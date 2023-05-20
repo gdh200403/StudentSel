@@ -14,8 +14,8 @@ import java.util.List;
  * @date 2023/5/19 21:11
  */
 @Mapper
-@Repository(value = "StudentDao")
-public interface StudentDao {
+@Repository(value = "StudentDAO")
+public interface StudentDAO {
     public List<StudentRecord> queryAllStudent();
 
     public StudentRecord queryStudentByID(@Param("student_id") String ID);

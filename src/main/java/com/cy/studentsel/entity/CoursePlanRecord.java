@@ -11,35 +11,27 @@ import java.io.Serializable;
 //) {
 //}
 public class CoursePlanRecord implements Serializable{
-private String major;
+    private String major;
     private String planid;
-
-    public CoursePlanRecord(String major, String planID) {
-        this.major = major;
-        planid = planID;
-    }
 
     public String getMajor() {
         return major;
-    }
-
-    public String getPlanID() {
-        return planid;
     }
 
     public void setMajor(String major) {
         this.major = major;
     }
 
-    public void setPlanID(String planID) {
-        planid = planID;
+    public String getPlanid() {
+        return planid;
     }
 
-    @Override
-    public String toString() {
-        return "CoursePlanRecord{" +
-                "Major='" + major + '\'' +
-                ", PlanID='" + planid + '\'' +
-                '}';
+    public void setPlanid(String planid) {
+        this.planid = planid;
+    }
+
+    public CoursePlanRecord(String major, String planid) {
+        this.major = major;
+        this.planid = planid;
     }
 }

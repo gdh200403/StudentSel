@@ -3,7 +3,7 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <!-- Path: src\main\resources\Mapper\CourseSelDaoMapper.xml -->
-<mapper namespace="com.cy.studentsel.DAO.SCDao">
+<mapper namespace="com.cy.studentsel.DAO.SCDAO">
     <select id="queryAllSC" resultType="com.cy.studentsel.entity.SCRecord">
         select * from sc
     </select>

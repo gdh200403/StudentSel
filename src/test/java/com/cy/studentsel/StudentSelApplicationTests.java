@@ -1,8 +1,7 @@
 package com.cy.studentsel;
 
-import com.cy.studentsel.DAO.StudentDao;
+import com.cy.studentsel.DAO.StudentDAO;
 import com.cy.studentsel.entity.StudentRecord;
-import com.cy.studentsel.handler.StudentHandler;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -15,9 +14,9 @@ import java.sql.SQLException;
 class StudentSelApplicationTests {
     @Autowired
     private DataSource DataS;
-    @Qualifier("StudentDao")
+    @Qualifier("StudentDAO")
     @Autowired
-    private StudentDao student;
+    private StudentDAO student;
 
     @Test
     void contextLoads() {

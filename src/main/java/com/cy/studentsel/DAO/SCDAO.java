@@ -8,8 +8,8 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Mapper
-@Repository(value = "SCDao")
-public interface SCDao {
+@Repository(value = "SCDAO")
+public interface SCDAO {
     List<SCRecord> queryAllSC();
 
     public SCRecord querySCByID(@Param("sc_id") String ID);

@@ -2,7 +2,7 @@ package com.cy.studentsel.handler.impl;
 
 
 
-import com.cy.studentsel.DAO.StudentDao;
+import com.cy.studentsel.DAO.StudentDAO;
 import com.cy.studentsel.entity.StudentRecord;
 import com.cy.studentsel.handler.StudentHandler;
 import jakarta.annotation.Resource;
@@ -18,7 +18,7 @@ import java.util.Objects;
 @Service
 public class StudentHandlerImpl implements StudentHandler {
     @Resource
-    private StudentDao studentDao;
+    private StudentDAO studentDao;
 
     @Override
     public String login(String ID, String pwd) {

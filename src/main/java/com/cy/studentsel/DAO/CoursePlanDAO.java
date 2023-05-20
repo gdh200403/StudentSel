@@ -8,8 +8,8 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Mapper
-@Repository(value = "CoursePlanDao")
-public interface CoursePlanDao {
+@Repository(value = "CoursePlanDAO")
+public interface CoursePlanDAO {
     List<CoursePlanRecord> queryAllCoursePlan();
 
     public CoursePlanRecord queryCoursePlanByID(@Param("courseplan_id") String ID);

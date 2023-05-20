@@ -7,8 +7,8 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 @Mapper
-@Repository(value = "TeacherDao")
-public interface TeacherDao {
+@Repository(value = "TeacherDAO")
+public interface TeacherDAO {
     List<TeacherRecord> queryAllTeacher();
 
     public TeacherRecord queryTeacherByID(@Param("Teacher_id") String ID);
