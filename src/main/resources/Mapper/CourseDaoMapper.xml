@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- Path: src\main\resources\Mapper\CourseDaoMapper.xml -->
+<mapper namespace="com.cy.studentsel.DAO.CourseDao">
+    <select id="queryAllCourse" resultType="com.cy.studentsel.entity.CourseRecord">
+        select * from course
+    </select>
+    <select id="queryCourseByID" resultType="com.cy.studentsel.entity.CourseRecord" parameterType="String">
+        select * from course where course.id = #{course_id}
+    </select>
+    <update id="updateCourse" parameterType="com.cy.studentsel.entity.CourseRecord">
+        update course set name = #{name}, credit = #{credit}, type = #{type},  teacher = #{teacher}, time = #{time},
+                          place = #{place}, capacity = #{capacity} where id = #{id}
+    </update>
+    <delete id="deleteCourse" parameterType="String">
+        delete from course where course.id = #{course_id}
+    </delete>
+</mapper>

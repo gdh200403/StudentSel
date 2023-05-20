@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- Path: src\main\resources\Mapper\TeachCourseDaoMapper.xml -->
+<mapper namespace="com.cy.studentsel.DAO.TCDao">
+    <select id="queryAllTC" resultType="com.cy.studentsel.entity.TCRecord">
+        select * from tc;
+    </select>
+    <select id="queryTCByTeacherID" resultType="com.cy.studentsel.entity.TCRecord" parameterType="String">
+        select * from tc where tc.id = #{teacher_id}
+    </select>
+    <select id="queryTCByCourseID" resultType="com.cy.studentsel.entity.TCRecord" parameterType="String">
+        select * from tc where tc.id = #{course_id}
+    </select>
+    <select id="queryTCByTeacherIDAndCourseID" resultType="com.cy.studentsel.entity.TCRecord" parameterType="com.cy.studentsel.entity.TCRecord">
+        select * from tc where tc.id = #{id} and tc.courseid = #{courseid}
+    </select>
+    <delete id="deleteTC" parameterType="String">
+        delete from tc where tc.id = #{id} and tc.courseid = #{courseid}
+    </delete>
+    <insert id="addTC" parameterType="com.cy.studentsel.entity.TCRecord">
+        insert into tc values (#{id}, #{courseid}, #{capacity})
+    </insert>
+</mapper>

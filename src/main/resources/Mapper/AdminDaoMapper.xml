@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- Path: src\main\resources\Mapper\AdminDaoMapper.xml -->
+<mapper namespace="com.cy.studentsel.DAO.AdminDAO">
+    <select id="queryAdminByID" resultType="com.cy.studentsel.entity.AdminRecord" parameterType="String">
+        select * from admin where admin.id = #{admin_id}
+    </select>
+
+</mapper>
