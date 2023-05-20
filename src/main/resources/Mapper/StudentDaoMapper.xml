@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- Path: src\main\resources\Mapper\StudentDaoMapper.xml -->
+<mapper namespace= "com.cy.studentsel.DAO.StudentDao">
+    <select id="queryAllStudent" resultType="com.cy.studentsel.entity.StudentRecord">
+        select * from student
+    </select>
+    <select id="queryStudentByID" resultType="com.cy.studentsel.entity.StudentRecord" parameterType="String">
+        select * from student where student.id = #{student_id}
+    </select>
+    <update id="updateStudent" parameterType="com.cy.studentsel.entity.StudentRecord">
+        update student set student.name = #{name}, student.sex = #{sex} where student.id = #{id}
+    </update>
+    <delete id="deleteStudent" parameterType="String">
+        delete from student where student.id = #{student_id}
+    </delete>
+    <insert id="addStudent" parameterType="com.cy.studentsel.entity.StudentRecord">
+        insert into student values (#{id},#{name}, #{sex}, #{age}, #{major}, #{pwd})
+    </insert>
+</mapper>
