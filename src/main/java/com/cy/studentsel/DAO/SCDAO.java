@@ -12,11 +12,11 @@ import java.util.List;
 public interface SCDAO {
     List<SCRecord> queryAllSC();
 
-    public SCRecord querySCByID(@Param("sc_id") String ID);
+    public  List <SCRecord> querySCByStudentID( String student_id);
 
-    public int updateSC(SCRecord scRecord);
+    public  List <SCRecord> querySCByCourseID(String course_id);
 
-    public int deleteSC(@Param("sc_id") String ID);
+    public void updateSC( SCRecord id);
 
-    public int addSC(SCRecord scRecord);
+    public void addSC(SCRecord scRecord);
 }

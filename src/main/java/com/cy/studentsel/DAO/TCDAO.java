@@ -12,11 +12,12 @@ import java.util.List;
 public interface TCDAO {
     List<TCRecord> queryAllTC();
 
-    public TCRecord queryTCByID(@Param("TC_id") String ID);
+    public List <TCRecord> queryTCByTeacherID(@Param("teacher_id") String ID);
 
-    public int updateTC(TCRecord tcRecord);
+    public List <TCRecord> queryTCByCourseID(String course_id);
 
-    public int deleteTC(@Param("tc_id") String ID);
+    public List <TCRecord> queryTCByTeacherIDAndCourseID( TCRecord tc);
 
-    public int addTC(TCRecord tcRecord);
+    public void deleteTC(String courseid);
+    public void addTC(TCRecord tc);
 }
