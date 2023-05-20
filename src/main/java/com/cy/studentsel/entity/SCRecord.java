@@ -3,30 +3,24 @@ package com.cy.studentsel.entity;
 import java.io.Serializable;
 
 public class SCRecord implements Serializable {
-    private String ID;
-    private String CourseID;
+    private String id;
+    private String courseid;
     private int grade;
 
-    public SCRecord(String ID, String courseID, int grade) {
-        this.ID = ID;
-        CourseID = courseID;
-        this.grade = grade;
+    public String getId() {
+        return id;
     }
 
-    public String getID() {
-        return ID;
+    public void setId(String id) {
+        this.id = id;
     }
 
-    public void setID(String ID) {
-        this.ID = ID;
+    public String getCourseid() {
+        return courseid;
     }
 
-    public String getCourseID() {
-        return CourseID;
-    }
-
-    public void setCourseID(String courseID) {
-        CourseID = courseID;
+    public void setCourseid(String courseid) {
+        this.courseid = courseid;
     }
 
     public int getGrade() {
@@ -34,6 +28,12 @@ public class SCRecord implements Serializable {
     }
 
     public void setGrade(int grade) {
+        this.grade = grade;
+    }
+
+    public SCRecord(String id, String courseid, int grade) {
+        this.id = id;
+        this.courseid = courseid;
         this.grade = grade;
     }
 }

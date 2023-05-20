@@ -4,13 +4,13 @@ import java.io.Serializable;
 
 public class TCRecord implements Serializable {
     private String id;
-    private String Courseid;
-    private String Capacity;
+    private String courseid;
+    private String capacity;
 
     public TCRecord(String id, String courseid, String capacity) {
         this.id = id;
-        Courseid = courseid;
-        Capacity = capacity;
+        this.courseid = courseid;
+        this.capacity = capacity;
     }
 
     public String getId() {
@@ -22,18 +22,18 @@ public class TCRecord implements Serializable {
     }
 
     public String getCourseid() {
-        return Courseid;
+        return courseid;
     }
 
     public void setCourseid(String courseid) {
-        Courseid = courseid;
+        this.courseid = courseid;
     }
 
     public String getCapacity() {
-        return Capacity;
+        return capacity;
     }
 
     public void setCapacity(String capacity) {
-        Capacity = capacity;
+        this.capacity = capacity;
     }
 }

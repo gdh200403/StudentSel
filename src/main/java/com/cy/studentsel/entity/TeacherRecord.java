@@ -12,80 +12,57 @@ package com.cy.studentsel.entity;
 //}
 
 public class TeacherRecord {
-    String name;
     String id;
-    String sex;
-    String job;     //职务
-    String education;   //学历
-    String major;
-    String tel;
+    String name;
+    String sex;     //职务
+    String age;   //学历
+    String pwd;
 
-    @Override
-    public String toString() {
-        return "TeacherRecord{" +
-                "name='" + name + '\'' +
-                ", id='" + id + '\'' +
-                ", sex='" + sex + '\'' +
-                ", job='" + job + '\'' +
-                ", education='" + education + '\'' +
-                ", major='" + major + '\'' +
-                ", tel='" + tel + '\'' +
-                '}';
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public void setId(String id) {
+    public TeacherRecord(String id, String name, String sex, String age, String pwd) {
         this.id = id;
-    }
-
-    public void setSex(String sex) {
+        this.name = name;
         this.sex = sex;
-    }
-
-    public void setJob(String job) {
-        this.job = job;
-    }
-
-    public void setEducation(String education) {
-        this.education = education;
-    }
-
-    public void setMajor(String major) {
-        this.major = major;
-    }
-
-    public void setTel(String tel) {
-        this.tel = tel;
-    }
-
-    public String getName() {
-        return name;
+        this.age = age;
+        this.pwd = pwd;
     }
 
     public String getId() {
         return id;
     }
 
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
     public String getSex() {
         return sex;
     }
 
-    public String getJob() {
-        return job;
+    public void setSex(String sex) {
+        this.sex = sex;
     }
 
-    public String getEducation() {
-        return education;
+    public String getAge() {
+        return age;
     }
 
-    public String getMajor() {
-        return major;
+    public void setAge(String age) {
+        this.age = age;
     }
 
-    public String getTel() {
-        return tel;
+    public String getPwd() {
+        return pwd;
+    }
+
+    public void setPwd(String pwd) {
+        this.pwd = pwd;
     }
 }
