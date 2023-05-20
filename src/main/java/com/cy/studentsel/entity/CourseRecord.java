@@ -42,63 +42,79 @@ public class CourseRecord implements Serializable{
         return ID;
     }
 
-    public void setID(String ID) {
-        this.ID = ID;
-    }
-
     public String getName() {
         return Name;
-    }
-
-    public void setName(String name) {
-        Name = name;
     }
 
     public int getCredit() {
         return Credit;
     }
 
-    public void setCredit(int credit) {
-        Credit = credit;
-    }
-
     public String getType() {
         return Type;
-    }
-
-    public void setType(String type) {
-        Type = type;
     }
 
     public String getTeacher() {
         return Teacher;
     }
 
-    public void setTeacher(String teacher) {
-        Teacher = teacher;
-    }
-
     public String getTime() {
         return time;
-    }
-
-    public void setTime(String time) {
-        this.time = time;
     }
 
     public String getPlace() {
         return place;
     }
 
-    public void setPlace(String place) {
-        this.place = place;
-    }
-
     public int getCapacity() {
         return capacity;
+    }
+
+    public void setID(String ID) {
+        this.ID = ID;
+    }
+
+    public void setName(String name) {
+        Name = name;
+    }
+
+    public void setCredit(int credit) {
+        Credit = credit;
+    }
+
+    public void setType(String type) {
+        Type = type;
+    }
+
+    public void setTeacher(String teacher) {
+        Teacher = teacher;
+    }
+
+    public void setTime(String time) {
+        this.time = time;
+    }
+
+    public void setPlace(String place) {
+        this.place = place;
     }
 
     public void setCapacity(int capacity) {
         this.capacity = capacity;
     }
+
+    @Override
+    public String toString() {
+        return "CourseRecord{" +
+                "ID='" + ID + '\'' +
+                ", Name='" + Name + '\'' +
+                ", Credit=" + Credit +
+                ", Type='" + Type + '\'' +
+                ", Teacher='" + Teacher + '\'' +
+                ", time='" + time + '\'' +
+                ", place='" + place + '\'' +
+                ", capacity=" + capacity +
+                '}';
+    }
+
+
 }
