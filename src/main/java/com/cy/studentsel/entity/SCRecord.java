@@ -36,4 +36,13 @@ public class SCRecord implements Serializable {
         this.courseid = courseid;
         this.grade = grade;
     }
+
+    @Override
+    public String toString() {
+        return "SCRecord{" +
+                "id='" + id + '\'' +
+                ", courseid='" + courseid + '\'' +
+                ", grade=" + grade +
+                '}';
+    }
 }
