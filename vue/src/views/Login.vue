@@ -47,17 +47,17 @@ export default {
     login() {
       this.$refs.form.validate(valid => {
         if (valid) {
-            this.request.post("/verify", this.form).then(res => {
+            this.request.post("/api/verify", this.form).then(res => {
                 console.log(res)
                 if (res.status === 200) {
                     this.$message({
                         message: '登录成功',
                         type: 'success'
                     })
-                    this.$router.push({path: '/'})
+                    this.$router.push({path: '/' + this.form.userType})
                 } else {
                     this.$message({
-                        message: '登录失败',
+                        message: res.msg,
                         type: 'error'
                     })
                 }
