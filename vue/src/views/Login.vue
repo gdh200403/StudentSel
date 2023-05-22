@@ -18,11 +18,11 @@
           </el-input>
         </el-form-item>
         <el-form-item prop="userType" class="radio-group">
-            <el-radio-group v-model="form.userType">
-              <el-radio label="student">学生</el-radio>
-              <el-radio label="teacher">教师</el-radio>
-              <el-radio label="admin">管理员</el-radio>
-            </el-radio-group>
+          <el-radio-group v-model="form.userType">
+            <el-radio label="student">学生</el-radio>
+            <el-radio label="teacher">教师</el-radio>
+            <el-radio label="admin">管理员</el-radio>
+          </el-radio-group>
         </el-form-item>
         <el-form-item class="login-button">
           <el-button type="primary" @click="login" >登录</el-button>
@@ -78,6 +78,7 @@ h1{
   text-align: center;
 }
 .login-container {
+  display: flex;
   justify-content: center;
   align-items: center;
   height: 100vh;
