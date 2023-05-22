@@ -17,7 +17,7 @@
         select * from tc where tc.id = #{id} and tc.courseid = #{courseid}
     </select>
     <delete id="deleteTC" parameterType="String">
-        delete from tc where tc.id = #{id} and tc.courseid = #{courseid}
+        delete from tc where tc.id = #{teacher_id} and tc.courseid = #{course_id}
     </delete>
     <insert id="addTC" parameterType="com.cy.studentsel.entity.TCRecord">
         insert into tc values (#{id}, #{courseid}, #{capacity})

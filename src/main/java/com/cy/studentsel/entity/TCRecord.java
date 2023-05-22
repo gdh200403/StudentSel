@@ -5,9 +5,18 @@ import java.io.Serializable;
 public class TCRecord implements Serializable {
     private String id;
     private String courseid;
-    private String capacity;
+    private int capacity = -1;
 
-    public TCRecord(String id, String courseid, String capacity) {
+    @Override
+    public String toString() {
+        return "TCRecord{" +
+                "id='" + id + '\'' +
+                ", courseid='" + courseid + '\'' +
+                ", capacity=" + capacity +
+                '}';
+    }
+
+    public TCRecord(String id, String courseid, int capacity) {
         this.id = id;
         this.courseid = courseid;
         this.capacity = capacity;
@@ -29,11 +38,11 @@ public class TCRecord implements Serializable {
         this.courseid = courseid;
     }
 
-    public String getCapacity() {
+    public int getCapacity() {
         return capacity;
     }
 
-    public void setCapacity(String capacity) {
+    public void setCapacity(int capacity) {
         this.capacity = capacity;
     }
 }

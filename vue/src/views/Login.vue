@@ -47,7 +47,21 @@ export default {
     login() {
       this.$refs.form.validate(valid => {
         if (valid) {
-          // TODO: 处理登录逻辑
+            this.request.post("/verify", this.form).then(res => {
+                console.log(res)
+                if (res.status === 200) {
+                    this.$message({
+                        message: '登录成功',
+                        type: 'success'
+                    })
+                    this.$router.push({path: '/'})
+                } else {
+                    this.$message({
+                        message: '登录失败',
+                        type: 'error'
+                    })
+                }
+            })
           console.log('登录成功')
         } else {
           console.log('表单验证失败')
@@ -67,6 +81,8 @@ h1{
   justify-content: center;
   align-items: center;
   height: 100vh;
+  background-image: linear-gradient(to bottom right, #FC466B, #3F5EFB);
+  overflow: hidden;
 }
 .login-card {
   width: 400px;
@@ -83,5 +99,7 @@ h1{
 .login-button{
   display: flex;
   justify-content: center;
+}
+.wrapper {
 }
 </style>

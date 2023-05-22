@@ -12,11 +12,11 @@ import java.util.List;
 public interface CoursePlanDAO {
     List<CoursePlanRecord> queryAllCoursePlan();
 
-    public CoursePlanRecord queryCoursePlanByID(@Param("courseplan_id") String ID);
+    public CoursePlanRecord queryCoursePlanByID(@Param("course_plan_id") String ID);
 
-    public int updateCoursePlan(CoursePlanRecord studentplanRecord);
+    public int updateCoursePlan(CoursePlanRecord record);
 
-    public int deleteCoursePlan(@Param("CoursePlan_id") String ID);
+    public int deleteCoursePlan(@Param("course_plan_id") String ID);
 
-    public int addCoursePlan(CoursePlanRecord courseplanRecord);
+    public int addCoursePlan(CoursePlanRecord record);
 }

@@ -11,11 +11,11 @@ import java.util.List;
 public interface TeacherDAO {
     List<TeacherRecord> queryAllTeacher();
 
-    public TeacherRecord queryTeacherByID(@Param("Teacher_id") String ID);
+    public TeacherRecord queryTeacherByID(@Param("teacher_id") String ID);
 
-    public int updateTeacher(TeacherRecord teacherRecord);
+    public int updateTeacher(TeacherRecord record);
 
     public int deleteTeacher(@Param("teacher_id") String ID);
 
-    public int addTeacher(TeacherRecord teacherRecord);
+    public int addTeacher(TeacherRecord record);
 }

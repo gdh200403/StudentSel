@@ -10,13 +10,13 @@ import java.util.List;
 @Mapper
 @Repository(value = "AdminDAO")
 public interface AdminDAO {
-    List<AdminRecord> queryAlladmin();
+    List<AdminRecord> queryAllAdmin();
 
-    public AdminRecord queryadminByID(@Param("admin_id") String ID);
+    public AdminRecord queryAdminByID(@Param("admin_id") String ID);
 
-    public int updateadmin(AdminRecord admin_Record);
+    public int updateAdmin(AdminRecord admin_Record);
 
-    public int deleteadmin(@Param("admin_id") String ID);
+    public int deleteAdmin(@Param("admin_id") String ID);
 
-    public int addadmin(AdminRecord admin_Record);
+    public int addAdmin(AdminRecord admin_Record);
 }

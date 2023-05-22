@@ -11,7 +11,7 @@ import java.util.List;
 public interface CourseDAO {
     List<CourseRecord> queryAllCourse();
 
-    public CourseRecord queryCourseByID(@Param("CoursePlan_id") String ID);
+    public CourseRecord queryCourseByID(@Param("course_id") String ID);
 
     public int updateCourse(CourseRecord courseRecord);
 

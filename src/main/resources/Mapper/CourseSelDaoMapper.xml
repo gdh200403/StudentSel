@@ -13,9 +13,6 @@
     <select id="querySCByCourseID" resultType="com.cy.studentsel.entity.SCRecord" parameterType="String">
         select * from sc where sc.courseid = #{course_id}
     </select>
-    <update id="updateSC" parameterType="com.cy.studentsel.entity.SCRecord">
-        update sc set id = #{id}, courseid = #{courseid}, grade = #{grade} where id = #{id}
-    </update>
     <delete id="deleteSC" parameterType="String">
         delete from sc where sc.id = #{id} and sc.courseid = #{courseid}
     </delete>

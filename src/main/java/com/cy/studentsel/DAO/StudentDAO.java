@@ -20,10 +20,10 @@ public interface StudentDAO {
 
     public StudentRecord queryStudentByID(@Param("student_id") String ID);
 
-    public int updateStudent(StudentRecord studentRecord);
+    public int updateStudent(StudentRecord record);
 
     public int deleteStudent(@Param("student_id") String ID);
 
-    public int addStudent(StudentRecord studentRecord);
+    public int addStudent(StudentRecord record);
 }
 

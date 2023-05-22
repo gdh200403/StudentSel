@@ -65,4 +65,15 @@ public class TeacherRecord {
     public void setPwd(String pwd) {
         this.pwd = pwd;
     }
+
+    @Override
+    public String toString() {
+        return "TeacherRecord{" +
+                "id='" + id + '\'' +
+                ", name='" + name + '\'' +
+                ", sex='" + sex + '\'' +
+                ", age='" + age + '\'' +
+                ", pwd='" + pwd + '\'' +
+                '}';
+    }
 }

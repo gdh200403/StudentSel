@@ -14,10 +14,11 @@ public interface TCDAO {
 
     public List <TCRecord> queryTCByTeacherID(@Param("teacher_id") String ID);
 
-    public List <TCRecord> queryTCByCourseID(String course_id);
+    public List <TCRecord> queryTCByCourseID(@Param("course_id") String ID);
 
-    public List <TCRecord> queryTCByTeacherIDAndCourseID( TCRecord tc);
+    public List <TCRecord> queryTCByTeacherIDAndCourseID(TCRecord tc);
 
-    public void deleteTC(String courseid);
+    public void deleteTC(@Param("teacher_id") String teacher_id,@Param("course_id") String course_id);
+
     public void addTC(TCRecord tc);
 }

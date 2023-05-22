@@ -24,4 +24,12 @@ public class AdminRecord {
         this.id = id;
         this.pwd = pwd;
     }
+
+    @Override
+    public String toString() {
+        return "AdminRecord{" +
+                "id='" + id + '\'' +
+                ", pwd='" + pwd + '\'' +
+                '}';
+    }
 }

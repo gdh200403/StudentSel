@@ -34,4 +34,12 @@ public class CoursePlanRecord implements Serializable{
         this.major = major;
         this.planid = planid;
     }
+
+    @Override
+    public String toString() {
+        return "CoursePlanRecord{" +
+                "major='" + major + '\'' +
+                ", planid='" + planid + '\'' +
+                '}';
+    }
 }
