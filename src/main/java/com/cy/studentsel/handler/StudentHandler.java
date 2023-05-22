@@ -10,14 +10,8 @@ import java.util.List;
  * @author leaf-fulture
  * @date 2023/5/20 14:27
  */
-public interface StudentHandler {
-    /**
-     * 学生登录
-     * @param ID
-     * @param pwd
-     * @return
-     */
-    public String login(String ID, String pwd);
+public interface StudentHandler extends UserHandler {
+
 
     public List<StudentRecord> queryAllStudent();
 

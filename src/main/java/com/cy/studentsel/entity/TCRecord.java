@@ -7,15 +7,6 @@ public class TCRecord implements Serializable {
     private String courseid;
     private int capacity = -1;
 
-    @Override
-    public String toString() {
-        return "TCRecord{" +
-                "id='" + id + '\'' +
-                ", courseid='" + courseid + '\'' +
-                ", capacity=" + capacity +
-                '}';
-    }
-
     public TCRecord(String id, String courseid, int capacity) {
         this.id = id;
         this.courseid = courseid;

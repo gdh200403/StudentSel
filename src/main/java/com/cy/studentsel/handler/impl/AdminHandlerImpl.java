@@ -3,8 +3,13 @@ package com.cy.studentsel.handler.impl;
 import com.cy.studentsel.DAO.AdminDAO;
 import com.cy.studentsel.entity.AdminRecord;
 import com.cy.studentsel.handler.AdminHandler;
+import com.cy.studentsel.handler.ex.HandlerSqlException;
+import com.cy.studentsel.handler.ex.PasswordNoMatchException;
+import com.cy.studentsel.handler.ex.UserNameNoFoundException;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
+
+import java.util.Objects;
 
 /**
  * @author leaf-fulture
@@ -17,21 +22,14 @@ public class AdminHandlerImpl implements AdminHandler {
 
     @Override
     public String login(String ID, String pwd) {
-        try {
-            AdminRecord admin = adminDAO.queryAdminByID(ID);
-            if (admin == null) {
-                return "admin_not_exist";
-            }
-            if (admin.getPwd().equals(pwd)){
-                return "login_success";
-            }
-            else {
-                return "pwd_error";
-            }
+        AdminRecord admin = adminDAO.queryAdminByID(ID);
+        if (admin == null) {
+            throw new UserNameNoFoundException("管理员账号不存在");
         }
-        catch (Exception e){
-            return "error";
+        if (!Objects.equals(admin.getPwd(), pwd)){
+            throw new PasswordNoMatchException("密码错误");
         }
+        return "登录成功";
     }
 
     @Override

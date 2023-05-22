@@ -18,17 +18,6 @@ public class TeacherRecord {
     int age;   //学历
     String pwd;
 
-    @Override
-    public String toString() {
-        return "TeacherRecord{" +
-                "id='" + id + '\'' +
-                ", name='" + name + '\'' +
-                ", sex='" + sex + '\'' +
-                ", age='" + age + '\'' +
-                ", pwd='" + pwd + '\'' +
-                '}';
-    }
-
     public TeacherRecord(String id, String name, String sex,int age, String pwd) {
         this.id = id;
         this.name = name;
