@@ -24,19 +24,16 @@
               @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55"></el-table-column>
       <el-table-column prop="id" label="ID" width="80"></el-table-column>
-      <el-table-column prop="name" label="课程名称"></el-table-column>
-      <el-table-column prop="score" label="文件类型"></el-table-column>
-      <el-table-column prop="times" label="课时"></el-table-column>
-      <el-table-column prop="teacher" label="授课老师"></el-table-column>
-      <el-table-column label="启用">
+      <el-table-column prop="name" label="文章标题"></el-table-column>
+      <el-table-column prop="content" label="文章内容">
         <template slot-scope="scope">
-          <el-switch v-model="scope.row.state" active-color="#13ce66" inactive-color="#ccc"
-                     @change="changeEnable(scope.row)"></el-switch>
+          <el-button @click="view(scope.row.content)" type="primary">查看内容</el-button>
         </template>
       </el-table-column>
+      <el-table-column prop="user" label="发布人"></el-table-column>
+      <el-table-column prop="time" label="发布时间"></el-table-column>
       <el-table-column label="操作" width="280" align="center">
         <template slot-scope="scope">
-          <el-button type="primary" @click="selectCourse(scope.row.id)">选课</el-button>
           <el-button type="success" @click="handleEdit(scope.row)" v-if="user.role === 'ROLE_ADMIN'">编辑 <i class="el-icon-edit"></i></el-button>
           <el-popconfirm
               class="ml-5"
@@ -65,21 +62,13 @@
       </el-pagination>
     </div>
 
-    <el-dialog title="课程信息" :visible.sync="dialogFormVisible" width="30%" >
+    <el-dialog title="文章信息" :visible.sync="dialogFormVisible" width="60%" >
       <el-form label-width="80px" size="small">
-        <el-form-item label="名称">
+        <el-form-item label="文章标题">
           <el-input v-model="form.name" autocomplete="off"></el-input>
         </el-form-item>
-        <el-form-item label="学分">
-          <el-input v-model="form.score" autocomplete="off"></el-input>
-        </el-form-item>
-        <el-form-item label="课时">
-          <el-input v-model="form.times" autocomplete="off"></el-input>
-        </el-form-item>
-        <el-form-item label="老师">
-          <el-select clearable v-model="form.teacherId" placeholder="请选择">
-            <el-option v-for="item in teachers" :key="item.id" :label="item.nickname" :value="item.id"></el-option>
-          </el-select>
+        <el-form-item label="文章内容">
+          <mavon-editor ref="md" v-model="form.content" :ishljs="true" @imgAdd="imgAdd"/>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -88,13 +77,32 @@
       </div>
     </el-dialog>
 
+    <el-dialog title="文章信息" :visible.sync="viewDialogVis" width="60%" >
+      <el-card>
+        <div>
+          <mavon-editor
+              class="md"
+              :value="content"
+              :subfield="false"
+              :defaultOpen="'preview'"
+              :toolbarsFlag="false"
+              :editable="false"
+              :scrollStyle="true"
+              :ishljs="true"
+          />
+        </div>
+      </el-card>
+    </el-dialog>
+
   </div>
 </template>
 
 <script>
 
+import axios from "axios";
+
 export default {
-  name: "Course",
+  name: "Article",
   data() {
     return {
       form: {},
@@ -106,24 +114,37 @@ export default {
       total: 0,
       dialogFormVisible: false,
       teachers: [],
-      user: localStorage.getItem("user") ? JSON.parse(localStorage.getItem("user")) : {}
+      user: localStorage.getItem("user") ? JSON.parse(localStorage.getItem("user")) : {},
+      content: '',
+      viewDialogVis: false
     }
   },
   created() {
     this.load()
   },
   methods: {
-    selectCourse(courseId) {
-      this.request.post('/course/studentCourse/' + courseId + "/" + this.user.id).then(res => {
-        if (res.code === '200') {
-          this.$message.success("选课成功")
-        } else {
-          this.$message.success(res.msg)
-        }
+    view(content) {
+      this.content = content
+      this.viewDialogVis = true
+    },
+    // 绑定@imgAdd event
+    imgAdd(pos, $file) {
+      let $vm = this.$refs.md
+      // 第一步.将图片上传到服务器.
+      const formData = new FormData();
+      formData.append('file', $file);
+      axios({
+        url: 'http://localhost:9090/file/upload',
+        method: 'post',
+        data: formData,
+        headers: {'Content-Type': 'multipart/form-data'},
+      }).then((res) => {
+        // 第二步.将返回的url替换到文本原位置![...](./0) -> ![...](url)
+        $vm.$img2Url(pos, res.data);
       })
     },
     load() {
-      this.request.get("/course/page", {
+      this.request.get("/article/page", {
         params: {
           pageNum: this.pageNum,
           pageSize: this.pageSize,
@@ -136,12 +157,9 @@ export default {
 
       })
 
-      this.request.get("/user/role/ROLE_TEACHER").then(res => {
-        this.teachers = res.data
-      })
     },
     changeEnable(row) {
-      this.request.post("/course/update", row).then(res => {
+      this.request.post("/article/update", row).then(res => {
         if (res.code === '200') {
           this.$message.success("操作成功")
         }
@@ -156,7 +174,7 @@ export default {
       this.dialogFormVisible = true
     },
     del(id) {
-      this.request.delete("/course/" + id).then(res => {
+      this.request.delete("/article/" + id).then(res => {
         if (res.code === '200') {
           this.$message.success("删除成功")
           this.load()
@@ -171,7 +189,7 @@ export default {
     },
     delBatch() {
       let ids = this.multipleSelection.map(v => v.id)  // [{}, {}, {}] => [1,2,3]
-      this.request.post("/course/del/batch", ids).then(res => {
+      this.request.post("/article/del/batch", ids).then(res => {
         if (res.code === '200') {
           this.$message.success("批量删除成功")
           this.load()
@@ -181,7 +199,7 @@ export default {
       })
     },
     save() {
-      this.request.post("/course", this.form).then(res => {
+      this.request.post("/article", this.form).then(res => {
         if (res.code === '200') {
           this.$message.success("保存成功")
           this.dialogFormVisible = false
