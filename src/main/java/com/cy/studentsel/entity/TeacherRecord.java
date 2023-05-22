@@ -15,10 +15,21 @@ public class TeacherRecord {
     String id;
     String name;
     String sex;     //职务
-    String age;   //学历
+    int age;   //学历
     String pwd;
 
-    public TeacherRecord(String id, String name, String sex, String age, String pwd) {
+    @Override
+    public String toString() {
+        return "TeacherRecord{" +
+                "id='" + id + '\'' +
+                ", name='" + name + '\'' +
+                ", sex='" + sex + '\'' +
+                ", age='" + age + '\'' +
+                ", pwd='" + pwd + '\'' +
+                '}';
+    }
+
+    public TeacherRecord(String id, String name, String sex,int age, String pwd) {
         this.id = id;
         this.name = name;
         this.sex = sex;
@@ -50,11 +61,11 @@ public class TeacherRecord {
         this.sex = sex;
     }
 
-    public String getAge() {
+    public int getAge() {
         return age;
     }
 
-    public void setAge(String age) {
+    public void setAge(int age) {
         this.age = age;
     }
 

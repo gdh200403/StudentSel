@@ -45,4 +45,13 @@ public class TCRecord implements Serializable {
     public void setCapacity(int capacity) {
         this.capacity = capacity;
     }
+
+    @Override
+    public String toString() {
+        return "TCRecord{" +
+                "id='" + id + '\'' +
+                ", courseid='" + courseid + '\'' +
+                ", capacity='" + capacity + '\'' +
+                '}';
+    }
 }
