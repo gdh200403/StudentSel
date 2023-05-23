@@ -5,9 +5,13 @@ package com.cy.studentsel.handler.impl;
 import com.cy.studentsel.DAO.StudentDAO;
 import com.cy.studentsel.entity.StudentRecord;
 import com.cy.studentsel.handler.StudentHandler;
+import com.cy.studentsel.handler.ex.HandlerSqlException;
+import com.cy.studentsel.handler.ex.PasswordNoMatchException;
+import com.cy.studentsel.handler.ex.UserNameNoFoundException;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
 
+import java.sql.SQLException;
 import java.util.List;
 import java.util.Objects;
 
@@ -22,21 +26,14 @@ public class StudentHandlerImpl implements StudentHandler {
 
     @Override
     public String login(String ID, String pwd) {
-        try {
-            StudentRecord studentRecord = studentDao.queryStudentByID(ID);
-            if (studentRecord == null) {
-                return "student_not_exist";
-            }
-            if (Objects.equals(studentRecord.getPwd(), pwd)){
-                return "login_success";
-            }
-            else {
-                return "pwd_error";
-            }
+        StudentRecord studentRecord = studentDao.queryStudentByID(ID);
+        if (studentRecord == null) {
+            throw new UserNameNoFoundException("学号不存在");
         }
-        catch (Exception e){
-            return "error";
+        if (!Objects.equals(studentRecord.getPwd(), pwd)){
+            throw new PasswordNoMatchException("密码错误");
         }
+        return "登录成功";
     }
 
     @Override

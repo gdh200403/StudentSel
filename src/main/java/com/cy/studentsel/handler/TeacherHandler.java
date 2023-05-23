@@ -10,9 +10,7 @@ import java.util.List;
  * @date 2023/5/20 17:51
  */
 
-public interface TeacherHandler {
-    public String login(String ID, String pwd);
-
+public interface TeacherHandler extends UserHandler {
     public TeacherRecord getTeacher(String ID);
 
     public boolean update(TeacherRecord teacherRecord);

@@ -22,18 +22,4 @@ public class studentController {
     @Resource
     private StudentHandler studentHandler;
 
-//    @GetMapping("/index")
-//    private List<StudentRecord> index(){
-//        return studentHandler.queryAllStudent();
-//    }
-
-    @PostMapping("/login")
-    @ResponseBody
-    public JsonResult<Void> login(@RequestBody UserDto dto){
-        String msg = studentHandler.login(dto.getUsername(), dto.getPassword());
-        if (Objects.equals(msg, "login_success")) {
-            return new JsonResult<>(200, "登录成功", null);
-        }
-        return new JsonResult<>(500, "登录失败", null);
-    }
 }

@@ -2,6 +2,10 @@ package com.cy.studentsel.handler.impl;
 import  com.cy.studentsel.DAO.TeacherDAO;
 import com.cy.studentsel.entity.TeacherRecord;
 import com.cy.studentsel.handler.TeacherHandler;
+import com.cy.studentsel.handler.ex.HandlerException;
+import com.cy.studentsel.handler.ex.HandlerSqlException;
+import com.cy.studentsel.handler.ex.PasswordNoMatchException;
+import com.cy.studentsel.handler.ex.UserNameNoFoundException;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
 
@@ -19,21 +23,14 @@ public class TeacherHandlerImpl implements TeacherHandler {
 
     @Override
     public String login(String ID, String pwd) {
-        try {
-            TeacherRecord teacherRecord = teacherDao.queryTeacherByID(ID);
-            if (teacherRecord == null) {
-                return "teacher_not_exist";
-            }
-            if (Objects.equals(teacherRecord.getPwd(), pwd)){
-                return "login_success";
-            }
-            else {
-                return "pwd_error";
-            }
+        TeacherRecord teacherRecord = teacherDao.queryTeacherByID(ID);
+        if (teacherRecord == null) {
+            throw new UserNameNoFoundException("教师工号不存在");
         }
-        catch (Exception e){
-            return "error";
+        if (!Objects.equals(teacherRecord.getPwd(), pwd)){
+            throw new PasswordNoMatchException("密码错误");
         }
+        return "登录成功";
     }
 
     @Override
