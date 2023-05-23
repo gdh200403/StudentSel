@@ -120,7 +120,7 @@
           <el-button type="danger" class="ml-5">批量删除<i class="el-icon-circle-remove-outline"></i> </el-button>
         </div>
 <!--        数据表格-->
-        <el-table :data="tableData"  stripe class="ml-5" height="600" style="width: 100%">
+        <el-table :data="tableData"  stripe class="ml-5" height="700" style="width: 100%">
           <el-table-column prop="date" label="日期" width="140">
           </el-table-column>
           <el-table-column prop="name" label="姓名" width="120">
