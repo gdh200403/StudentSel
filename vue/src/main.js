@@ -7,7 +7,7 @@ import './assets/normal.css'
 import './assets/gloable.css'
 import request from "@/utils/request";
 
-Vue.use(ElementUI);
+Vue.use(ElementUI,{size: "small"});
 
 Vue.config.productionTip = false
 
