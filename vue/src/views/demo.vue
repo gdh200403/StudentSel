@@ -2,17 +2,18 @@
   <el-container style="height: 100%">
 <!--    左侧边栏导航菜单-->
       <el-menu
-          default-openeds="1"
+          class="el-menu-vertical-demo"
           background-color="rgb(48,65,86)"
           text-color="#fff"
           active-text-color="#ffd04b"
-          :collapse-transition="false"
+          default-active="1-1"
+          :collapse-transition=false
           :collapse="isCollapse">
         <div class="menu-header">
           <img src="../assets/logo.png" class="logo" >
-          <b style="color: white" v-show="!isCollapse">后台管理</b>
+          <b style="color: white" v-show="!isCollapse">教师后台</b>
         </div>
-        <el-submenu index="1">
+        <el-submenu index="1" style="width: 200px">
           <template slot="title">
             <i class="el-icon-user-solid"></i>
             <span>学生管理</span>
@@ -34,7 +35,7 @@
         <div style="flex: 1;font-size: 18px">
           <span :class="collapseBtnClass" style="cursor: pointer" @click="collapse"></span>
         </div>
-        <el-dropdown style="text-align:left;cursor: pointer">
+        <el-dropdown style="text-align:left;cursor: pointer" trigger="click">
           <div>
             <span>王小虎</span>
             <i class="el-icon-arrow-down"></i>

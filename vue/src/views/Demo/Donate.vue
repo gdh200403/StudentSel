@@ -4,7 +4,7 @@
       知识星球限时特惠中，扫码即可加入
     </div>
 
-    <img src="@/assets/星球-小.png" alt="" style="margin: 10px 0">
+    <img src="../../assets/星球-小.png" alt="" style="margin: 10px 0">
 
   </div>
 </template>
