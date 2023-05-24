@@ -2,6 +2,7 @@
   <el-container style="height: 100%">
 <!--    左侧边栏导航菜单-->
       <el-menu
+          default-openeds="1"
           background-color="rgb(48,65,86)"
           text-color="#fff"
           active-text-color="#ffd04b"
