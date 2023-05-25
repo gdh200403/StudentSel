@@ -11,7 +11,11 @@ import java.util.List;
 public interface TeacherDAO {
     List<TeacherRecord> queryAllTeacher();
 
+
+    public List<TeacherRecord> queryTeacherByPage(@Param("page") int page, @Param("size") int size);
+
     public TeacherRecord queryTeacherByID(@Param("teacher_id") String ID);
+
 
     public int updateTeacher(TeacherRecord record);
 

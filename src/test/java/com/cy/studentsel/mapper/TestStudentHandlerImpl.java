@@ -14,10 +14,10 @@ import org.springframework.boot.test.context.SpringBootTest;
 public class TestStudentHandlerImpl {
     @Autowired
     private StudentHandler studentHandler;
-    @Test
-    public void testqueryALLStudent(){
-        System.out.println(studentHandler.queryAllStudent());
-    }
+//    @Test
+//    public void testqueryALLStudent(){
+//        System.out.println(studentHandler.queryAllStudent());
+//    }
     @Test
     public void testlogin(){System.out.println(studentHandler.login("PB42000001","123456"));}
     @Test
@@ -27,4 +27,6 @@ public class TestStudentHandlerImpl {
         StudentRecord a=new StudentRecord("PB42000001","llf","male",21,"cs","123456");
         System.out.println(studentHandler.update(a));
     }
+
+
 }

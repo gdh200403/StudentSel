@@ -1,7 +1,11 @@
 package com.cy.studentsel.handler.impl;
 
 import com.cy.studentsel.DAO.AdminDAO;
+import com.cy.studentsel.DAO.StudentDAO;
+import com.cy.studentsel.DAO.TeacherDAO;
 import com.cy.studentsel.entity.AdminRecord;
+import com.cy.studentsel.entity.StudentRecord;
+import com.cy.studentsel.entity.TeacherRecord;
 import com.cy.studentsel.handler.AdminHandler;
 import com.cy.studentsel.handler.ex.HandlerSqlException;
 import com.cy.studentsel.handler.ex.PasswordNoMatchException;
@@ -9,6 +13,8 @@ import com.cy.studentsel.handler.ex.UserNameNoFoundException;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
 
+import java.sql.SQLException;
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -19,6 +25,10 @@ import java.util.Objects;
 public class AdminHandlerImpl implements AdminHandler {
     @Resource
     private AdminDAO adminDAO;
+    @Resource
+    private StudentDAO studentDAO;
+    @Resource
+    private TeacherDAO teacherDAO;
 
     @Override
     public String login(String ID, String pwd) {
@@ -45,13 +55,32 @@ public class AdminHandlerImpl implements AdminHandler {
 
     @Override
     public boolean update(String ID, String pwd) {
-        try {
-            adminDAO.updateAdmin(new AdminRecord(ID, pwd));
-            return true;
-        }
-        catch (Exception e){
-            e.printStackTrace();
-            return false;
-        }
+        adminDAO.updateAdmin(new AdminRecord(ID, pwd));
+        return true;
+    }
+
+    @Override
+    public List<StudentRecord> queryAllStudent() {
+        return studentDAO.queryAllStudent();
+    }
+
+    @Override
+    public List<StudentRecord> queryStudentByPage(int page, int size) {
+        return studentDAO.queryStudentByPage(page, size);
+    }
+
+    @Override
+    public List<StudentRecord> queryStudentByCondition(StudentRecord record) {
+        return studentDAO.queryStudentByCondition(record);
+    }
+
+    @Override
+    public List<TeacherRecord> queryAllTeacher() {
+        return teacherDAO.queryAllTeacher();
+    }
+
+    @Override
+    public List<TeacherRecord> queryTeacherByPage(int page, int size) {
+        return teacherDAO.queryTeacherByPage(page, size);
     }
 }

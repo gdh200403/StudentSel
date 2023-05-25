@@ -26,31 +26,25 @@ public class StudentHandlerImpl implements StudentHandler {
 
     @Override
     public String login(String ID, String pwd) {
-        StudentRecord studentRecord = studentDao.queryStudentByID(ID);
+        StudentRecord query = new StudentRecord(ID, null, null, null, null, null);
+        List<StudentRecord> studentRecord = studentDao.queryStudentByCondition(query);
         if (studentRecord == null) {
             throw new UserNameNoFoundException("学号不存在");
         }
-        if (!Objects.equals(studentRecord.getPwd(), pwd)){
+        if (!Objects.equals(studentRecord.get(0).getPwd(), pwd)){
             throw new PasswordNoMatchException("密码错误");
         }
         return "登录成功";
     }
 
-    @Override
-    public List<StudentRecord> queryAllStudent() {
-        try {
-            return studentDao.queryAllStudent();
-        }
-        catch (Exception e){
-            e.printStackTrace();
-            return null;
-        }
-    }
+
+
 
     @Override
     public StudentRecord getStudent(String ID) {
         try {
-            return studentDao.queryStudentByID(ID);
+            StudentRecord query = new StudentRecord(ID, null, null, null, null, null);
+            return studentDao.queryStudentByCondition(query).get(0);
         }
         catch (Exception e){
             e.printStackTrace();

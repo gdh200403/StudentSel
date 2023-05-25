@@ -12,9 +12,6 @@ import java.util.List;
  */
 public interface StudentHandler extends UserHandler {
 
-
-    public List<StudentRecord> queryAllStudent();
-
     /**
      * Get student by ID
      */

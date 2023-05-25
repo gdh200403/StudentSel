@@ -2,6 +2,8 @@ const { defineConfig } = require('@vue/cli-service')
 module.exports = defineConfig({
   transpileDependencies: true,
   devServer: {
+    host: 'localhost',
+    port: 8080, // 端口
     proxy: {
       "/proxy_url":{           // /proxy_url 这个用来和根路径 baseURL 进行匹配
         target: 'http://localhost:8081',  // 这个是填写跨域的请求域名+端口号，也就是要请求的URL(不包含URL路径)

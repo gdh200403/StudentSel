@@ -11,7 +11,7 @@
                 :collapse="isCollapse">
             <div class="menu-header">
                 <img src="../assets/logo.png" class="logo" >
-                <b style="color: white" v-show="!isCollapse">管理后台</b>
+                <b style="color: white" v-show="!isCollapse">学生选课管理后台</b>
             </div>
             <el-submenu index="1" style="width: 200px">
                 <template slot="title">
@@ -53,26 +53,40 @@
                     <el-input
                             placeholder="请输入ID"
                             prefix-icon="el-icon-search"
-                            v-model="input1"
+                            v-model="id"
                             style="width: 200px;"
                             class="ml-5">
                     </el-input>
                     <el-input
                             placeholder="请输入姓名"
                             prefix-icon="el-icon-search"
-                            v-model="input2"
+                            v-model="name"
                             style="width: 200px"
                             class="ml-5">
                     </el-input>
                     <el-input
-                            placeholder="请输入xx"
+                            placeholder="请输入性别"
                             prefix-icon="el-icon-search"
-                            v-model="input3"
+                            v-model="sex"
+                            style="width: 200px"
+                            class="ml-5">
+                    </el-input>
+                    <el-input
+                            placeholder="请输入年龄"
+                            prefix-icon="el-icon-search"
+                            v-model="age"
+                            style="width: 200px"
+                            class="ml-5">
+                    </el-input>
+                    <el-input
+                            placeholder="请输入专业"
+                            prefix-icon="el-icon-search"
+                            v-model="major"
                             style="width: 200px"
                             class="ml-5">
                     </el-input>
                     <!--          搜索按钮-->
-                    <el-button type="primary" icon="el-icon-search" class="ml-5">搜索</el-button>
+                    <el-button type="primary" icon="el-icon-search" class="ml-5" @click="search">搜索</el-button>
                 </div>
                 <!--        新增按钮-->
                 <div style="margin: 10px 0">
@@ -80,11 +94,15 @@
                 </div>
                 <!--        数据表格-->
                 <el-table :data="tableData"  stripe class="ml-5" height="700" style="width: 100%">
-                    <el-table-column prop="date" label="日期" width="140">
+                    <el-table-column prop="id" label="学号" width="180">
                     </el-table-column>
                     <el-table-column prop="name" label="姓名" width="120">
                     </el-table-column>
-                    <el-table-column prop="address" label="地址">
+                    <el-table-column prop="sex" label="性别" width="120">
+                    </el-table-column>
+                    <el-table-column prop="age" label="年龄" width="120">
+                    </el-table-column>
+                    <el-table-column prop="major" label="专业" width="120">
                     </el-table-column>
                     <!--          编辑与删除-->
                     <el-table-column
@@ -106,11 +124,11 @@
                     <el-pagination
                             @size-change="handleSizeChange"
                             @current-change="handleCurrentChange"
-                            :current-page="currentPage4"
-                            :page-sizes="[5, 10, 15, 20]"
-                            :page-size="10"
+                            :current-page="currentPage"
+                            :page-sizes="[2, 5, 10, 15, 20]"
+                            :page-size="pageSize"
                             layout="total, sizes, prev, pager, next, jumper"
-                            :total="400">
+                            :total="total">
                     </el-pagination>
                 </div>
             </el-main>
@@ -123,16 +141,27 @@ export default {
     name: "Admin",
     data() {
         const item = {
-            date: '2016-05-02',
-            name: '王小虎',
-            address: '上海市普陀区金沙江路 1518 弄'
+
         };
         return {
-            tableData: Array(10).fill(item),
+            id: '',
+            name: '',
+            sex: '',
+            age: '',
+            major: '',
+            tableData: Array(0).fill(item),
+            total : 10,
+            currentPage: 1,
+            pageSize: 5,
             collapseBtnClass: 'el-icon-s-fold',
             isCollapse: false,
         }
     },
+    created() {
+        this.load()
+    },
+    // if search
+
     methods:{
         collapse(){ //点击收缩按钮触发
             this.isCollapse=!this.isCollapse
@@ -141,7 +170,42 @@ export default {
             }else{
                 this.collapseBtnClass = 'el-icon-s-fold'
             }
-        }
+        },
+        load(){
+
+            this.request.get('/api/admin/page/student', {
+                    params: {
+                        page : this.currentPage,
+                        pageSize : this.pageSize,
+                        id : (this.id === '') ? "" : this.id,
+                        name : (this.name === '') ? "" : this.name,
+                        sex : (this.sex === '') ? "" : this.sex,
+                        age : (this.age === '') ? -1 : this.age,
+                        major : (this.major === '') ? "" : this.major,
+                    }
+                }
+            )
+            .then( res => {
+                if (res.status === 200) {
+                    this.tableData = res.data.list
+                    this.total = res.data.total
+                } else {
+                    this.$message.error(res.msg)
+                }
+            })
+
+        },
+        search(){
+            this.load()
+        },
+        handleSizeChange(pageSize) {
+            this.pageSize = pageSize
+            this.load()
+        },
+        handleCurrentChange(currentPage) {
+            this.currentPage = currentPage
+            this.load()
+        },
     }
 }
 </script>

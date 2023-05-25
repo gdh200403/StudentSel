@@ -18,10 +18,10 @@ public class StudentRecord implements Serializable {
     private String id;
     private String name;
     private String sex;
-    private int age;
+    private Integer age;
     private String major;
-    private String pwd;
-    public StudentRecord(String id, String name, String sex, int age, String major, String pwd){
+    private String pwd = "";
+    public StudentRecord(String id, String name, String sex, Integer age, String major, String pwd){
         this.id = id;
         this.name = name;
 
@@ -29,6 +29,14 @@ public class StudentRecord implements Serializable {
         this.age = age;
         this.major = major;
         this.pwd = pwd;
+    }
+
+    public StudentRecord(String id, String name, String sex, Integer age, String major) {
+        this.id = id;
+        this.name = name;
+        this.sex = sex;
+        this.age = age;
+        this.major = major;
     }
 
     public String getId() {
@@ -43,7 +51,7 @@ public class StudentRecord implements Serializable {
         return sex;
     }
 
-    public int getAge() {
+    public Integer getAge() {
         return age;
     }
 
@@ -68,7 +76,7 @@ public class StudentRecord implements Serializable {
         this.sex = sex;
     }
 
-    public void setAge(int age) {
+    public void setAge(Integer age) {
         this.age = age;
     }
 

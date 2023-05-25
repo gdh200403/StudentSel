@@ -14,5 +14,4 @@ public interface TeacherHandler extends UserHandler {
     public TeacherRecord getTeacher(String ID);
 
     public boolean update(TeacherRecord teacherRecord);
-    public List<TeacherRecord> queryAllTeacher();
 }

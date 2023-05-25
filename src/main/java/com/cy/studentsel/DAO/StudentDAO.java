@@ -18,12 +18,15 @@ import java.util.List;
 public interface StudentDAO {
     public List<StudentRecord> queryAllStudent();
 
-    public StudentRecord queryStudentByID(@Param("student_id") String ID);
+    public List<StudentRecord> queryStudentByCondition(StudentRecord record);
+
+    public List<StudentRecord> queryStudentByPage(@Param("page") int page, @Param("size") int size);
 
     public int updateStudent(StudentRecord record);
 
     public int deleteStudent(@Param("student_id") String ID);
 
     public int addStudent(StudentRecord record);
+
 }
 

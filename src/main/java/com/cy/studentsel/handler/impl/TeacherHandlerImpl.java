@@ -33,16 +33,6 @@ public class TeacherHandlerImpl implements TeacherHandler {
         return "登录成功";
     }
 
-    @Override
-    public List<TeacherRecord> queryAllTeacher() {
-        try {
-            return teacherDao.queryAllTeacher();
-        }
-        catch (Exception e){
-            e.printStackTrace();
-            return null;
-        }
-    }
 
     @Override
     public TeacherRecord getTeacher(String ID) {

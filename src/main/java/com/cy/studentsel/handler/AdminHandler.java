@@ -1,6 +1,10 @@
 package com.cy.studentsel.handler;
 
 import com.cy.studentsel.entity.AdminRecord;
+import com.cy.studentsel.entity.StudentRecord;
+import com.cy.studentsel.entity.TeacherRecord;
+
+import java.util.List;
 
 /**
  * @author leaf-fulture
@@ -10,4 +14,14 @@ public interface AdminHandler extends UserHandler {
     public AdminRecord getAdmin(String ID);
 
     public boolean update(String ID, String pwd);
+
+    public List<StudentRecord> queryAllStudent();
+
+    public List<StudentRecord> queryStudentByPage(int page, int size);
+
+    public List<StudentRecord> queryStudentByCondition(StudentRecord record);
+
+    public List<TeacherRecord> queryAllTeacher();
+
+    public List<TeacherRecord> queryTeacherByPage(int page, int size);
 }

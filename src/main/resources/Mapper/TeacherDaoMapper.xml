@@ -7,6 +7,9 @@
     <select id="queryAllTeacher" resultType="com.cy.studentsel.entity.TeacherRecord">
         select * from teacher
     </select>
+    <select id="queryTeacherByPage" parameterType="int" resultType="com.cy.studentsel.entity.TeacherRecord">
+        select * from teacher limit #{page}, #{size}
+    </select>
     <select id="queryTeacherByID" resultType="com.cy.studentsel.entity.TeacherRecord" parameterType="String">
         select * from teacher where teacher.id = #{teacher_id}
     </select>
