@@ -16,7 +16,7 @@
                 <i class="el-icon-user-solid"></i>
                 <span>学生管理</span>
             </template>
-            <el-menu-item index="admin/studentMan">学生信息管理</el-menu-item>
+            <el-menu-item index="/admin/studentMan">学生信息管理</el-menu-item>
             <el-menu-item index="1-2">学生选课管理</el-menu-item>
         </el-submenu>
         <el-menu-item index="2"> <i class="el-icon-s-custom"></i>
