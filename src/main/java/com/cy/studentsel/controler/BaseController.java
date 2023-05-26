@@ -7,8 +7,11 @@ package com.cy.studentsel.controler;
 
 import com.cy.studentsel.handler.ex.HandlerException;
 import com.cy.studentsel.util.JsonResult;
+import org.apache.ibatis.exceptions.IbatisException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import java.sql.SQLException;
 
 /**
  * Base controller
@@ -18,7 +21,7 @@ public class BaseController {
 
     @ExceptionHandler(HandlerException.class)
     @ResponseBody
-    public JsonResult<Void> handleException(Throwable e) {
+    public JsonResult<Void> handleHandlerException(Throwable e) {
         JsonResult<Void> jsonResult = new JsonResult<>();
         switch (e.getClass().getSimpleName()) {
             case "UserNameNoFoundException" -> {
@@ -27,6 +30,10 @@ public class BaseController {
             }
             case "PasswordNoMatchException" -> {
                 jsonResult.setStatus(1001);
+                jsonResult.setMsg(e.getMessage());
+            }
+            case "UserIdDuplicateException" -> {
+                jsonResult.setStatus(1002);
                 jsonResult.setMsg(e.getMessage());
             }
             case "HandlerSqlException" -> {
@@ -38,6 +45,16 @@ public class BaseController {
                 jsonResult.setMsg("未知错误");
             }
         }
+        return jsonResult;
+    }
+
+
+    @ExceptionHandler(SQLException.class)
+    @ResponseBody
+    public JsonResult<Void> handleSqlException(Throwable e) {
+        JsonResult<Void> jsonResult = new JsonResult<>();
+        jsonResult.setStatus(6000);
+        jsonResult.setMsg("Sql错误，填入的数据不符合要求");
         return jsonResult;
     }
 

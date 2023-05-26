@@ -21,6 +21,9 @@ public class StudentRecord implements Serializable {
     private Integer age;
     private String major;
     private String pwd = "";
+
+    public StudentRecord(){}
+
     public StudentRecord(String id, String name, String sex, Integer age, String major, String pwd){
         this.id = id;
         this.name = name;

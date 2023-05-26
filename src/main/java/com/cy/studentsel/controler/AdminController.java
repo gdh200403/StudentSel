@@ -8,6 +8,7 @@ import com.cy.studentsel.handler.TeacherHandler;
 import com.cy.studentsel.util.JsonResult;
 import com.sun.net.httpserver.Authenticator;
 import jakarta.annotation.Resource;
+import org.apache.ibatis.annotations.Delete;
 import org.springframework.web.bind.annotation.*;
 
 import java.sql.Struct;
@@ -55,6 +56,36 @@ public class AdminController extends BaseController{
         jsonResult.setData(pageInfo);
         jsonResult.setStatus(SUCCESS);
         jsonResult.setMsg("查询成功");
+        return jsonResult;
+    }
+
+    @PostMapping("/student/save")
+    @ResponseBody
+    public JsonResult<Void> addStudent(@RequestBody StudentRecord record) {
+        JsonResult<Void> jsonResult = new JsonResult<>();
+        adminHandler.addStudent(record);
+        jsonResult.setStatus(SUCCESS);
+        jsonResult.setMsg("添加成功");
+        return jsonResult;
+    }
+
+    @PostMapping("/student/update")
+    @ResponseBody
+    public JsonResult<Void> updateStudent(@RequestBody StudentRecord record) {
+        JsonResult<Void> jsonResult = new JsonResult<>();
+        adminHandler.updateStudent(record);
+        jsonResult.setStatus(SUCCESS);
+        jsonResult.setMsg("修改成功");
+        return jsonResult;
+    }
+
+    @DeleteMapping("/student/delete/{id}")
+    @ResponseBody
+    public JsonResult<Void> deleteStudent(@PathVariable String id) {
+        JsonResult<Void> jsonResult = new JsonResult<>();
+        adminHandler.deleteStudent(id);
+        jsonResult.setStatus(SUCCESS);
+        jsonResult.setMsg("删除成功");
         return jsonResult;
     }
 

@@ -16,11 +16,6 @@
     <select id="queryStudentByCondition" resultType="com.cy.studentsel.entity.StudentRecord">
         select id, name, sex, age, major
         from student
-        <if test="(id != null and id != '')
-        or (name != null and name != '')
-        or (sex != null and sex != '')
-        or (age != null and age != -1)
-        or (major != null and major != '')">
             where
             <if test="id != null and id != ''">
                 id = #{id} and
@@ -38,10 +33,30 @@
                 major = #{major} and
             </if>
             true
-        </if>
     </select>
     <update id="updateStudent" parameterType="com.cy.studentsel.entity.StudentRecord">
-        update student set student.name = #{name}, student.sex = #{sex} where student.id = #{id}
+        update student
+        <set>
+            <if test="name != null and name != ''">
+                name = #{name},
+            </if>
+            <if test="sex != null and sex != ''">
+                sex = #{sex},
+            </if>
+            <if test="age != null and age != -1">
+                age = #{age},
+            </if>
+            <if test="major != null and major != ''">
+                major = #{major},
+            </if>
+            <if test="pwd != null and pwd != ''">
+                pwd = #{pwd},
+            </if>
+            id = #{id}
+        </set>
+        <where>
+            id = #{id}
+        </where>
     </update>
     <delete id="deleteStudent" parameterType="String">
         delete from student where student.id = #{student_id}

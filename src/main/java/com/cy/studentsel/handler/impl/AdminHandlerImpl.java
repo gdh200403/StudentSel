@@ -7,13 +7,12 @@ import com.cy.studentsel.entity.AdminRecord;
 import com.cy.studentsel.entity.StudentRecord;
 import com.cy.studentsel.entity.TeacherRecord;
 import com.cy.studentsel.handler.AdminHandler;
-import com.cy.studentsel.handler.ex.HandlerSqlException;
 import com.cy.studentsel.handler.ex.PasswordNoMatchException;
+import com.cy.studentsel.handler.ex.UserIdDuplicateException;
 import com.cy.studentsel.handler.ex.UserNameNoFoundException;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
 
-import java.sql.SQLException;
 import java.util.List;
 import java.util.Objects;
 
@@ -44,13 +43,7 @@ public class AdminHandlerImpl implements AdminHandler {
 
     @Override
     public AdminRecord getAdmin(String ID) {
-        try {
-            return adminDAO.queryAdminByID(ID);
-        }
-        catch (Exception e){
-            e.printStackTrace();
-            return null;
-        }
+        return adminDAO.queryAdminByID(ID);
     }
 
     @Override
@@ -72,6 +65,26 @@ public class AdminHandlerImpl implements AdminHandler {
     @Override
     public List<StudentRecord> queryStudentByCondition(StudentRecord record) {
         return studentDAO.queryStudentByCondition(record);
+    }
+
+    @Override
+    public void addStudent(StudentRecord record) {
+        StudentRecord temp = new StudentRecord(record.getId(), null, null, null, null, null);
+        List<StudentRecord> query = studentDAO.queryStudentByCondition(temp);
+        if (query.size() != 0) {
+            throw new UserIdDuplicateException("学号已存在");
+        }
+        studentDAO.addStudent(record);
+    }
+
+    @Override
+    public void updateStudent(StudentRecord record) {
+        studentDAO.updateStudent(record);
+    }
+
+    @Override
+    public void deleteStudent(String ID) {
+        studentDAO.deleteStudent(ID);
     }
 
     @Override

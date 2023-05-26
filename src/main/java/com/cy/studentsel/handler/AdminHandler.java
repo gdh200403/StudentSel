@@ -21,6 +21,12 @@ public interface AdminHandler extends UserHandler {
 
     public List<StudentRecord> queryStudentByCondition(StudentRecord record);
 
+    public void addStudent(StudentRecord record);
+
+    public void updateStudent(StudentRecord record);
+
+    public void deleteStudent(String ID);
+
     public List<TeacherRecord> queryAllTeacher();
 
     public List<TeacherRecord> queryTeacherByPage(int page, int size);

@@ -1,0 +1,263 @@
+<template>
+  <div>
+      <div style="margin: 10px 0">
+          <!--          搜索框-->
+          <el-input
+                  placeholder="请输入ID"
+                  prefix-icon="el-icon-search"
+                  v-model="id"
+                  style="width: 200px;"
+                  class="ml-5">
+          </el-input>
+          <el-input
+                  placeholder="请输入姓名"
+                  prefix-icon="el-icon-search"
+                  v-model="name"
+                  style="width: 200px"
+                  class="ml-5">
+          </el-input>
+          <el-input
+                  placeholder="请输入性别"
+                  prefix-icon="el-icon-search"
+                  v-model="sex"
+                  style="width: 200px"
+                  class="ml-5">
+          </el-input>
+          <el-input
+                  placeholder="请输入年龄"
+                  prefix-icon="el-icon-search"
+                  v-model="age"
+                  style="width: 200px"
+                  class="ml-5">
+          </el-input>
+          <el-input
+                  placeholder="请输入专业"
+                  prefix-icon="el-icon-search"
+                  v-model="major"
+                  style="width: 200px"
+                  class="ml-5">
+          </el-input>
+          <!--          搜索按钮-->
+          <el-button type="primary" icon="el-icon-search" class="ml-5" @click="search">搜索</el-button>
+      </div>
+      <!--        新增按钮-->
+      <div style="margin: 10px 0">
+          <el-button type="primary" class="ml-5" @click="handleAdd">新增<i class="el-icon-circle-plus-outline"></i> </el-button>
+      </div>
+      <!--        数据表格-->
+      <el-table :data="tableData"  stripe class="ml-5" height="700" style="width: 100%">
+          <el-table-column prop="id" label="学号" width="180">
+          </el-table-column>
+          <el-table-column prop="name" label="姓名" width="120">
+          </el-table-column>
+          <el-table-column prop="sex" label="性别" width="120">
+          </el-table-column>
+          <el-table-column prop="age" label="年龄" width="120">
+          </el-table-column>
+          <el-table-column prop="major" label="专业" width="120">
+          </el-table-column>
+          <!--          编辑与删除-->
+          <el-table-column
+                  align="right">
+              <template slot-scope="scope">
+                  <el-button
+                          size="mini"
+                          @click="handleEdit(scope.row)"
+                          type="success"><i class="el-icon-edit-outline"></i>编辑</el-button>
+                  <el-popconfirm
+                          class="ml-5"
+                          confirm-button-text='确定'
+                          cancel-button-text='取消'
+                          icon="el-icon-info"
+                          icon-color="red"
+                          title="确定删除该学生信息吗？"
+                          @confirm="handleDelete(scope.row.id)"
+                  >
+                      <el-button
+                              size="mini"
+                              type="danger"
+                              slot = "reference"><i class="el-icon-delete"></i>删除</el-button>
+                  </el-popconfirm>
+              </template>
+          </el-table-column>
+      </el-table>
+      <div style="padding: 10px;text-align: center">
+          <!--          分页控制-->
+          <el-pagination
+              @size-change="handleSizeChange"
+              @current-change="handleCurrentChange"
+              :current-page="currentPage"
+              :page-sizes="[2, 5, 10, 15, 20]"
+              :page-size="pageSize"
+              layout="total, sizes, prev, pager, next, jumper"
+              :total="total">
+          </el-pagination>
+      </div>
+
+      <el-dialog title="学生信息" :visible.sync="dialogFormVisible" width="30%">
+          <el-form label-width="100px">
+              <el-form-item label="学生学号">
+                  <el-input :disabled = "disableEditID" v-model="form.id" autocomplete="off"></el-input>
+              </el-form-item>
+              <el-form-item label="学生姓名">
+                  <el-input v-model="form.name" autocomplete="off"></el-input>
+              </el-form-item>
+              <el-form-item label="学生性别">
+                  <el-input v-model="form.sex" autocomplete="off"></el-input>
+              </el-form-item>
+              <el-form-item label="学生年龄">
+                  <el-input v-model="form.age" autocomplete="off"></el-input>
+              </el-form-item>
+              <el-form-item label="学生专业">
+                  <el-input v-model="form.major" autocomplete="off"></el-input>
+              </el-form-item>
+              <el-form-item label="密码">
+                  <el-input v-model="form.pwd" autocomplete="off"></el-input>
+              </el-form-item>
+              <!--                        <el-form-item label="活动区域">-->
+              <!--                            <el-select v-model="form.region" placeholder="请选择活动区域">-->
+              <!--                                <el-option label="区域一" value="shanghai"></el-option>-->
+              <!--                                <el-option label="区域二" value="beijing"></el-option>-->
+              <!--                            </el-select>-->
+              <!--                        </el-form-item>-->
+          </el-form>
+          <div slot="footer" class="dialog-footer">
+              <el-button @click="dialogFormVisible = false">取 消</el-button>
+              <el-button type="primary" @click="save">确 定</el-button>
+          </div>
+      </el-dialog>
+  </div>
+</template>
+
+<script>
+export default {
+    name: "User.vue",
+    data() {
+        const item = {
+            id: '1',
+            name: '12',
+            sex: '123',
+            age: '12',
+            major: '12',
+        };
+        return {
+            id: '',
+            name: '',
+            sex: '',
+            age: '',
+            major: '',
+            dialogFormVisible : false,
+            disableEditID : false,
+            form: {
+                id: '',
+                name: '',
+                sex: '',
+                age: '',
+                major: '',
+                pwd: '123456',
+            },
+            tableData: Array(0).fill(item),
+            total : 10,
+            currentPage: 1,
+            pageSize: 5,
+        }
+    },
+    created() {
+        this.load()
+    },
+    methods: {
+        load(){
+            this.request.get('/api/admin/page/student', {
+                    params: {
+                        page : this.currentPage,
+                        pageSize : this.pageSize,
+                        id : (this.id === '') ? "" : this.id,
+                        name : (this.name === '') ? "" : this.name,
+                        sex : (this.sex === '') ? "" : this.sex,
+                        age : (this.age === '') ? -1 : this.age,
+                        major : (this.major === '') ? "" : this.major,
+                    }
+                }
+            )
+                .then( res => {
+                    if (res.status === 200) {
+                        this.tableData = res.data.list
+                        this.total = res.data.total
+                    } else {
+                        this.$message.error(res.msg)
+                    }
+                })
+
+        },
+        search(){
+            this.load()
+        },
+        handleAdd() {
+            this.disableEditID = false
+            this.dialogFormVisible = true
+            this.form =  {
+                id: '',
+                name: '',
+                sex: '',
+                age: '',
+                major: '',
+                pwd: '',
+            }
+        },
+        handleEdit(row) {
+            this.disableEditID = true
+            this.form = Object.assign({}, row)
+            this.dialogFormVisible = true
+        },
+        handleDelete(id) {
+            this.request.delete('/api/admin/student/delete/' + id)
+                .then(res => {
+                    if (res.status === 200) {
+                        this.$message.success(res.msg)
+                        this.load()
+                    } else {
+                        this.$message.error(res.msg)
+                    }
+                })
+        },
+        save() {
+            if (this.disableEditID) {
+                this.request.post('/api/admin/student/update', this.form)
+                    .then(res => {
+                        if (res.status === 200) {
+                            this.$message.success(res.msg)
+                            this.dialogFormVisible = false
+                            this.load()
+                        } else {
+                            this.$message.error(res.msg)
+                        }
+                    })
+            } else {
+                this.request.post('/api/admin/student/save', this.form)
+                    .then(res => {
+                        if (res.status === 200) {
+                            this.$message.success(res.msg)
+                            this.dialogFormVisible = false
+                            this.load()
+                        } else {
+                            this.$message.error(res.msg)
+                        }
+                    })
+            }
+        },
+
+        handleSizeChange(pageSize) {
+            this.pageSize = pageSize
+            this.load()
+        },
+        handleCurrentChange(currentPage) {
+            this.currentPage = currentPage
+            this.load()
+        },
+    }
+}
+</script>
+
+<style scoped>
+
+</style>
