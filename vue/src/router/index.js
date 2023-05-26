@@ -36,7 +36,17 @@ const routes = [
     path: '/404',
     name: '404',
     component: () => import('../views/404.vue')
-  }
+  },
+  {
+    path: '/admin/course',
+    name: 'admin/course',
+    component: () => import('../views/AdminCourse.vue')
+  },
+  {
+    path: '/admin/teacher',
+    name: 'admin/teacher',
+    component: () => import('../views/AdminTeacher.vue')
+  },
 ]
 
 const router = new VueRouter({
