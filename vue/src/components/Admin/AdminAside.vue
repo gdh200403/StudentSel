@@ -1,6 +1,5 @@
 <template>
-    <el-menu :default-openeds="opens" style="min-height: 100%; overflow-x: hidden"
-             background-color="rgb(48, 65, 86)"
+    <el-menu background-color="rgb(48, 65, 86)"
              text-color="#fff"
              active-text-color="#ffd04b"
              :collapse-transition="false"
@@ -8,22 +7,18 @@
              router
     >
         <div class="menu-header">
-            <img src="../../assets/logo.png" class="logo" >
-            <b style="color: white" v-show="logoTextShow">学生选课管理后台</b>
+            <img src="../../assets/logo.png" class="logo" alt="el-icon-picture-outline">
+            <b style="color: white" v-show="!isCollapse">学生选课管理后台</b>
         </div>
-        <el-submenu index="1" style="width: 200px">
-            <template slot="title">
-                <i class="el-icon-user-solid"></i>
-                <span>学生管理</span>
-            </template>
-            <el-menu-item index="/admin/studentMan">学生信息管理</el-menu-item>
-            <el-menu-item index="1-2">学生选课管理</el-menu-item>
-        </el-submenu>
-        <el-menu-item index="2"> <i class="el-icon-s-custom"></i>
-            <span>教师管理</span>
+        <el-menu-item index="/admin/studentMan">
+          <i class="el-icon-user-solid"></i>
+          <span v-show="!isCollapse">学生管理</span>
         </el-menu-item>
-        <el-menu-item index="3"> <i class="el-icon-s-management"></i>
-            <span>课程管理</span>
+        <el-menu-item index="/admin/teacherMan"> <i class="el-icon-s-custom"></i>
+          <span v-show="!isCollapse">教师管理</span>
+        </el-menu-item>
+        <el-menu-item index="/admin/courseMan"> <i class="el-icon-s-management"></i>
+          <span v-show="!isCollapse">课程管理</span>
         </el-menu-item>
     </el-menu>
 </template>
@@ -33,7 +28,6 @@ export default {
     name: "AdminAside",
     props: {
         isCollapse: Boolean,
-        logoTextShow: Boolean,
     },
 }
 </script>
@@ -49,6 +43,11 @@ export default {
     height: 60px;
     line-height: 60px;
     text-align: center;
+}
+.el-menu {
+  min-height: 100vh;
+  overflow-x: hidden;
+  border-right-color: transparent;
 }
 /*.el-menu-item.is-active {*/
 /*    background-color: rgb(38, 52, 69) !important;*/
