@@ -4,22 +4,73 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <!-- Path: src\main\resources\Mapper\TeachCourseDaoMapper.xml -->
 <mapper namespace="com.cy.studentsel.DAO.TCDAO">
-    <select id="queryAllTC" resultType="com.cy.studentsel.entity.TCRecord">
-        select * from tc;
+    <update id="updateTC" parameterType="com.cy.studentsel.entity.TCRecord">
+        update tc
+        <set>
+            <if test="current != null and current != -1">
+                current = #{current},
+            </if>
+            <if test="capacity != null and capacity != -1">
+                capacity = #{capacity},
+            </if>
+            <if test="term != null and term != ''">
+                term = #{term},
+            </if>
+            <if test="place != null and place != ''">
+                place = #{place},
+            </if>
+            <if test="comment != null and comment != ''">
+                comment = #{comment},
+            </if>
+            teacher_id = #{teacher_id}
+        </set>
+        <where>
+            teacher_id = #{teacher_id} and course_id = #{course_id}
+        </where>
+    </update>
+    <!--    <select id="queryAllTC" resultType="com.cy.studentsel.entity.TCRecord">-->
+<!--        select * from tc;-->
+<!--    </select>-->
+<!--    <select id="queryTCByTeacherID" resultType="com.cy.studentsel.entity.TCRecord" parameterType="String">-->
+<!--        select * from tc where tc.id = #{teacher_id}-->
+<!--    </select>-->
+<!--    <select id="queryTCByCourseID" resultType="com.cy.studentsel.entity.TCRecord" parameterType="String">-->
+<!--        select * from tc where tc.id = #{course_id}-->
+<!--    </select>-->
+    <select id="queryTCByTeacherIDAndCourseID" resultType="com.cy.studentsel.entity.TCRecord" parameterType="String">
+        select * from tc where tc.teacher_id = #{teacher_id} and tc.course_id = #{course_id}
     </select>
-    <select id="queryTCByTeacherID" resultType="com.cy.studentsel.entity.TCRecord" parameterType="String">
-        select * from tc where tc.id = #{teacher_id}
+<!--    <delete id="deleteTC" parameterType="String">-->
+<!--        delete from tc where tc.id = #{teacher_id} and tc.courseid = #{course_id}-->
+<!--    </delete>-->
+<!--    <insert id="addTC" parameterType="com.cy.studentsel.entity.TCRecord">-->
+<!--        insert into tc values (#{id}, #{courseid}, #{capacity})-->
+<!--    </insert>-->
+    <select id="queryTCByCondition" resultType="com.cy.studentsel.entity.TCRecord">
+        select * from tcview
+        <where>
+            <if test="teacher_id != null and teacher_id != ''">
+                teacher_id like concat('%', #{teacher_id}, '%') and
+            </if>
+            <if test="course_id != null and course_id != ''">
+                course_id like concat('%', #{course_id}, '%') and
+            </if>
+            <if test="teacher_name != null and teacher_name != ''">
+                teacher_name like concat('%', #{teacher_name}, '%') and
+            </if>
+            <if test="course_name != null and course_name != ''">
+                course_name like concat('%', #{course_name}, '%') and
+            </if>
+             <if test="type != null and type != ''">
+                type = #{type} and
+            </if>
+            <if test="credit != null and credit != -1">
+                credit = #{credit} and
+            </if>
+             <if test="place != null and place != ''">
+                place like concat('%', #{place}, '%') and
+            </if>
+            true
+        </where>
     </select>
-    <select id="queryTCByCourseID" resultType="com.cy.studentsel.entity.TCRecord" parameterType="String">
-        select * from tc where tc.id = #{course_id}
-    </select>
-    <select id="queryTCByTeacherIDAndCourseID" resultType="com.cy.studentsel.entity.TCRecord" parameterType="com.cy.studentsel.entity.TCRecord">
-        select * from tc where tc.id = #{id} and tc.courseid = #{courseid}
-    </select>
-    <delete id="deleteTC" parameterType="String">
-        delete from tc where tc.id = #{teacher_id} and tc.courseid = #{course_id}
-    </delete>
-    <insert id="addTC" parameterType="com.cy.studentsel.entity.TCRecord">
-        insert into tc values (#{id}, #{courseid}, #{capacity})
-    </insert>
 </mapper>

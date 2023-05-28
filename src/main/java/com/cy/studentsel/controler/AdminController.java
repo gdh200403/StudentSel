@@ -1,6 +1,7 @@
 package com.cy.studentsel.controler;
 
 import com.cy.studentsel.entity.StudentRecord;
+import com.cy.studentsel.entity.TCRecord;
 import com.cy.studentsel.entity.TeacherRecord;
 import com.cy.studentsel.handler.AdminHandler;
 import com.cy.studentsel.handler.StudentHandler;
@@ -38,15 +39,15 @@ public class AdminController extends BaseController{
     @GetMapping("/page/student")
     @ResponseBody
     public JsonResult<pageInfo<StudentRecord>> findPageStudent(@RequestParam Integer page, @RequestParam Integer pageSize,
-                                                               @RequestParam String id,
-                                                               @RequestParam String name,
+                                                               @RequestParam String student_id,
+                                                               @RequestParam String student_name,
                                                                @RequestParam String sex,
                                                                @RequestParam Integer age,
                                                                @RequestParam String major
                                                                ) {
         JsonResult<pageInfo<StudentRecord>> jsonResult = new JsonResult<>();
         pageInfo<StudentRecord> pageInfo = new pageInfo<>();
-        StudentRecord record = new StudentRecord(id, name, sex, age, major);
+        StudentRecord record = new StudentRecord(student_id, student_name, sex, age, major);
         List<StudentRecord> list = adminHandler.queryStudentByCondition(record);
 //        List<StudentRecord> list = adminHandler.queryAllStudent();
         int pageStart = (page - 1) * pageSize;
@@ -89,18 +90,111 @@ public class AdminController extends BaseController{
         return jsonResult;
     }
 
-    @GetMapping("/page/teacher")
+    @GetMapping("/page/tc")
     @ResponseBody
-    public JsonResult<pageInfo<TeacherRecord>> findPageTeacher(@RequestParam Integer page, @RequestParam Integer pageSize) {
-        JsonResult<pageInfo<TeacherRecord>> jsonResult = new JsonResult<>();
-        pageInfo<TeacherRecord> pageInfo = new pageInfo<>();
+    public JsonResult<pageInfo<TCRecord>> findPageTC(@RequestParam Integer page, @RequestParam Integer pageSize,
+                                                     @RequestParam String teacher_id,
+                                                     @RequestParam String course_id,
+                                                     @RequestParam String teacher_name,
+                                                     @RequestParam String course_name,
+                                                     @RequestParam String type,
+                                                     @RequestParam int credit,
+                                                     @RequestParam String place
+                                                     ) {
+        JsonResult<pageInfo<TCRecord>> jsonResult = new JsonResult<>();
+        pageInfo<TCRecord> pageInfo = new pageInfo<>();
+        TCRecord record = new TCRecord(teacher_id, course_id, teacher_name, course_name, type, credit, place);
+        List<TCRecord> list = adminHandler.queryTCByCondition(record);
         int pageStart = (page - 1) * pageSize;
         int limit = pageSize;
-        pageInfo.list = adminHandler.queryTeacherByPage(pageStart, limit);
-        pageInfo.total = adminHandler.queryAllTeacher().size();
+        pageInfo.list = list.subList(pageStart, min(pageStart + limit, list.size()));
+        pageInfo.total = list.size();
         jsonResult.setData(pageInfo);
         jsonResult.setStatus(SUCCESS);
         jsonResult.setMsg("查询成功");
+        return jsonResult;
+    }
+
+    @PostMapping("/tc/save")
+    @ResponseBody
+    public JsonResult<Void> addTC(@RequestBody TCRecord record) {
+        JsonResult<Void> jsonResult = new JsonResult<>();
+        adminHandler.addTC(record);
+        jsonResult.setStatus(SUCCESS);
+        jsonResult.setMsg("添加成功");
+        return jsonResult;
+    }
+
+    @PostMapping("/tc/update")
+    @ResponseBody
+    public JsonResult<Void> updateTC(@RequestBody TCRecord record) {
+        JsonResult<Void> jsonResult = new JsonResult<>();
+        adminHandler.updateTC(record);
+        jsonResult.setStatus(SUCCESS);
+        jsonResult.setMsg("修改成功");
+        return jsonResult;
+    }
+
+    @DeleteMapping("/tc/delete/{teacher_id}/{course_id}")
+    @ResponseBody
+    public JsonResult<Void> deleteTC(@PathVariable String teacher_id, @PathVariable String course_id) {
+        JsonResult<Void> jsonResult = new JsonResult<>();
+        adminHandler.deleteTC(teacher_id, course_id);
+        jsonResult.setStatus(SUCCESS);
+        jsonResult.setMsg("删除成功");
+        return jsonResult;
+    }
+
+    @GetMapping("/page/teacher")
+    @ResponseBody
+    public JsonResult<pageInfo<TeacherRecord>> findPageTeacher(@RequestParam Integer page, @RequestParam Integer pageSize,
+                                                               @RequestParam String teacher_id,
+                                                               @RequestParam String teacher_name,
+                                                               @RequestParam String sex,
+                                                               @RequestParam Integer age
+    ) {
+        JsonResult<pageInfo<TeacherRecord>> jsonResult = new JsonResult<>();
+        pageInfo<TeacherRecord> pageInfo = new pageInfo<>();
+        TeacherRecord record = new TeacherRecord(teacher_id, teacher_name, sex, age);
+        List<TeacherRecord> list = adminHandler.queryTeacherByCondition(record);
+//        List<StudentRecord> list = adminHandler.queryAllStudent();
+        int pageStart = (page - 1) * pageSize;
+        int limit = pageSize;
+        pageInfo.list = list.subList(pageStart, min(pageStart + limit, list.size()));
+        pageInfo.total = list.size();
+        jsonResult.setData(pageInfo);
+        jsonResult.setStatus(SUCCESS);
+        jsonResult.setMsg("查询成功");
+        return jsonResult;
+    }
+
+    @PostMapping("/teacher/save")
+    @ResponseBody
+    public JsonResult<Void> addTeacher(@RequestBody TeacherRecord record) {
+        JsonResult<Void> jsonResult = new JsonResult<>();
+        adminHandler.addTeacher(record);
+        jsonResult.setStatus(SUCCESS);
+        jsonResult.setMsg("添加成功");
+        return jsonResult;
+    }
+
+    @PostMapping("/teacher/update")
+    @ResponseBody
+    public JsonResult<Void> updateTeacher(@RequestBody TeacherRecord record) {
+        JsonResult<Void> jsonResult = new JsonResult<>();
+        adminHandler.updateTeacher(record);
+        jsonResult.setStatus(SUCCESS);
+        jsonResult.setMsg("修改成功");
+        return jsonResult;
+    }
+
+    @DeleteMapping("/teacher/delete/{id}")
+    @ResponseBody
+    public JsonResult<Void> deleteTeacher(@PathVariable String id) {
+        JsonResult<Void> jsonResult = new JsonResult<>();
+        adminHandler.deleteTeacher(id);
+        jsonResult.setStatus(SUCCESS);
+        jsonResult.setMsg("删除成功");
         return jsonResult;
     }
 }

@@ -5,14 +5,14 @@
           <el-input
                   placeholder="请输入ID"
                   prefix-icon="el-icon-search"
-                  v-model="id"
+                  v-model="student_id"
                   style="width: 200px;"
                   class="ml-5">
           </el-input>
           <el-input
                   placeholder="请输入姓名"
                   prefix-icon="el-icon-search"
-                  v-model="name"
+                  v-model="student_name"
                   style="width: 200px"
                   class="ml-5">
           </el-input>
@@ -46,8 +46,8 @@
     </div>
     <!--        数据表格-->
     <el-table :data="tableData"  stripe class="ml-5" height="700" style="width: 100%">
-      <el-table-column prop="id" label="学号" width="180"></el-table-column>
-      <el-table-column prop="name" label="姓名" width="120"></el-table-column>
+      <el-table-column prop="student_id" label="学号" width="180"></el-table-column>
+      <el-table-column prop="student_name" label="姓名" width="120"></el-table-column>
       <el-table-column prop="sex" label="性别" width="120"></el-table-column>
       <el-table-column prop="age" label="年龄" width="120"></el-table-column>
       <el-table-column prop="major" label="专业" width="120"></el-table-column>
@@ -73,7 +73,7 @@
                   icon="el-icon-info"
                   icon-color="red"
                   title="确定删除该学生信息吗？"
-                  @confirm="handleDelete(scope.row.id)"
+                  @confirm="handleDelete(scope.row.student_id)"
           >
             <el-button
                     size="mini"
@@ -119,10 +119,10 @@
     <el-dialog title="学生信息" :visible.sync="dialogFormVisible" width="30%">
         <el-form label-width="100px">
             <el-form-item label="学生学号">
-                <el-input :disabled = "disableEditID" v-model="form.id" autocomplete="off"></el-input>
+                <el-input :disabled = "disableEditID" v-model="form.student_id" autocomplete="off"></el-input>
             </el-form-item>
             <el-form-item label="学生姓名">
-                <el-input v-model="form.name" autocomplete="off"></el-input>
+                <el-input v-model="form.student_name" autocomplete="off"></el-input>
             </el-form-item>
             <el-form-item label="学生性别">
                 <el-input v-model="form.sex" autocomplete="off"></el-input>
@@ -156,15 +156,15 @@ export default {
     name: "User.vue",
     data() {
         const item = {
-            id: '1',
-            name: '12',
+            student_id: '1',
+            student_name: '12',
             sex: '123',
             age: '12',
             major: '12',
         };
         return {
-            id: '',
-            name: '',
+            student_id: '',
+            student_name: '',
             sex: '',
             age: '',
             major: '',
@@ -174,8 +174,8 @@ export default {
             dialogFormVisible : false,
             disableEditID : false,
             form: {
-                id: '',
-                name: '',
+                student_id: '',
+                student_name: '',
                 sex: '',
                 age: '',
                 major: '',
@@ -196,8 +196,8 @@ export default {
                     params: {
                         page : this.currentPage,
                         pageSize : this.pageSize,
-                        id : (this.id === '') ? "" : this.id,
-                        name : (this.name === '') ? "" : this.name,
+                        student_id : (this.student_id === '') ? "" : this.student_id,
+                        student_name : (this.student_name === '') ? "" : this.student_name,
                         sex : (this.sex === '') ? "" : this.sex,
                         age : (this.age === '') ? -1 : this.age,
                         major : (this.major === '') ? "" : this.major,
@@ -221,8 +221,8 @@ export default {
             this.disableEditID = false
             this.dialogFormVisible = true
             this.form =  {
-                id: '',
-                name: '',
+                student_id: '',
+                student_name: '',
                 sex: '',
                 age: '',
                 major: '',

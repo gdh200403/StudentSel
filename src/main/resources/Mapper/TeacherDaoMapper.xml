@@ -11,16 +11,52 @@
         select * from teacher limit #{page}, #{size}
     </select>
     <select id="queryTeacherByID" resultType="com.cy.studentsel.entity.TeacherRecord" parameterType="String">
-        select * from teacher where teacher.id = #{teacher_id}
+        select * from teacher where teacher.teacher_id = #{teacher_id}
+    </select>
+    <select id="queryTeacherByCondition" resultType="com.cy.studentsel.entity.TeacherRecord">
+        select teacher_id, teacher_name, sex, age
+        from teacher
+        where
+        <if test="teacher_id != null and teacher_id != ''">
+            teacher_id like concat('%', #{teacher_id}, '%') and
+        </if>
+        <if test="teacher_name != null and teacher_name != ''">
+            teacher_name like concat('%', #{teacher_name}, '%') and
+        </if>
+        <if test="sex != null and sex != ''">
+            sex = #{sex} and
+        </if>
+        <if test="age != null and age != -1">
+            age = #{age} and
+        </if>
+        true
     </select>
     <update id="updateTeacher" parameterType="com.cy.studentsel.entity.TeacherRecord">
-        update teacher set name = #{name}, sex = #{sex}, age = #{age},  pwd = #{pwd} where id = #{id}
+        update teacher
+        <set>
+            <if test="teacher_name != null and teacher_name != ''">
+                teacher_name = #{teacher_name},
+            </if>
+            <if test="sex != null and sex != ''">
+                sex = #{sex},
+            </if>
+            <if test="age != null and age != -1">
+                age = #{age},
+            </if>
+            <if test="pwd != null and pwd != ''">
+                pwd = #{pwd},
+            </if>
+            teacher_id = #{teacher_id}
+        </set>
+        <where>
+            teacher_id = #{teacher_id}
+        </where>
     </update>
     <delete id="deleteTeacher" parameterType="String">
-        delete from teacher where teacher.id = #{teacher_id}
+        delete from teacher where teacher.teacher_id = #{teacher_id}
     </delete>
     <insert id="addTeacher" parameterType="com.cy.studentsel.entity.TeacherRecord">
-        insert into teacher values (#{id}, #{name}, #{sex}, #{age}, #{pwd})
+        insert into teacher values (#{teacher_id}, #{teacher_name}, #{sex}, #{age}, #{pwd})
     </insert>
 
 </mapper>

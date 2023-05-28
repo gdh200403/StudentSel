@@ -13,9 +13,9 @@ public interface CourseDAO {
 
     public CourseRecord queryCourseByID(@Param("course_id") String ID);
 
-    public int updateCourse(CourseRecord courseRecord);
+    public int updateCourse(CourseRecord record);
 
     public int deleteCourse(@Param("course_id") String ID);
 
-    public int addCourse(CourseRecord courseRecord);
+    public int addCourse(CourseRecord record);
 }

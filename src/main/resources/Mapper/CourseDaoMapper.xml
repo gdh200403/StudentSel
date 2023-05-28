@@ -5,7 +5,8 @@
 <!-- Path: src\main\resources\Mapper\CourseDaoMapper.xml -->
 <mapper namespace="com.cy.studentsel.DAO.CourseDAO">
     <select id="queryAllCourse" resultType="com.cy.studentsel.entity.CourseRecord">
-        select * from course
+        select * from course, teacher, tc
+        where course.id = tc.courseid and teacher.id = tc.id
     </select>
     <select id="queryCourseByID" resultType="com.cy.studentsel.entity.CourseRecord" parameterType="String">
         select * from course where course.id = #{course_id}

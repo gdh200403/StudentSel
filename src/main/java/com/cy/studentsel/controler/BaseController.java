@@ -49,13 +49,13 @@ public class BaseController {
     }
 
 
-    @ExceptionHandler(SQLException.class)
-    @ResponseBody
-    public JsonResult<Void> handleSqlException(Throwable e) {
-        JsonResult<Void> jsonResult = new JsonResult<>();
-        jsonResult.setStatus(6000);
-        jsonResult.setMsg("Sql错误，填入的数据不符合要求");
-        return jsonResult;
-    }
+//    @ExceptionHandler(SQLException.class)
+//    @ResponseBody
+//    public JsonResult<Void> handleSqlException(Throwable e) {
+//        JsonResult<Void> jsonResult = new JsonResult<>();
+//        jsonResult.setStatus(6000);
+//        jsonResult.setMsg("Sql错误，填入的数据不符合要求");
+//        return jsonResult;
+//    }
 
 }
