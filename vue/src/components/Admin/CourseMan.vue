@@ -3,13 +3,6 @@
     <!--          搜索框-->
     <div style="margin: 10px 0">
           <el-input
-              placeholder="请输入课程ID"
-              prefix-icon="el-icon-search"
-              v-model="course_id"
-              style="width: 200px;"
-              class="ml-5">
-          </el-input>
-          <el-input
               placeholder="请输入课程名称"
               prefix-icon="el-icon-search"
               v-model="course_name"
@@ -31,27 +24,6 @@
               style="width: 200px"
               class="ml-5">
           </el-input>
-          <el-input
-              placeholder="请输入授课地点"
-              prefix-icon="el-icon-search"
-              v-model="place"
-              style="width: 200px"
-              class="ml-5">
-          </el-input>
-          <el-input
-              placeholder="请输入授课教师ID"
-              prefix-icon="el-icon-search"
-              v-model="teacher_id"
-              style="width: 200px"
-              class="ml-5">
-          </el-input>
-          <el-input
-              placeholder="请输入授课教师姓名"
-              prefix-icon="el-icon-search"
-              v-model="teacher_name"
-              style="width: 200px"
-              class="ml-5">
-          </el-input>
           <!--          搜索按钮-->
           <el-button type="primary" icon="el-icon-search" class="ml-5" @click="search">搜索</el-button>
         </div>
@@ -61,20 +33,13 @@
     </div>
     <!--        数据表格-->
     <el-table :data="tableData"  stripe class="ml-5" height="700" style="width: 100%">
-      <el-table-column property="course_id" label="课程ID" width="100"></el-table-column>
       <el-table-column property="course_name" label="课程名称" width="150"></el-table-column>
-      <el-table-column property="term" label="授课学期" width="100"></el-table-column>
-      <el-table-column property="type" label="课程性质" width="100"></el-table-column>
-      <el-table-column property="teacher_id" label="授课教师ID" width="100"></el-table-column>
-      <el-table-column property="teacher_name" label="授课教师" width="100"></el-table-column>
-      <el-table-column property="place" label="授课地点" width="100"></el-table-column>
-      <el-table-column property="credit" label="学分" width="80"></el-table-column>
-      <el-table-column property="total_hours" label="总学时" width="80"></el-table-column>
-      <el-table-column property="teaching_hours" label="授课学时" width="80"></el-table-column>
-      <el-table-column property="experiment_hours" label="实验/上机学时" width="80"></el-table-column>
-      <el-table-column property="current" label="已选人数" width="80"></el-table-column>
-      <el-table-column property="capacity" label="选课上限" width="80"></el-table-column>
-      <el-table-column property="comment" label="课程备注"></el-table-column>
+        <el-table-column property="type" label="课程性质" width="100"></el-table-column>
+        <el-table-column property="credit" label="学分" width="80"></el-table-column>
+        <el-table-column property="total_hours" label="总学时" width="80"></el-table-column>
+        <el-table-column property="teaching_hours" label="授课学时" width="80"></el-table-column>
+        <el-table-column property="experiment_hours" label="实验/上机学时" width="80"></el-table-column>
+        <el-table-column property="comment" label="课程备注"></el-table-column>
       <!--          编辑与删除-->
       <el-table-column align="right">
         <template slot-scope="scope">
@@ -90,7 +55,7 @@
             cancel-button-text='取消'
             icon="el-icon-info"
             icon-color="red"
-            title="确定删除该授课信息吗？"
+            title="确定删除该课程吗？"
             @confirm="handleDelete(scope.row)"
           >
             <el-button
@@ -117,7 +82,7 @@
     </div>
     <!--        编辑对话框-->
     <el-dialog
-        title="授课信息"
+        title="课程信息"
         :visible.sync="dialogFormVisible"
         width="30%">
       <el-form label-width="100px" class="demo-ruleForm">

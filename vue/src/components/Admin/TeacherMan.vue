@@ -39,7 +39,7 @@
     </div>
     <!--        数据表格-->
     <el-table :data="tableData"  stripe class="ml-5" height="700" style="width: 100%">
-      <el-table-column prop="teacher_id" label="学号" width="180"></el-table-column>
+      <el-table-column prop="teacher_id" label="工号" width="180"></el-table-column>
       <el-table-column prop="teacher_name" label="姓名" width="120"></el-table-column>
       <el-table-column prop="sex" label="性别" width="120"></el-table-column>
       <el-table-column prop="age" label="年龄" width="120"></el-table-column>

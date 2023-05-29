@@ -24,8 +24,8 @@ const routes = [
             {path: 'studentMan', name: 'studentMan', component: () => import('../components/Admin/StudentMan.vue')},
             {path: 'teacherMan', name: 'teacherMan', component: () => import('../components/Admin/TeacherMan.vue')},
             {path: 'courseMan', name: 'courseMan', component: () => import('../components/Admin/CourseMan.vue')},
-            {path: 'studentCourseMan', name: 'studentCourseMan', component: () => import('../components/Admin/SCMan.vue')},
-            {path: 'teacherCourseMan', name: 'teacherCourseMan', component: () => import('../components/Admin/TCMan.vue')},
+            {path: 'studentCourseMan', name: 'studentCourseMan', component: () => import('../components/Admin/StudentCourseMan.vue')},
+            {path: 'teacherCourseMan', name: 'teacherCourseMan', component: () => import('../components/Admin/TeacherCourseMan.vue')},
         ]
     },
     {
