@@ -9,12 +9,12 @@
         default-active="1"
         :collapse-transition=false
         :collapse="isCollapse">
-      <div class="menu-header">
+      <div class="menu-header" >
         <img src="../assets/logo.png" class="logo" >
         <b style="color: white" v-show="!isCollapse">学生选课管理后台</b>
       </div>
       <router-link to="/admin">
-        <el-menu-item index="1" >
+        <el-menu-item index="1" style="width: 200px">
           <i class="el-icon-user-solid"></i>
           <span v-show="!isCollapse">学生管理</span>
         </el-menu-item>
