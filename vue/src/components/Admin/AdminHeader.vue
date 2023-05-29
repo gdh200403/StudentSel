@@ -10,8 +10,10 @@
           </div>
           <el-dropdown-menu slot="dropdown">
               <el-dropdown-item><i class="el-icon-user"></i>个人信息</el-dropdown-item>
-              <el-dropdown-item>
-                  <i class="el-icon-switch-button"  @click="logout"></i>退出登陆
+              <el-dropdown-item >
+                  <div @click="logout">
+                    <i class="el-icon-switch-button"  ></i>退出登陆
+                  </div>
               </el-dropdown-item>
 <!--              <el-dropdown-item style="font-size: 14px; padding: 5px 0">-->
 <!--                  <span style="text-decoration: none" @click="logout">退出</span>-->

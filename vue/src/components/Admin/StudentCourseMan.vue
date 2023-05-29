@@ -104,7 +104,7 @@
                     <el-table-column property="credit" label="学分" width="80"></el-table-column>
                     <el-table-column property="total_hours" label="总学时" width="80"></el-table-column>
                     <el-table-column property="teaching_hours" label="授课学时" width="80"></el-table-column>
-                    <el-table-column property="experiment_hours" label="实验/上机学时" width="80"></el-table-column>
+                    <el-table-column property="experiment_hours" label="实验/上机学时" width="120"></el-table-column>
                     <el-table-column property="current" label="已选人数" width="80"></el-table-column>
                     <el-table-column property="capacity" label="选课上限" width="80"></el-table-column>
                     <el-table-column property="comment" label="课程备注"></el-table-column>

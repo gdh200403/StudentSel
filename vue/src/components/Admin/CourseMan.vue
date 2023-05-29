@@ -38,8 +38,7 @@
         <el-table-column property="credit" label="学分" width="80"></el-table-column>
         <el-table-column property="total_hours" label="总学时" width="80"></el-table-column>
         <el-table-column property="teaching_hours" label="授课学时" width="80"></el-table-column>
-        <el-table-column property="experiment_hours" label="实验/上机学时" width="80"></el-table-column>
-        <el-table-column property="comment" label="课程备注"></el-table-column>
+        <el-table-column property="experiment_hours" label="实验/上机学时" width="120"></el-table-column>
       <!--          编辑与删除-->
       <el-table-column align="right">
         <template slot-scope="scope">
@@ -80,64 +79,64 @@
           :total="total">
       </el-pagination>
     </div>
-    <!--        编辑对话框-->
+    <!--      新增与编辑共用对话框-->
     <el-dialog
-        title="课程信息"
+        title="新增课程信息"
         :visible.sync="dialogFormVisible"
         width="30%">
-      <el-form label-width="100px" class="demo-ruleForm">
+      <el-form label-width="110px" class="demo-ruleForm">
         <el-form-item label="课程ID" prop="course_id">
-          <el-input :disabled = "disableEdit" v-model="form.course_id"></el-input>
+          <el-input v-model="form.course_id" :disabled = "disableEdit"></el-input>
         </el-form-item>
         <el-form-item label="课程名称" prop="course_name">
-          <el-input v-model="form.course_name" disabled></el-input>
+          <el-input v-model="form.course_name" :disabled = "disableEdit"></el-input>
         </el-form-item>
-        <el-form-item label="教师ID" prop="course_id">
-          <el-input :disabled = "disableEdit" v-model="form.teacher_id"></el-input>
-        </el-form-item>
-        <el-form-item label="教师姓名" prop="course_name">
-          <el-input v-model="form.teacher_name" disabled></el-input>
-        </el-form-item>
+<!--        <el-form-item label="教师ID" prop="course_id">-->
+<!--          <el-input :disabled = "disableEdit" v-model="form.teacher_id"></el-input>-->
+<!--        </el-form-item>-->
+<!--        <el-form-item label="教师姓名" prop="course_name">-->
+<!--          <el-input v-model="form.teacher_name" disabled></el-input>-->
+<!--        </el-form-item>-->
 <!--        <el-form-item label="课程名称" prop="course_name">-->
 <!--          <el-input v-model="form.course_name"></el-input>-->
 <!--        </el-form-item>-->
-<!--        <el-form-item label="课程性质" prop="type">-->
-<!--          <el-select v-model="form.type" placeholder="请选择课程性质">-->
-<!--            <el-option-->
-<!--                v-for="item in options"-->
-<!--                :key="item.value"-->
-<!--                :label="item.label"-->
-<!--                :value="item.value">-->
-<!--            </el-option>-->
-<!--          </el-select>-->
-<!--        </el-form-item>-->
-        <el-form-item label="授课地点" prop="place">
-          <el-input v-model="form.place"></el-input>
+        <el-form-item label="课程性质" prop="type">
+          <el-select v-model="form.type" placeholder="请选择课程性质">
+            <el-option
+                v-for="item in options"
+                :key="item.value"
+                :label="item.label"
+                :value="item.value">
+            </el-option>
+          </el-select>
         </el-form-item>
-<!--        <el-form-item label="学分" prop="credit">-->
-<!--          <el-input v-model="form.credit"></el-input>-->
+<!--        <el-form-item label="授课地点" prop="place">-->
+<!--          <el-input v-model="form.place"></el-input>-->
 <!--        </el-form-item>-->
-<!--        <el-form-item label="总学时" prop="total_hours">-->
-<!--          <el-input v-model="form.total_hours"></el-input>-->
+        <el-form-item label="学分" prop="credit">
+          <el-input v-model="form.credit"></el-input>
+        </el-form-item>
+        <el-form-item label="总学时" prop="total_hours">
+          <el-input v-model="form.total_hours"></el-input>
+        </el-form-item>
+        <el-form-item label="授课学时" prop="teaching_hours">
+          <el-input v-model="form.teaching_hours"></el-input>
+        </el-form-item>
+        <el-form-item label="实验/上机学时" prop="experiment_hours">
+          <el-input v-model="form.experiment_hours"></el-input>
+        </el-form-item>
+<!--        <el-form-item label="已选人数" prop="current">-->
+<!--          <el-input v-model="form.current"></el-input>-->
 <!--        </el-form-item>-->
-<!--        <el-form-item label="授课学时" prop="teaching_hours">-->
-<!--          <el-input v-model="form.teaching_hours"></el-input>-->
+<!--        <el-form-item label="选课上限" prop="capacity">-->
+<!--          <el-input v-model="form.capacity"></el-input>-->
 <!--        </el-form-item>-->
-<!--        <el-form-item label="实验/上机学时" prop="experiment_hours">-->
-<!--          <el-input v-model="form.experiment_hours"></el-input>-->
+<!--        <el-form-item label="授课学期" prop="comment">-->
+<!--          <el-input v-model="form.term"></el-input>-->
 <!--        </el-form-item>-->
-        <el-form-item label="已选人数" prop="current">
-          <el-input v-model="form.current"></el-input>
-        </el-form-item>
-        <el-form-item label="选课上限" prop="capacity">
-          <el-input v-model="form.capacity"></el-input>
-        </el-form-item>
-        <el-form-item label="授课学期" prop="comment">
-          <el-input v-model="form.term"></el-input>
-        </el-form-item>
-        <el-form-item label="课程备注" prop="comment">
-          <el-input v-model="form.comment"></el-input>
-        </el-form-item>
+<!--        <el-form-item label="课程备注" prop="comment">-->
+<!--          <el-input v-model="form.comment"></el-input>-->
+<!--        </el-form-item>-->
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button @click="dialogFormVisible = false">取 消</el-button>
@@ -187,11 +186,11 @@ export default {
         teacher_name: '',
         course_id: '',
         course_name: '',
-        // type: '',
-        // credit: '',
-        // total_hours: '',
-        // teaching_hours: '',
-        // experiment_hours: '',
+        type: '',
+        credit: '',
+        total_hours: '',
+        teaching_hours: '',
+        experiment_hours: '',
         current: '',
         capacity: '',
         term: '',

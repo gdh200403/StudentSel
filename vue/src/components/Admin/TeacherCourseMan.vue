@@ -17,9 +17,9 @@
                 class="ml-5">
             </el-input>
             <el-input
-                placeholder="请输入授课地点"
+                placeholder="请输入授课学期"
                 prefix-icon="el-icon-search"
-                v-model="place"
+                v-model="term"
                 style="width: 200px"
                 class="ml-5">
             </el-input>
@@ -37,21 +37,43 @@
                 style="width: 200px"
                 class="ml-5">
             </el-input>
+            <el-input
+                placeholder="请输入授课地点"
+                prefix-icon="el-icon-search"
+                v-model="place"
+                style="width: 200px"
+                class="ml-5">
+            </el-input>
             <!--          搜索按钮-->
             <el-button type="primary" icon="el-icon-search" class="ml-5" @click="search">搜索</el-button>
         </div>
-        <!--        新增按钮-->
-        <div style="margin: 10px 0">
-            <el-button type="primary" class="ml-5" @click="handle_add">新增<i class="el-icon-circle-plus-outline"></i> </el-button>
-        </div>
+<!--        &lt;!&ndash;        新增按钮&ndash;&gt;-->
+<!--        <div style="margin: 10px 0">-->
+<!--            <el-button type="primary" class="ml-5" @click="handle_add">新增<i class="el-icon-circle-plus-outline"></i> </el-button>-->
+<!--        </div>-->
         <!--        数据表格-->
-        <el-table :data="tableData"  stripe class="ml-5" height="700" style="width: 100%">
-            <el-table-column property="course_name" label="课程名称" width="150"></el-table-column>
-            <el-table-column property="course_id" label="课程ID" width="100"></el-table-column>
+        <el-table :data="tableData"
+                  :span-method="objectSpanMethod"
+                  stripe class="ml-5" height="700" style="width: 100%">
+            <el-table-column property="course_name" label="课程名称" width="150">
+                <template slot-scope="scope">
+                    <span >{{ scope.row.course_name }}</span>
+                    <el-button
+                        size="mini"
+                        @click="handleAddTC(scope.row)"
+                        type="primary"
+                    >
+                        <i class="el-icon-circle-plus-outline"></i>新增开课
+                    </el-button>
+
+                </template>
+            </el-table-column>
             <el-table-column property="term" label="授课学期" width="100"></el-table-column>
-            <el-table-column property="teacher_id" label="授课教师ID" width="100"></el-table-column>
+            <el-table-column property="course_id" label="课程ID" width="100"></el-table-column>
             <el-table-column property="teacher_name" label="授课教师" width="100"></el-table-column>
-            <el-table-column property="place" label="上课地点" width="100"></el-table-column>
+            <el-table-column property="teacher_id" label="授课教师ID" width="100"></el-table-column>
+            <el-table-column property="place" label="授课地点" width="100"></el-table-column>
+            <el-table-column property="time" label="上课时间" width="100"></el-table-column>
             <el-table-column property="current" label="已选人数" width="80"></el-table-column>
             <el-table-column property="capacity" label="选课上限" width="80"></el-table-column>
             <el-table-column property="comment" label="课程备注"></el-table-column>
@@ -83,8 +105,8 @@
                 </template>
             </el-table-column>
         </el-table>
+        <!--          分页控制-->
         <div style="padding: 10px;text-align: center">
-            <!--          分页控制-->
             <el-pagination
                 @size-change="handleSizeChange"
                 @current-change="handleCurrentChange"
@@ -105,13 +127,16 @@
                     <el-input :disabled = "disableEdit" v-model="form.course_id"></el-input>
                 </el-form-item>
                 <el-form-item label="课程名称" prop="course_name">
-                    <el-input v-model="form.course_name" disabled></el-input>
+                    <el-input  v-model="form.course_name" disabled></el-input>
                 </el-form-item>
                 <el-form-item label="教师ID" prop="course_id">
                     <el-input :disabled = "disableEdit" v-model="form.teacher_id"></el-input>
                 </el-form-item>
                 <el-form-item label="教师姓名" prop="course_name">
                     <el-input v-model="form.teacher_name" disabled></el-input>
+                </el-form-item>
+                <el-form-item label="授课学期" prop="comment">
+                    <el-input v-model="form.term"></el-input>
                 </el-form-item>
                 <!--        <el-form-item label="课程名称" prop="course_name">-->
                 <!--          <el-input v-model="form.course_name"></el-input>-->
@@ -128,6 +153,9 @@
                 <!--        </el-form-item>-->
                 <el-form-item label="授课地点" prop="place">
                     <el-input v-model="form.place"></el-input>
+                </el-form-item>
+                <el-form-item label="授课时间" prop="time">
+                    <el-input v-model="form.time"></el-input>
                 </el-form-item>
                 <!--        <el-form-item label="学分" prop="credit">-->
                 <!--          <el-input v-model="form.credit"></el-input>-->
@@ -146,9 +174,6 @@
                 </el-form-item>
                 <el-form-item label="选课上限" prop="capacity">
                     <el-input v-model="form.capacity"></el-input>
-                </el-form-item>
-                <el-form-item label="授课学期" prop="comment">
-                    <el-input v-model="form.term"></el-input>
                 </el-form-item>
                 <el-form-item label="课程备注" prop="comment">
                     <el-input v-model="form.comment"></el-input>
@@ -194,6 +219,7 @@ export default {
             teacher_name: '',
             course_id: '',
             course_name: '',
+            term:'',
             type: '',
             place: '',
             credit: '',
@@ -261,9 +287,10 @@ export default {
                 })
 
         },
-        handle_add() {
+        handleAddTC() {
             this.disableEdit = false
             this.dialogFormVisible = true
+            // this.form.course_name = row.course_name
             this.form = {
                 teacher_id: '',
                 course_id: '',
@@ -272,6 +299,7 @@ export default {
                 term: '',
                 place: '',
                 comment: '',
+                time:'',
             }
         },
         handleEdit(row) {
@@ -326,6 +354,42 @@ export default {
             this.currentPage = currentPage
             this.load()
         },
+        objectSpanMethod({ row, column, rowIndex, columnIndex }) {//合并课程名相同项
+            // 判断是否为第一列
+            if (columnIndex === 0) {
+                // 判断当前行是否需要合并
+                if (rowIndex === 0 || row.course_name !== this.tableData[rowIndex - 1].course_name) {
+                    let rowspan = 1;
+                    for (let i = rowIndex + 1; i < this.tableData.length; i++) {
+                        if (row.course_name === this.tableData[i].course_name) {
+                            rowspan++;
+                        } else {
+                            break;
+                        }
+                    }
+                    return { rowspan, colspan: 1 };
+                } else {
+                    return { rowspan: 0, colspan: 0 };
+                }
+            }
+            // 判断是否为第二列
+            if (columnIndex === 1) {
+                // 判断当前行是否需要合并
+                if (rowIndex === 0 || row.term !== this.tableData[rowIndex - 1].term) {
+                    let rowspan = 1;
+                    for (let i = rowIndex + 1; i < this.tableData.length; i++) {
+                        if (row.term === this.tableData[i].term) {
+                            rowspan++;
+                        } else {
+                            break;
+                        }
+                    }
+                    return { rowspan, colspan: 1 };
+                } else {
+                    return { rowspan: 0, colspan: 0 };
+                }
+            }
+        }
     }
 }
 </script>
