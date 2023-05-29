@@ -54,6 +54,7 @@ export default {
                         message: '登录成功',
                         type: 'success'
                     })
+                    localStorage.setItem('user', JSON.stringify(res.data))
                     this.$router.push({path: '/' + this.form.userType})
                 } else {
                     this.$message({
