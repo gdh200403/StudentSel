@@ -24,25 +24,18 @@ import java.io.Serializable;
 @NoArgsConstructor
 @AllArgsConstructor
 public class CourseRecord implements Serializable{
-    private String id;
-    private String name;
+    private String course_id;
+    private String course_name;
     private String type;
     private int credit;
     private int total_hours;
     private int teaching_hours;
     private int experiment_hours;
 
-    @Override
-    public String toString() {
-        return "CourseRecord{" +
-                "id='" + id + '\'' +
-                ", name='" + name + '\'' +
-                ", type='" + type + '\'' +
-                ", credit=" + credit +
-                ", totalhours=" + total_hours +
-                ", teachinghours=" + teaching_hours +
-                ", experimenthours=" + experiment_hours +
-                '}';
+    public CourseRecord(String course_id, String course_name, String type, int credit) {
+        this.course_id = course_id;
+        this.course_name = course_name;
+        this.type = type;
+        this.credit = credit;
     }
-
 }

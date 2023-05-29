@@ -87,9 +87,15 @@ CREATE TABLE SC (
 );
 
 drop view if exists TCView;
+drop view if exists SCView;
 
 create view TCView as select teacher.teacher_id,teacher_name,course.course_id,course_name,type,credit,total_hours,teaching_hours,experiment_hours,term,place,current,Capacity,Comment
                       from TC inner join Course on TC.course_id=Course.course_id inner join Teacher on TC.teacher_id=Teacher.teacher_id;
+
+create view SCView as select SC.student_id, student_name, SC.course_id, course_name, Teacher.teacher_id, teacher.teacher_name, type, credit, total_hours, teaching_hours, experiment_hours, term, place, Grade
+                      from sc, tc, Student, Course, Teacher
+                      where sc.course_id = tc.course_id and sc.student_id = Student.student_id and sc.course_id = Course.course_id and tc.teacher_id = Teacher.teacher_id;
+
 
 insert into Admin values('admin','admin');
 

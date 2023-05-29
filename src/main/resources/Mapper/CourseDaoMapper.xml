@@ -5,17 +5,56 @@
 <!-- Path: src\main\resources\Mapper\CourseDaoMapper.xml -->
 <mapper namespace="com.cy.studentsel.DAO.CourseDAO">
     <select id="queryAllCourse" resultType="com.cy.studentsel.entity.CourseRecord">
-        select * from course, teacher, tc
-        where course.id = tc.courseid and teacher.id = tc.id
+        select * from course
     </select>
     <select id="queryCourseByID" resultType="com.cy.studentsel.entity.CourseRecord" parameterType="String">
-        select * from course where course.id = #{course_id}
+        select * from course where course.course_id = #{course_id}
+    </select>
+    <select id="queryCourseByCondition" resultType="com.cy.studentsel.entity.CourseRecord" parameterType="com.cy.studentsel.entity.CourseRecord">
+        select *
+        from course
+        <where>
+            <if test="course_id != null and course_id != ''">
+                course_id like concat('%', #{course_id}, '%') and
+            </if>
+            <if test="course_name != null and course_name != ''">
+                course_name like concat('%', #{course_name}, '%') and
+            </if>
+            <if test="type != null and type != ''">
+                type = #{type} and
+            </if>
+            <if test="credit != null and credit != -1">
+                credit = #{credit} and
+            </if>
+            true
+        </where>
     </select>
     <update id="updateCourse" parameterType="com.cy.studentsel.entity.CourseRecord">
-        update course set name = #{name}, credit = #{credit}, type = #{type},  teacher = #{teacher}, time = #{time},
-                          place = #{place}, capacity = #{capacity} where id = #{id}
+        update course
+        <set>
+            <if test="course_name != null and course_name != ''">
+                course_name = #{course_name},
+            </if>
+            <if test="type != null and type != ''">
+                type = #{type},
+            </if>
+            <if test="credit != null and credit != -1">
+                credit = #{credit},
+            </if>
+            <if test="total_hours != null and total_hours != -1">
+                total_hours = #{total_hours},
+            </if>
+            <if test="teaching_hours != null and teaching_hours != -1">
+                teaching_hours = #{teaching_hours},
+            </if>
+            <if test="experiment_hours != null and experiment_hours != -1">
+                experiment_hours = #{experiment_hours},
+            </if>
+            course_id = #{course_id}
+        </set>
+        where course.course_id = #{course_id}
     </update>
     <delete id="deleteCourse" parameterType="String">
-        delete from course where course.id = #{course_id}
+        delete from course where course.course_id = #{course_id}
     </delete>
 </mapper>

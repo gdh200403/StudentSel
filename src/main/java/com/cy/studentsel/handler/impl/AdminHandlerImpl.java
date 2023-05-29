@@ -1,13 +1,7 @@
 package com.cy.studentsel.handler.impl;
 
-import com.cy.studentsel.DAO.AdminDAO;
-import com.cy.studentsel.DAO.StudentDAO;
-import com.cy.studentsel.DAO.TCDAO;
-import com.cy.studentsel.DAO.TeacherDAO;
-import com.cy.studentsel.entity.AdminRecord;
-import com.cy.studentsel.entity.StudentRecord;
-import com.cy.studentsel.entity.TCRecord;
-import com.cy.studentsel.entity.TeacherRecord;
+import com.cy.studentsel.DAO.*;
+import com.cy.studentsel.entity.*;
 import com.cy.studentsel.handler.AdminHandler;
 import com.cy.studentsel.handler.ex.PasswordNoMatchException;
 import com.cy.studentsel.handler.ex.UserIdDuplicateException;
@@ -32,6 +26,10 @@ public class AdminHandlerImpl implements AdminHandler {
     private TeacherDAO teacherDAO;
     @Resource
     private TCDAO tcDAO;
+    @Resource
+    private SCDAO scDAO;
+    @Resource
+    private CourseDAO courseDAO;
 
     @Override
     public String login(String ID, String pwd) {
@@ -146,5 +144,53 @@ public class AdminHandlerImpl implements AdminHandler {
     @Override
     public void deleteTeacher(String id) {
         teacherDAO.deleteTeacher(id);
+    }
+
+    @Override
+    public List<SCRecord> querySCByCondition(SCRecord record) {
+        return scDAO.querySCByCondition(record);
+    }
+
+    @Override
+    public void addSC(SCRecord record) {
+        SCRecord query = scDAO.querySCByStudentIDAndCourseID(record.getStudent_id(), record.getCourse_id());
+        if (query != null) {
+            throw new UserIdDuplicateException("该学生已选该课程");
+        }
+        scDAO.addSC(record);
+    }
+
+    @Override
+    public void updateSC(SCRecord record) {
+        scDAO.updateSC(record);
+    }
+
+    @Override
+    public void deleteSC(String studentId, String courseId) {
+        scDAO.deleteSC(studentId, courseId);
+    }
+
+    @Override
+    public List<CourseRecord> queryCourseByCondition(CourseRecord record) {
+        return courseDAO.queryCourseByCondition(record);
+    }
+
+    @Override
+    public void addCourse(CourseRecord record) {
+        CourseRecord query = courseDAO.queryCourseByID(record.getCourse_id());
+        if (query != null) {
+            throw new UserIdDuplicateException("课程号已存在");
+        }
+        courseDAO.addCourse(record);
+    }
+
+    @Override
+    public void updateCourse(CourseRecord record) {
+        courseDAO.updateCourse(record);
+    }
+
+    @Override
+    public void deleteCourse(String id) {
+        courseDAO.deleteCourse(id);
     }
 }

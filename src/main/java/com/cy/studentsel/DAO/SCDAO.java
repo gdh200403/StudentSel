@@ -16,7 +16,13 @@ public interface SCDAO {
 
     public  List <SCRecord> querySCByCourseID(String course_id);
 
+    public  SCRecord querySCByStudentIDAndCourseID(@Param("student_id") String student_id, @Param("course_id") String course_id);
+
     public void updateSC(SCRecord id);
 
     public void addSC(SCRecord record);
+
+    public List<SCRecord> querySCByCondition(SCRecord record);
+
+    public void deleteSC(String studentId, String courseId);
 }
