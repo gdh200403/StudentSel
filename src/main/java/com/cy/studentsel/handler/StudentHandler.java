@@ -2,6 +2,7 @@ package com.cy.studentsel.handler;
 
 
 import com.cy.studentsel.StudentSelApplication;
+import com.cy.studentsel.entity.SCRecord;
 import com.cy.studentsel.entity.StudentRecord;
 
 import java.util.List;
@@ -22,4 +23,8 @@ public interface StudentHandler extends UserHandler {
      * update student info
      */
     public boolean update(StudentRecord studentRecord);
+
+    public void addSC(SCRecord record);
+
+//    public SCRecord querySCByStudentID(String studentId);
 }

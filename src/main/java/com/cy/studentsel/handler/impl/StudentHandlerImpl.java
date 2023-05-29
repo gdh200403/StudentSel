@@ -2,7 +2,9 @@ package com.cy.studentsel.handler.impl;
 
 
 
+import com.cy.studentsel.DAO.SCDAO;
 import com.cy.studentsel.DAO.StudentDAO;
+import com.cy.studentsel.entity.SCRecord;
 import com.cy.studentsel.entity.StudentRecord;
 import com.cy.studentsel.handler.StudentHandler;
 import com.cy.studentsel.handler.ex.HandlerSqlException;
@@ -23,6 +25,8 @@ import java.util.Objects;
 public class StudentHandlerImpl implements StudentHandler {
     @Resource
     private StudentDAO studentDao;
+    @Resource
+    private SCDAO scDAO;
 
     @Override
     public String login(String ID, String pwd) {
@@ -42,26 +46,20 @@ public class StudentHandlerImpl implements StudentHandler {
 
     @Override
     public StudentRecord getStudent(String ID) {
-        try {
-            StudentRecord query = new StudentRecord(ID, null, null, null, null, null);
-            return studentDao.queryStudentByCondition(query).get(0);
-        }
-        catch (Exception e){
-            e.printStackTrace();
-            return null;
-        }
+        return studentDao.queryStudentByID(ID);
     }
 
     @Override
     public boolean update(StudentRecord studentRecord) {
-        try {
-            studentDao.updateStudent(studentRecord);
-            return true;
-        } catch (Exception e) {
-            e.printStackTrace();
-            return false;
-        }
+        studentDao.updateStudent(studentRecord);
+        return true;
     }
+
+    @Override
+    public void addSC(SCRecord record) {
+
+    }
+
 
     public static void main(String[] args) {
         StudentHandlerImpl studentHandler = new StudentHandlerImpl();
