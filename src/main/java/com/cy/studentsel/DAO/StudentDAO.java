@@ -5,6 +5,7 @@ package com.cy.studentsel.DAO;
 import com.cy.studentsel.entity.StudentRecord;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Select;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -28,5 +29,6 @@ public interface StudentDAO {
 
     public int addStudent(StudentRecord record);
 
+    public StudentRecord queryStudentByID(String studentId);
 }
 

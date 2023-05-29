@@ -20,4 +20,10 @@ public class TestAdminHanderImpl {
         StudentRecord record = new StudentRecord("", "", "", 20, "", "");
         System.out.println(adminHandler.queryStudentByCondition(record));
     }
+
+    @Test
+    public void testUpdateStudent() {
+        StudentRecord record = new StudentRecord("20160001", "", "女", -1, "123", "");
+        adminHandler.updateStudent(record);
+    }
 }

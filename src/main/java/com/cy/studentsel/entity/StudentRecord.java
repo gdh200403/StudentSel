@@ -1,5 +1,9 @@
 package com.cy.studentsel.entity;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import java.io.Serializable;/**
  * @author leaf-fulture
  * @date 2023/4/24 17:38
@@ -13,90 +17,23 @@ import java.io.Serializable;/**
 //        String Major,
 //        String pwd
 //){}
-
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class StudentRecord implements Serializable {
-    private String id;
-    private String name;
+    private String student_id;
+    private String student_name;
     private String sex;
     private Integer age;
     private String major;
     private String pwd = "";
-    public StudentRecord(String id, String name, String sex, Integer age, String major, String pwd){
-        this.id = id;
-        this.name = name;
 
+
+    public StudentRecord(String student_id, String student_name, String sex, Integer age, String major) {
+        this.student_id = student_id;
+        this.student_name = student_name;
         this.sex = sex;
         this.age = age;
         this.major = major;
-        this.pwd = pwd;
-    }
-
-    public StudentRecord(String id, String name, String sex, Integer age, String major) {
-        this.id = id;
-        this.name = name;
-        this.sex = sex;
-        this.age = age;
-        this.major = major;
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public String getSex() {
-        return sex;
-    }
-
-    public Integer getAge() {
-        return age;
-    }
-
-    public String getMajor() {
-        return major;
-    }
-
-    public String getPwd() {
-        return pwd;
-    }
-
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public void setSex(String sex) {
-        this.sex = sex;
-    }
-
-    public void setAge(Integer age) {
-        this.age = age;
-    }
-
-    public void setMajor(String major) {
-        this.major = major;
-    }
-
-    public void setPwd(String pwd) {
-        this.pwd = pwd;
-    }
-
-    @Override
-    public String toString() {
-        return "StudentRecord{" +
-                "ID='" + id + '\'' +
-                ", Name='" + name + '\'' +
-                ", Sex='" + sex + '\'' +
-                ", age=" + age +
-                ", Major='" + major + '\'' +
-                ", pwd='" + pwd + '\'' +
-                '}';
     }
 }

@@ -2,8 +2,9 @@ package com.cy.studentsel.controler;
 
 import com.cy.studentsel.entity.CourseRecord;
 import com.cy.studentsel.entity.SCRecord;
-import com.cy.studentsel.entity.StudentRecord;
-import com.cy.studentsel.handler.StudentHandler;
+import com.cy.studentsel.entity.TCRecord;
+import com.cy.studentsel.entity.TeacherRecord;
+import com.cy.studentsel.handler.TeacherHandler;
 import com.cy.studentsel.util.JsonResult;
 import jakarta.annotation.Resource;
 import org.springframework.web.bind.annotation.*;
@@ -14,32 +15,30 @@ import static java.lang.Integer.min;
 
 /**
  * @author leaf-fulture
- * @date 2023/5/20 17:28
+ * @date 2023/5/28 16:54
  */
-//@RestController
-//@RequestMapping("api/student")
-//public class StudentController extends BaseController{
+//public class TeacherController extends BaseController{
 //    @Resource
-//    private StudentHandler studentHandler;
+//    private TeacherHandler teacherHandler;
 //
 //    @GetMapping("/personal")
 //    @ResponseBody
-//    public JsonResult<StudentRecord> findPersonal(@RequestParam String student_id) {
-//        JsonResult<StudentRecord> jsonResult = new JsonResult<>();
-//        StudentRecord record = studentHandler.getStudent(student_id);
+//    public JsonResult<TeacherRecord> findPersonal(@RequestParam String teacher_id) {
+//        JsonResult<TeacherRecord> jsonResult = new JsonResult<>();
+//        TeacherRecord record = teacherHandler.queryTeacherByTeacherID(teacher_id);
 //        jsonResult.setData(record);
 //        jsonResult.setStatus(SUCCESS);
 //        jsonResult.setMsg("查询成功");
 //        return jsonResult;
 //    }
 //
-//    @PostMapping("/sc/save")
+//    @PostMapping("/sc/update")
 //    @ResponseBody
-//    public JsonResult<Void> addSC(@RequestBody SCRecord record) {
+//    public JsonResult<Void> updateSC(@RequestBody SCRecord record) {
 //        JsonResult<Void> jsonResult = new JsonResult<>();
-//        studentHandler.addSC(record);
+//        teacherHandler.updateSC(record);
 //        jsonResult.setStatus(SUCCESS);
-//        jsonResult.setMsg("添加成功");
+//        jsonResult.setMsg("修改成功");
 //        return jsonResult;
 //    }
 //
@@ -58,7 +57,7 @@ import static java.lang.Integer.min;
 //        JsonResult<AdminController.pageInfo<SCRecord>> jsonResult = new JsonResult<>();
 //        AdminController.pageInfo<SCRecord> pageInfo = new AdminController.pageInfo<>();
 //        SCRecord record = new SCRecord(student_id, course_id, teacher_id, student_name, course_name, teacher_name, type, credit, place);
-//        List<SCRecord> list = studentHandler.querySCByCondition(record);
+//        List<SCRecord> list = teacherHandler.querySCByCondition(record);
 ////        List<StudentRecord> list = adminHandler.queryAllStudent();
 //        int pageStart = (page - 1) * pageSize;
 //        int limit = pageSize;
@@ -70,21 +69,21 @@ import static java.lang.Integer.min;
 //        return jsonResult;
 //    }
 //
-//    @GetMapping("/page/course")
+//    @GetMapping("/page/tc")
 //    @ResponseBody
-//    public JsonResult<AdminController.pageInfo<CourseRecord>> findPageCourse(@RequestParam Integer page, @RequestParam Integer pageSize,
-//                                                                             @RequestParam String course_id,
-//                                                                             @RequestParam String course_name,
-//                                                                             @RequestParam String type,
-//                                                                             @RequestParam int credit,
-//                                                                             @RequestParam int total_hours,
-//                                                                             @RequestParam int teaching_hours,
-//                                                                             @RequestParam int experiment_hours
+//    public JsonResult<AdminController.pageInfo<TCRecord>> findPageTC(@RequestParam Integer page, @RequestParam Integer pageSize,
+//                                                                     @RequestParam String teacher_id,
+//                                                                     @RequestParam String course_id,
+//                                                                     @RequestParam String teacher_name,
+//                                                                     @RequestParam String course_name,
+//                                                                     @RequestParam String type,
+//                                                                     @RequestParam int credit,
+//                                                                     @RequestParam String place
 //    ) {
-//        JsonResult<AdminController.pageInfo<CourseRecord>> jsonResult = new JsonResult<>();
-//        AdminController.pageInfo<CourseRecord> pageInfo = new AdminController.pageInfo<>();
-//        CourseRecord record = new CourseRecord(course_id, course_name, type, credit);
-//        List<CourseRecord> list = studentHandler.queryCourseByCondition(record);
+//        JsonResult<AdminController.pageInfo<TCRecord>> jsonResult = new JsonResult<>();
+//        AdminController.pageInfo<TCRecord> pageInfo = new AdminController.pageInfo<>();
+//        TCRecord record = new TCRecord(teacher_id, course_id, teacher_name, course_name, type, credit, place);
+//        List<TCRecord> list = TeacherHandler.queryTCByCondition(record);
 //        int pageStart = (page - 1) * pageSize;
 //        int limit = pageSize;
 //        pageInfo.list = list.subList(pageStart, min(pageStart + limit, list.size()));
@@ -94,5 +93,6 @@ import static java.lang.Integer.min;
 //        jsonResult.setMsg("查询成功");
 //        return jsonResult;
 //    }
+//
 //
 //}

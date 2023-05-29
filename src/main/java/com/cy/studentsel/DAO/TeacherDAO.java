@@ -22,4 +22,6 @@ public interface TeacherDAO {
     public int deleteTeacher(@Param("teacher_id") String ID);
 
     public int addTeacher(TeacherRecord record);
+
+    List<TeacherRecord> queryTeacherByCondition(TeacherRecord temp);
 }

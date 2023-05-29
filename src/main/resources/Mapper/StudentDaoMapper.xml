@@ -11,22 +11,17 @@
         select * from student limit #{page}, #{size}
     </select>
     <select id="queryStudentByID" resultType="com.cy.studentsel.entity.StudentRecord" parameterType="String">
-        select * from student where student.id = #{student_id}
+        select * from student where student.student_id = #{student_id}
     </select>
     <select id="queryStudentByCondition" resultType="com.cy.studentsel.entity.StudentRecord">
-        select id, name, sex, age, major
+        select student_id, student_name, sex, age, major
         from student
-        <if test="(id != null and id != '')
-        or (name != null and name != '')
-        or (sex != null and sex != '')
-        or (age != null and age != -1)
-        or (major != null and major != '')">
             where
-            <if test="id != null and id != ''">
-                id = #{id} and
+            <if test="student_id != null and student_id != ''">
+                student_id like concat('%', #{student_id}, '%') and
             </if>
-            <if test="name != null and name != ''">
-                name = #{name} and
+            <if test="student_name != null and student_name != ''">
+                student_name like concat('%', #{student_name}, '%') and
             </if>
             <if test="sex != null and sex != ''">
                 sex = #{sex} and
@@ -35,18 +30,38 @@
                 age = #{age} and
             </if>
             <if test="major != null and major != ''">
-                major = #{major} and
+                major like concat('%', #{major}, '%') and
             </if>
             true
-        </if>
     </select>
     <update id="updateStudent" parameterType="com.cy.studentsel.entity.StudentRecord">
-        update student set student.name = #{name}, student.sex = #{sex} where student.id = #{id}
+        update student
+        <set>
+            <if test="student_name != null and student_name != ''">
+                student_name = #{student_name},
+            </if>
+            <if test="sex != null and sex != ''">
+                sex = #{sex},
+            </if>
+            <if test="age != null and age != -1">
+                age = #{age},
+            </if>
+            <if test="major != null and major != ''">
+                major = #{major},
+            </if>
+            <if test="pwd != null and pwd != ''">
+                pwd = #{pwd},
+            </if>
+            student_id = #{student_id}
+        </set>
+        <where>
+            student_id = #{student_id}
+        </where>
     </update>
     <delete id="deleteStudent" parameterType="String">
-        delete from student where student.id = #{student_id}
+        delete from student where student.student_id = #{student_id}
     </delete>
     <insert id="addStudent" parameterType="com.cy.studentsel.entity.StudentRecord">
-        insert into student values (#{id},#{name}, #{sex}, #{age}, #{major}, #{pwd})
+        insert into student values (#{student_id},#{student_name}, #{sex}, #{age}, #{major}, #{pwd})
     </insert>
 </mapper>

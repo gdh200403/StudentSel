@@ -4,19 +4,68 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <!-- Path: src\main\resources\Mapper\CourseSelDaoMapper.xml -->
 <mapper namespace="com.cy.studentsel.DAO.SCDAO">
+    <update id="updateSC">
+        update sc
+        <set>
+            <if test="grade != null and grade != -1">
+                grade = #{grade},
+            </if>
+            student_id = #{student_id},
+            course_id = #{course_id}
+        </set>
+        <where>
+            student_id = #{student_id} and course_id = #{course_id}
+        </where>
+    </update>
     <select id="queryAllSC" resultType="com.cy.studentsel.entity.SCRecord">
         select * from sc
     </select>
     <select id="querySCByStudentID" resultType="com.cy.studentsel.entity.SCRecord" parameterType="String">
-        select * from sc where sc.id = #{student_id}
+        select * from sc where sc.student_id = #{student_id}
     </select>
     <select id="querySCByCourseID" resultType="com.cy.studentsel.entity.SCRecord" parameterType="String">
-        select * from sc where sc.courseid = #{course_id}
+        select * from sc where sc.course_id = #{course_id}
+    </select>
+    <select id="querySCByStudentIDAndCourseID" resultType="com.cy.studentsel.entity.SCRecord" parameterType="String">
+        select * from sc where sc.student_id = #{student_id} and sc.course_id = #{course_id}
+    </select>
+    <select id="querySCByCondition" resultType="com.cy.studentsel.entity.SCRecord">
+        select *
+        from scview
+        where
+            <if test="student_id != null and student_id != ''">
+                student_id like concat('%', #{student_id}, '%') and
+            </if>
+            <if test="student_name != null and student_name != ''">
+                student_name like concat('%', #{student_name}, '%') and
+            </if>
+            <if test="course_id != null and course_id != ''">
+                course_id like concat('%', #{course_id}, '%') and
+            </if>
+            <if test="course_name != null and course_name != ''">
+                course_name like concat('%', #{course_name}, '%') and
+            </if>
+            <if test="teacher_id != null and teacher_id != ''">
+                teacher_id like concat('%', #{teacher_id}, '%') and
+            </if>
+            <if test="teacher_name != null and teacher_name != ''">
+                teacher_name like concat('%', #{teacher_name}, '%') and
+            </if>
+            <if test="type != null and type != ''">
+                type = #{type} and
+                </if>
+            <if test="credit != null and credit != -1">
+                credit = #{credit} and
+            </if>
+            <if test="place != null and place != -1">
+                place = #{place} and
+            </if>
+            true
     </select>
     <delete id="deleteSC" parameterType="String">
-        delete from sc where sc.id = #{id} and sc.courseid = #{courseid}
+        delete from sc where sc.student_id = #{student_id} and sc.course_id = #{course_id}
     </delete>
     <insert id="addSC" parameterType="com.cy.studentsel.entity.SCRecord">
-        insert into sc values (#{id}, #{courseid}, #{grade})
+        insert into sc values (#{student_id}, #{course_id}, #{grade})
     </insert>
 </mapper>

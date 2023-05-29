@@ -17,7 +17,13 @@ const routes = [
   {
     path: '/admin',
     name: 'admin',
-    component: () => import('../views/Admin.vue')
+    component: () => import('../views/Admin.vue'),
+
+    children: [
+        {path: 'studentMan', name: 'studentMan', component: () => import('../components/Admin/StudentMan.vue')},
+        {path: 'teacherMan', name: 'teacherMan', component: () => import('../components/Admin/TeacherMan.vue')},
+        {path: 'courseMan', name: 'courseMan', component: () => import('../components/Admin/CourseMan.vue')},
+    ]
   },
   {
     path: '/teacher',
@@ -33,16 +39,6 @@ const routes = [
     path: '/404',
     name: '404',
     component: () => import('../views/404.vue')
-  },
-  {
-    path: '/admin/course',
-    name: 'admin/course',
-    component: () => import('../views/AdminCourse.vue')
-  },
-  {
-    path: '/admin/teacher',
-    name: 'admin/teacher',
-    component: () => import('../views/AdminTeacher.vue')
   },
 ]
 

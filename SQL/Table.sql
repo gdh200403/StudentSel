@@ -20,69 +20,82 @@ DROP TABLE IF EXISTS `Teacher`;
 DROP TABLE IF EXISTS `CoursePlan`;
 
 CREATE TABLE CoursePlan (
-    Major varchar(20) NOT NULL,
-    PlanID varchar(20) NOT NULL,
+    major varchar(20) NOT NULL,
+    plan_id varchar(20) NOT NULL,
     PRIMARY KEY (Major)
 );
 
 CREATE TABLE Admin (
-  ID varchar(20) NOT NULL,
-  Pwd varchar(20) NOT NULL,
+  id varchar(20) NOT NULL,
+  pwd varchar(20) NOT NULL,
   PRIMARY KEY (ID)
 );
 
 CREATE TABLE Student (
-    ID varchar(20) NOT NULL,
-    Name varchar(20) NOT NULL,
-    Sex varchar(10) NOT NULL,
-    Age int(11) NOT NULL,
-    Major varchar(20) NOT NULL,
-    Pwd varchar(20) NOT NULL,
-    PRIMARY KEY (ID),
-    FOREIGN KEY (Major) REFERENCES CoursePlan(Major)
+    student_id varchar(20) NOT NULL,
+    student_name varchar(20) NOT NULL,
+    sex varchar(10) NOT NULL,
+    age int(11) NOT NULL,
+    major varchar(20) NOT NULL,
+    pwd varchar(20) NOT NULL,
+    PRIMARY KEY (student_id),
+    FOREIGN KEY (major) REFERENCES CoursePlan(major)
 );
 
 CREATE TABLE Teacher (
-    ID varchar(20) NOT NULL,
-    Name varchar(20) NOT NULL,
-    Sex varchar(10) NOT NULL,
-    Age int(11) NOT NULL,
-    Pwd varchar(20) NOT NULL,
-    PRIMARY KEY (ID)
+    teacher_id varchar(20) NOT NULL,
+    teacher_name varchar(20) NOT NULL,
+    sex varchar(10) NOT NULL,
+    age int(11) NOT NULL,
+    pwd varchar(20) NOT NULL,
+    PRIMARY KEY (teacher_id)
 );
 
 
 
 CREATE TABLE Course (
-    ID varchar(20) NOT NULL,
-    Name varchar(20) NOT NULL,
-    Credit int(11) NOT NULL,
-    Type varchar(20) NOT NULL,
-    Teacher varchar(20) NOT NULL,
-    Time varchar(20) NOT NULL,
-    Place varchar(20) NOT NULL,
-    Capacity int(11) NOT NULL,
-    PRIMARY KEY (ID),
-    FOREIGN KEY (Teacher) REFERENCES Teacher(ID)
+    course_id varchar(20) NOT NULL,
+    course_name varchar(20) NOT NULL,
+    type varchar(20) NOT NULL,
+    credit int(11) default 0,
+    total_hours int(11) default 0,
+    teaching_hours int(11) default 0,
+    experiment_hours int(11) default 0,
+    PRIMARY KEY (course_id)
 );
 
 CREATE TABLE TC (
-    ID varchar(20) NOT NULL,
-    CourseID varchar(20) NOT NULL,
-    Capacity int NOT NULL,
-    PRIMARY KEY (ID,CourseID),
-    FOREIGN KEY (ID) REFERENCES Teacher(ID),
-    FOREIGN KEY (CourseID) REFERENCES Course(ID)
+    teacher_id varchar(20) NOT NULL,
+    course_id varchar(20) NOT NULL,
+    current int default 0,
+    Capacity int default 0,
+    term varchar(20) NOT NULL,
+    place varchar(20) NOT NULL,
+    Comment varchar(100) default NULL,
+    PRIMARY KEY (teacher_id, course_id),
+    FOREIGN KEY (teacher_id) REFERENCES Teacher(teacher_id),
+    FOREIGN KEY (course_id) REFERENCES Course(course_id)
 );
 
 CREATE TABLE SC (
-    ID varchar(20) NOT NULL,
-    CourseID varchar(20) NOT NULL,
+    student_id varchar(20) NOT NULL,
+    course_id varchar(20) NOT NULL,
     Grade int(11) default NULL,
-    PRIMARY KEY (ID,CourseID),
-    FOREIGN KEY (ID) REFERENCES Student(ID),
-    FOREIGN KEY (CourseID) REFERENCES Course(ID)
+    PRIMARY KEY (student_id, course_id),
+    FOREIGN KEY (student_id) REFERENCES Student(student_id),
+    FOREIGN KEY (course_id) REFERENCES Course(course_id)
 );
+
+drop view if exists TCView;
+drop view if exists SCView;
+
+create view TCView as select teacher.teacher_id,teacher_name,course.course_id,course_name,type,credit,total_hours,teaching_hours,experiment_hours,term,place,current,Capacity,Comment
+                      from TC inner join Course on TC.course_id=Course.course_id inner join Teacher on TC.teacher_id=Teacher.teacher_id;
+
+create view SCView as select SC.student_id, student_name, SC.course_id, course_name, Teacher.teacher_id, teacher.teacher_name, type, credit, total_hours, teaching_hours, experiment_hours, term, place, Grade
+                      from sc, tc, Student, Course, Teacher
+                      where sc.course_id = tc.course_id and sc.student_id = Student.student_id and sc.course_id = Course.course_id and tc.teacher_id = Teacher.teacher_id;
+
 
 insert into Admin values('admin','admin');
 
@@ -115,9 +128,18 @@ insert into Teacher values('PB42000010','李丽','女',30,'123456');
 insert into Teacher values('PB42000011','王明','男',30,'123456');
 insert into Teacher values('PB42000012','张明','男',30,'123456');
 
+# generate 10 courses data with random data and different course name
+insert into Course values('42000001','计算机科学与技术','专业必修',4,64,32,32);
+insert into Course values('42000002','计算机科学与技术','专业必修',5,64,32,32);
+insert into Course values('42000003','计算机科学与技术','专业必修',2,64,32,32);
+insert into Course values('42000004','计算机科学与技术','专业必修',2,64,32,32);
+insert into Course values('42000005','计算机科学与技术','专业必修',4,64,32,32);
+insert into Course values('42000006','计算机科学与技术','专业必修',4,64,32,32);
+insert into Course values('42000007','计算机科学与技术','专业必修',3,64,32,32);
 
-insert into Course values('CS001','计算机网络',4,'必修','PB42000007','周一第1-2节','A101',100);
-insert into Course values('CS002','计算机组成原理',4,'必修','PB42000008','周二第1-2节','A102',100);
-insert into Course values('CS003','操作系统',4,'必修','PB42000009','周三第1-2节','A103',100);
-insert into Course values('CS004','数据库原理',4,'必修','PB42000010','周四第1-2节','A104',100);
-insert into Course values('CS005','数据结构',4,'必修','PB42000011','周五第1-2节','A105',100);
+insert into TC values('PB42000007','42000001',0,100, 'sp23', 'A101','');
+insert into TC values('PB42000008','42000002',0,100, 'sp22', 'A102','');
+insert into TC values('PB42000009','42000003',0,100, 'sp21', 'A103','');
+insert into TC values('PB42000010','42000004',0,100, 'sp21', 'A104','');
+insert into TC values('PB42000011','42000005',0,100, 'sp21', 'A105','');
+insert into TC values('PB42000012','42000006',0,100, 'sp22', 'A106','');
