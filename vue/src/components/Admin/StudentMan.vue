@@ -3,7 +3,7 @@
     <!--          搜索框-->
     <div style="margin: 10px 0">
           <el-input
-                  placeholder="请输入ID"
+                  placeholder="请输入学号"
                   prefix-icon="el-icon-search"
                   v-model="student_id"
                   style="width: 200px;"
@@ -54,12 +54,6 @@
       <!--   查看选课、编辑与删除-->
       <el-table-column align="right">
         <template slot-scope="scope">
-          <el-button
-              size="mini"
-              @click="dialogTableVisible = true"
-              type="info">
-            <i class="el-icon-tickets"></i>查看选课
-          </el-button>
           <el-button
                   size="mini"
                   @click="handleEdit(scope.row)"

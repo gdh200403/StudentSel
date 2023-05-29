@@ -1,12 +1,15 @@
 package com.cy.studentsel.controler;
 
 import com.cy.studentsel.controler.dto.UserDto;
+import com.cy.studentsel.controler.ex.PasswordEmptyException;
+import com.cy.studentsel.controler.ex.UsernameEmptyException;
 import com.cy.studentsel.handler.AdminHandler;
 import com.cy.studentsel.handler.StudentHandler;
 import com.cy.studentsel.handler.TeacherHandler;
 import com.cy.studentsel.handler.impl.AdminHandlerImpl;
 import com.cy.studentsel.util.JsonResult;
 import jakarta.annotation.Resource;
+import org.apache.catalina.User;
 import org.springframework.boot.autoconfigure.batch.BatchProperties;
 import org.springframework.web.bind.annotation.*;
 
@@ -28,8 +31,17 @@ public class VerifyController extends BaseController{
 
     @PostMapping
     @ResponseBody
-    public JsonResult<Void> login(@RequestBody UserDto dto) {
-        JsonResult<Void> jsonResult = new JsonResult<>(200, "登录成功", null);
+    public JsonResult<UserDto> login(@RequestBody UserDto dto) {
+        if (dto.getUsername() == null || Objects.equals(dto.getUsername(), "")) {
+            throw new UsernameEmptyException("用户名不能为空");
+        }
+        if (dto.getPassword() == null || Objects.equals(dto.getPassword(), "")) {
+            throw new PasswordEmptyException("密码不能为空");
+        }
+        UserDto info = new UserDto();
+        info.setUsername(dto.getUsername());
+        info.setUserType(dto.getUserType());
+        JsonResult<UserDto> jsonResult = new JsonResult<>(200, "登录成功", info);
         String msg = switch (dto.getUserType()) {
             case "student" -> studentHandler.login(dto.getUsername(), dto.getPassword());
             case "teacher" -> teacherHandler.login(dto.getUsername(), dto.getPassword());

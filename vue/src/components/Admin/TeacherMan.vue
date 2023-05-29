@@ -3,7 +3,7 @@
     <!--          搜索框-->
     <div style="margin: 10px 0">
       <el-input
-          placeholder="请输入ID"
+          placeholder="请输入工号"
           prefix-icon="el-icon-search"
           v-model="teacher_id"
           style="width: 200px;"

@@ -5,6 +5,7 @@ package com.cy.studentsel.controler;
  * @date 2023/5/22 14:58
  */
 
+import com.cy.studentsel.controler.ex.ControllerException;
 import com.cy.studentsel.handler.ex.HandlerException;
 import com.cy.studentsel.util.JsonResult;
 import org.apache.ibatis.exceptions.IbatisException;
@@ -12,12 +13,19 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.sql.SQLException;
+import java.util.List;
 
 /**
  * Base controller
  */
 public class BaseController {
     public static final Integer SUCCESS = 200;
+
+
+    public static class pageInfo<E> {
+        public int total;
+        public List<E> list;
+    };
 
     @ExceptionHandler(HandlerException.class)
     @ResponseBody
@@ -48,6 +56,26 @@ public class BaseController {
         return jsonResult;
     }
 
+    @ExceptionHandler(ControllerException.class)
+    @ResponseBody
+    public JsonResult<Void> handleControllerException(Throwable e) {
+        JsonResult<Void> jsonResult = new JsonResult<>();
+        switch (e.getClass().getSimpleName()) {
+            case "UsernameEmptyException" -> {
+                jsonResult.setStatus(2000);
+                jsonResult.setMsg(e.getMessage());
+            }
+            case "PasswordEmptyException" -> {
+                jsonResult.setStatus(2001);
+                jsonResult.setMsg(e.getMessage());
+            }
+            default -> {
+                jsonResult.setStatus(6004);
+                jsonResult.setMsg("控制层未知错误");
+            }
+        }
+        return jsonResult;
+    }
 
 //    @ExceptionHandler(SQLException.class)
 //    @ResponseBody
