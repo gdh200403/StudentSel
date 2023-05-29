@@ -351,28 +351,5 @@ export default {
 </script>
 
 <style scoped>
-.el-header {
-  background-color: #ffffff;
-  color: #333;
-  line-height: 60px;
-}
 
-.el-menu {
-  min-height: 100vh;
-  overflow-x: hidden;
-  border-right-color: transparent;
-}
-
-.menu-header{
-  height: 60px;
-  line-height: 60px;
-  text-align: center;
-}
-
-.logo {
-  width: 18px;
-  position:relative;
-  top: 3px;
-  margin-right: 5px;
-}
 </style>
