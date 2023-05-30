@@ -81,7 +81,7 @@
     </div>
     <!--      新增与编辑共用对话框-->
     <el-dialog
-        title="新增课程信息"
+        title="课程信息"
         :visible.sync="dialogFormVisible"
         width="30%">
       <el-form label-width="110px" class="demo-ruleForm">
