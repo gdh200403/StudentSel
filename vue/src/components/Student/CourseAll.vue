@@ -134,14 +134,17 @@ export default defineComponent({
                             <el-progress :percentage="row.current / row.capacity * 100"
                                          :text-inside="true"
                                          :stroke-width="14"
-                            color="#a0cfff"></el-progress>
+                            color="#ecf5ff"></el-progress>
                         </div>
                     </div>
                 </template>
             </el-table-column>
             <el-table-column label="操作" fixed="right">
                 <template slot-scope="{ row }">
-                    <el-button v-if="!row.selected" type="primary" @click="selectCourse(row)" size="mini">选课</el-button>
+                    <el-button v-if="!row.selected"
+                               type="primary"
+                               @click="selectCourse(row)"
+                               size="mini" plain>选课</el-button>
                     <el-tag v-else>已选中</el-tag>
                 </template>
             </el-table-column>
@@ -153,7 +156,5 @@ export default defineComponent({
 </template>
 
 <style scoped>
-.h1{
-    color: ;
-}
+
 </style>
