@@ -9,7 +9,7 @@
               style="width: 200px"
               class="ml-5">
           </el-input>
-          <el-select v-model="type" placeholder="请选择课程性质" style="width: 100px" class="ml-5">
+          <el-select v-model="type" placeholder="请选择课程性质" style="width: 200px" class="ml-5">
             <el-option
                 v-for="item in options"
                 :key="item.value"
@@ -162,7 +162,7 @@ export default {
         label: '选修课'
       }, {
         value: '',
-        label: '无'
+        label: '请选择课程性质'
       }],
       teacher_id: '',
       teacher_name: '',
