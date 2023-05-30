@@ -138,37 +138,12 @@
                 <el-form-item label="授课学期" prop="comment">
                     <el-input v-model="form.term"></el-input>
                 </el-form-item>
-                <!--        <el-form-item label="课程名称" prop="course_name">-->
-                <!--          <el-input v-model="form.course_name"></el-input>-->
-                <!--        </el-form-item>-->
-                <!--        <el-form-item label="课程性质" prop="type">-->
-                <!--          <el-select v-model="form.type" placeholder="请选择课程性质">-->
-                <!--            <el-option-->
-                <!--                v-for="item in options"-->
-                <!--                :key="item.value"-->
-                <!--                :label="item.label"-->
-                <!--                :value="item.value">-->
-                <!--            </el-option>-->
-                <!--          </el-select>-->
-                <!--        </el-form-item>-->
                 <el-form-item label="授课地点" prop="place">
                     <el-input v-model="form.place"></el-input>
                 </el-form-item>
                 <el-form-item label="授课时间" prop="time">
                     <el-input v-model="form.time"></el-input>
                 </el-form-item>
-                <!--        <el-form-item label="学分" prop="credit">-->
-                <!--          <el-input v-model="form.credit"></el-input>-->
-                <!--        </el-form-item>-->
-                <!--        <el-form-item label="总学时" prop="total_hours">-->
-                <!--          <el-input v-model="form.total_hours"></el-input>-->
-                <!--        </el-form-item>-->
-                <!--        <el-form-item label="授课学时" prop="teaching_hours">-->
-                <!--          <el-input v-model="form.teaching_hours"></el-input>-->
-                <!--        </el-form-item>-->
-                <!--        <el-form-item label="实验/上机学时" prop="experiment_hours">-->
-                <!--          <el-input v-model="form.experiment_hours"></el-input>-->
-                <!--        </el-form-item>-->
                 <el-form-item label="已选人数" prop="current">
                     <el-input v-model="form.current"></el-input>
                 </el-form-item>

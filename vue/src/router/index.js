@@ -36,6 +36,7 @@ const routes = [
         children: [
             {path: 'info', name: 'info', component: () => import('../components/Student/Info.vue')},
             {path: 'courseSelected', name: 'courseSelected', component: () => import('../components/Student/CourseSelected.vue')},
+            {path: 'courseAll', name: 'courseAll', component: () => import('../components/Student/CourseAll.vue')},
         ]
     },
     {
