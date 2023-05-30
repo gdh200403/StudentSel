@@ -10,7 +10,7 @@
           :collapse-transition=false
           :collapse="isCollapse">
         <div class="menu-header">
-          <img src="../assets/logo.png" class="logo" >
+          <img src="../assets/logo_before.png" class="logo" >
           <b style="color: white" v-show="!isCollapse">教师后台</b>
         </div>
         <el-submenu index="1" style="width: 200px">

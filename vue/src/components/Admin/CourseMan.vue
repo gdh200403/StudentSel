@@ -48,22 +48,12 @@
               type="success">
             <i class="el-icon-edit-outline"></i>编辑
           </el-button>
-          <el-popconfirm
-            class="ml-5"
-            confirm-button-text='确定'
-            cancel-button-text='取消'
-            icon="el-icon-info"
-            icon-color="red"
-            title="确定删除该课程吗？"
-            @confirm="handleDelete(scope.row)"
-          >
+
             <el-button
               size="mini"
-              type="danger"
-              slot = "reference">
-              <i class="el-icon-delete"></i>删除
+              type="danger">
+              <i class="el-icon-delete" @click="handleDelete(scope.row)"></i>删除
             </el-button>
-          </el-popconfirm>
         </template>
       </el-table-column>
     </el-table>
@@ -182,8 +172,6 @@ export default {
       place: '',
       credit: '',
       form : {
-        teacher_id: '',
-        teacher_name: '',
         course_id: '',
         course_name: '',
         type: '',
@@ -191,11 +179,6 @@ export default {
         total_hours: '',
         teaching_hours: '',
         experiment_hours: '',
-        current: '',
-        capacity: '',
-        term: '',
-        place: '',
-        comment: '',
       },
       dialogFormVisible: false,
       disableEdit: false,
@@ -221,14 +204,11 @@ export default {
     },
     load(){
 
-      this.request.get('/api/admin/page/tc', {
+      this.request.get('/api/admin/page/course', {
             params: {
-              teacher_id: (this.teacher_id === '' ? "" : this.teacher_id),
-              teacher_name: (this.teacher_name === '' ? "" : this.teacher_name),
               course_id: (this.course_id === '' ? "" : this.course_id),
               course_name: (this.course_name === '' ? "" : this.course_name),
               type: (this.type === '' ? "" : this.type),
-              place: (this.place === '' ? "" : this.place),
               credit: (this.credit === '' ? -1 : this.credit),
               page: this.currentPage,
               pageSize: this.pageSize
@@ -249,13 +229,13 @@ export default {
         this.disableEdit = false
         this.dialogFormVisible = true
         this.form = {
-          teacher_id: '',
-          course_id: '',
-          current: '',
-          capacity: '',
-          term: '',
-          place: '',
-          comment: '',
+            course_id: '',
+            course_name: '',
+            type: '',
+            credit: '',
+            total_hours: '',
+            teaching_hours: '',
+            experiment_hours: '',
         }
     },
     handleEdit(row) {
@@ -264,19 +244,26 @@ export default {
         this.form = Object.assign({}, row)
     },
     handleDelete(row) {
-      this.request.delete('/api/admin/tc/delete/' + row.teacher_id + '/' + row.course_id)
-        .then(res => {
-          if (res.status === 200) {
-            this.$message.success(res.msg)
-            this.load()
-          } else {
-            this.$message.error(res.msg)
-          }
-        })
+        this.$confirm('删除课程会一并删除与该课程相关的选课与授课记录，确定吗？', '提示', {
+            confirmButtonText: '确定',
+            cancelButtonText: '取消',
+            type: 'danger'
+        }).then(() => {
+            this.request.delete('/api/admin/course/delete/' + row.course_id)
+                .then(res => {
+                    if (res.status === 200) {
+                        this.$message.success(res.msg)
+                        this.load()
+                    } else {
+                        this.$message.error(res.msg)
+                    }
+                })
+        }).catch(() => {
+        });
     },
     save(){
         if (this.disableEdit) {
-            this.request.post('/api/admin/tc/update', this.form)
+            this.request.post('/api/admin/course/update', this.form)
                 .then(res => {
                     if (res.status === 200) {
                         this.$message.success(res.msg)
@@ -287,7 +274,7 @@ export default {
                     }
                 })
         } else {
-            this.request.post('/api/admin/tc/save', this.form)
+            this.request.post('/api/admin/course/save', this.form)
                 .then(res => {
                     if (res.status === 200) {
                         this.$message.success(res.msg)

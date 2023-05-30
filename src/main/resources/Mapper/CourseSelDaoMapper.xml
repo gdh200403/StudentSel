@@ -57,7 +57,7 @@
             <if test="credit != null and credit != -1">
                 credit = #{credit} and
             </if>
-            <if test="place != null and place != -1">
+            <if test="place != null and place != ''">
                 place = #{place} and
             </if>
             true
