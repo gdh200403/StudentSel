@@ -55,6 +55,6 @@
         where course.course_id = #{course_id}
     </update>
     <delete id="deleteCourse" parameterType="String">
-        delete from course where course.course_id = #{course_id}
+        call deleteCourse(#{course_id})
     </delete>
 </mapper>

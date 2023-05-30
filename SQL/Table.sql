@@ -1,7 +1,6 @@
 create database if not exists CourseSelSys character set utf8mb4 collate utf8mb4_bin;
-
 USE `CourseSelSys`;
-# --TODO: 1.	当学生入学后，大学一般已经为学生准备了四年的学习计划，即为了满足学历、学位的要求而应完成的课程（Course）
+# TODO: 1. 当学生入学后，大学一般已经为学生准备了四年的学习计划，即为了满足学历、学位的要求而应完成的课程（Course）
 # 2.	在每学期期末的选课（Class）时间，学生都能通过选课系统查看下学期所开设课程，并选择和注册自己应该或有兴趣学习的课程，学生也可按学分查询、按课程性质查询等多种方式查询课程信息。系统应提供选课帮助，如已经选择的总学分等。
 # 3.	如果多个老师讲授这门课程，学生还可以选择自己喜欢的老师的课程
 # 4.	如果有空余的选课名额，那么学生就选课成功，考试结束后可查看该课程的成绩
@@ -92,27 +91,72 @@ drop view if exists SCView;
 create view TCView as select teacher.teacher_id,teacher_name,course.course_id,course_name,type,credit,total_hours,teaching_hours,experiment_hours,term,place,current,Capacity,Comment
                       from TC inner join Course on TC.course_id=Course.course_id inner join Teacher on TC.teacher_id=Teacher.teacher_id;
 
-create view SCView as select SC.student_id, student_name, SC.course_id, course_name, Teacher.teacher_id, teacher.teacher_name, type, credit, total_hours, teaching_hours, experiment_hours, term, place, Grade
+create view SCView as select SC.student_id, student_name, SC.course_id, course_name, Teacher.teacher_id, teacher.teacher_name, type, credit, total_hours, teaching_hours, experiment_hours, term, place, Grade, current, Capacity, Comment
                       from sc, tc, Student, Course, Teacher
                       where sc.course_id = tc.course_id and sc.student_id = Student.student_id and sc.course_id = Course.course_id and tc.teacher_id = Teacher.teacher_id;
+
+# 删除课程记录事务
+drop procedure if exists deleteCourse;
+delimiter //
+create procedure deleteCourse(in course_id varchar(20))
+begin
+    #define course_name
+#     set @course_name=(select course_name from Course where Course.course_id=course_id);
+#     call deleteCourseByName(@course_name);
+    delete from TC where tc.course_id=course_id;
+    delete from SC where sc.course_id=course_id;
+    delete from Course where course.course_id=course_id;
+end //
+delimiter ;
+
+# 删除所遇课程名的课程记录事务
+drop procedure if exists deleteCourseByName;
+delimiter //
+create procedure deleteCourseByName(in course_name varchar(20))
+begin
+    delete from TC where tc.course_id in (select course_id from Course where course.course_name=course_name);
+    delete from SC where sc.course_id in (select course_id from Course where course.course_name=course_name);
+    delete from Course where course.course_name=course_name;
+end //
+
+# 删除教师记录事务
+drop procedure if exists deleteTeacher;
+delimiter //
+create procedure deleteTeacher(in teacher_id varchar(20))
+begin
+    delete from TC where tc.teacher_id=teacher_id;
+    delete from Teacher where teacher.teacher_id=teacher_id;
+end //
+delimiter ;
+
+# 删除学生记录事务
+drop procedure if exists deleteStudent;
+delimiter //
+create procedure deleteStudent(in student_id varchar(20))
+begin
+    delete from SC where sc.student_id=student_id;
+    delete from Student where student.student_id=student_id;
+end //
+delimiter ;
+
 
 
 insert into Admin values('admin','admin');
 
-insert into CoursePlan values('计算机科学与技术','计算机科学与技术2024-2027');
-insert into CoursePlan values('软件工程','软件工程2024-2027');
-insert into CoursePlan values('网络工程','网络工程2024-2027');
-insert into CoursePlan values('信息安全','信息安全2024-2027');
-insert into CoursePlan values('数学','数学2024-2027');
-insert into CoursePlan values('物理','物理2024-2027');
-insert into CoursePlan values('化学','化学2024-2027');
-insert into CoursePlan values('生物','生物2024-2027');
-insert into CoursePlan values('英语','英语2024-2027');
-insert into CoursePlan values('法学','法学2024-2027');
-insert into CoursePlan values('经济学','经济学2024-2027');
-insert into CoursePlan values('管理学','管理学2024-2027');
-insert into CoursePlan values('哲学','哲学2024-2027');
-insert into CoursePlan values('历史学','历史学2024-2027');
+insert into CoursePlan values('计算机科学与技术','计算机科学与技术 2024-2027');
+insert into CoursePlan values('软件工程','软件工程 2024-2027');
+insert into CoursePlan values('网络工程','网络工程 2024-2027');
+insert into CoursePlan values('信息安全','信息安全 2024-2027');
+insert into CoursePlan values('数学','数学 2024-2027');
+insert into CoursePlan values('物理','物理 2024-2027');
+insert into CoursePlan values('化学','化学 2024-2027');
+insert into CoursePlan values('生物','生物 2024-2027');
+insert into CoursePlan values('英语','英语 2024-2027');
+insert into CoursePlan values('法学','法学 2024-2027');
+insert into CoursePlan values('经济学','经济学 2024-2027');
+insert into CoursePlan values('管理学','管理学 2024-2027');
+insert into CoursePlan values('哲学','哲学 2024-2027');
+insert into CoursePlan values('历史学','历史学 2024-2027');
 
 insert into Student values('PB42000001','张百嘉','男',20,'计算机科学与技术','123456');
 insert into Student values('PB42000002','李玲','女',20,'软件工程','123456');
@@ -130,16 +174,27 @@ insert into Teacher values('PB42000012','张明','男',30,'123456');
 
 # generate 10 courses data with random data and different course name
 insert into Course values('42000001','计算机科学与技术','专业必修',4,64,32,32);
-insert into Course values('42000002','计算机科学与技术','专业必修',5,64,32,32);
-insert into Course values('42000003','计算机科学与技术','专业必修',2,64,32,32);
-insert into Course values('42000004','计算机科学与技术','专业必修',2,64,32,32);
-insert into Course values('42000005','计算机科学与技术','专业必修',4,64,32,32);
-insert into Course values('42000006','计算机科学与技术','专业必修',4,64,32,32);
-insert into Course values('42000007','计算机科学与技术','专业必修',3,64,32,32);
+insert into Course values('42000002','物理','专业必修',5,64,32,32);
+insert into Course values('42000003','数学','专业必修',2,64,32,32);
+insert into Course values('42000004','哲学','专业必修',2,64,32,32);
+insert into Course values('42000005','生物','专业必修',4,64,32,32);
+insert into Course values('42000006','英语','专业必修',4,64,32,32);
+insert into Course values('42000007','历史学','专业必修',3,64,32,32);
 
 insert into TC values('PB42000007','42000001',0,100, 'sp23', 'A101','');
-insert into TC values('PB42000008','42000002',0,100, 'sp22', 'A102','');
-insert into TC values('PB42000009','42000003',0,100, 'sp21', 'A103','');
-insert into TC values('PB42000010','42000004',0,100, 'sp21', 'A104','');
-insert into TC values('PB42000011','42000005',0,100, 'sp21', 'A105','');
+insert into TC values('PB42000008','42000001',0,100, 'sp22', 'A102','');
+insert into TC values('PB42000009','42000004',0,100, 'sp21', 'A103','');
+insert into TC values('PB42000010','42000005',0,100, 'sp21', 'A104','');
+insert into TC values('PB42000011','42000006',0,100, 'sp21', 'A105','');
 insert into TC values('PB42000012','42000006',0,100, 'sp22', 'A106','');
+
+
+insert into SC values('PB42000001','42000001',NULL);
+insert into SC values('PB42000001','42000002',NULL);
+insert into SC values('PB42000001','42000003',NULL);
+insert into SC values('PB42000001','42000004',NULL);
+insert into SC values('PB42000002','42000002',NULL);
+insert into SC values('PB42000002','42000003',NULL);
+insert into SC values('PB42000002','42000004',NULL);
+insert into SC values('PB42000003','42000006',NULL);
+insert into SC values('PB42000003','42000007',NULL);

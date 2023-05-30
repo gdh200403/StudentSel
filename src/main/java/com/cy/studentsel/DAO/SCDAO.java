@@ -24,5 +24,5 @@ public interface SCDAO {
 
     public List<SCRecord> querySCByCondition(SCRecord record);
 
-    public void deleteSC(String studentId, String courseId);
+    public void deleteSC(String student_id, String course_id);
 }
