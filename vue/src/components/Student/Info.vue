@@ -111,7 +111,8 @@ export default defineComponent({
         <el-descriptions class="info" title="成绩信息" style="margin-top: 50px"></el-descriptions>
         <el-table
             :data="tableData.filter(data => !search || data.name.toLowerCase().includes(search.toLowerCase()))"
-            class="info">
+            class="info"
+            stripe>
             <el-table-column
                 label="授课学期"
                 prop="term">
