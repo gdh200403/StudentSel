@@ -4,8 +4,10 @@ package com.cy.studentsel.handler.impl;
 
 import com.cy.studentsel.DAO.SCDAO;
 import com.cy.studentsel.DAO.StudentDAO;
+import com.cy.studentsel.DAO.TCDAO;
 import com.cy.studentsel.entity.SCRecord;
 import com.cy.studentsel.entity.StudentRecord;
+import com.cy.studentsel.entity.TCRecord;
 import com.cy.studentsel.handler.StudentHandler;
 import com.cy.studentsel.handler.ex.HandlerSqlException;
 import com.cy.studentsel.handler.ex.PasswordNoMatchException;
@@ -27,6 +29,8 @@ public class StudentHandlerImpl implements StudentHandler {
     private StudentDAO studentDao;
     @Resource
     private SCDAO scDAO;
+    @Resource
+    private TCDAO tcDAO;
 
     @Override
     public String login(String ID, String pwd) {
@@ -64,6 +68,10 @@ public class StudentHandlerImpl implements StudentHandler {
         return scDAO.querySCByStudentID(student_id);
     }
 
+    @Override
+    public List<TCRecord> queryTCByCondition(TCRecord record) {
+        return tcDAO.queryTCByCondition(record);
+    }
 
 
     public static void main(String[] args) {

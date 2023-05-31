@@ -15,7 +15,7 @@ public class SCRecord implements Serializable {
 
 
 
-    private int grade;
+    private int grade = -1;
 
     private String student_name;
     private String course_name;

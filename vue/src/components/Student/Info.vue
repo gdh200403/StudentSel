@@ -33,6 +33,9 @@ export default defineComponent({
             credit_failed:2,
             arith_ave:89.23,
             weighted_ave:90.86,
+            total : 10,
+            currentPage: 1,
+            pageSize: 5,
         }
     },
     created() {
@@ -41,13 +44,32 @@ export default defineComponent({
     methods: {
         load() {
             //request for student Personal info
-            this.request.get('/api/student/personal',{
+            this.request.get('/api/student/personal', {
                 params: {
-                    student_id: this.user.username
+                    student_id: this.user.username,
                 }
             }).then(res => {
                 console.log(res)
                 this.student = res.data
+            }).catch(err => {
+                console.log(err)
+            })
+            // request for student course info
+            this.request.get('/api/student/page/sc', {
+                params: {
+                    student_id: this.user.username,
+                    page: this.currentPage,
+                    pageSize: this.pageSize
+                }
+            }).then(res => {
+                console.log(res)
+                this.tableData = res.data.pageInfo.list
+                this.total = res.data.pageInfo.total
+                this.total_credit = res.data.total_credit
+                this.credit_passed = res.data.credit_passed
+                this.credit_failed = res.data.credit_failed
+                this.arith_ave = res.data.arith_ave
+                this.weighted_ave = res.data.weighted_ave
             }).catch(err => {
                 console.log(err)
             })
@@ -57,8 +79,16 @@ export default defineComponent({
         },
         handleDelete(index, row) {
             console.log(index, row);
-        }
-    },
+        },
+        handleSizeChange(pageSize) {
+            this.pageSize = pageSize
+            this.load()
+        },
+        handleCurrentChange(currentPage) {
+            this.currentPage = currentPage
+            this.load()
+        },
+    }
 })
 </script>
 
@@ -147,6 +177,18 @@ export default defineComponent({
                 </template>
             </el-table-column>
         </el-table>
+        <div style="padding: 10px;text-align: center">
+            <!--          分页控制-->
+            <el-pagination
+                @size-change="handleSizeChange"
+                @current-change="handleCurrentChange"
+                :current-page="currentPage"
+                :page-sizes="[2, 5, 10, 15, 20]"
+                :page-size="pageSize"
+                layout="total, sizes, prev, pager, next, jumper"
+                :total="total">
+            </el-pagination>
+        </div>
         <div style="width: 100vh;margin: 0 auto">
         <el-row gutter="20" style="margin-top: 30px">
                 <el-col span="4">

@@ -5,6 +5,25 @@ export default defineComponent({
     name: "CourseAll",
     data(){
         return{
+            teacher_id: '',
+            teacher_name: '',
+            course_id: '',
+            course_name: '',
+            term:'',
+            type: '',
+            place: '',
+            credit: '',
+            form : {
+                teacher_id: '',
+                teacher_name: '',
+                course_id: '',
+                course_name: '',
+                current: '',
+                capacity: '',
+                term: '',
+                place: '',
+                comment: '',
+            },
             course:[{//TODO 显示数据
                 teacher_id: '123',
                 teacher_name: '123',
@@ -38,22 +57,62 @@ export default defineComponent({
             credit_selected:12,//TODO 统计当前已选总学分
             selectedCourses: [],
             errorDialogVisible: false,
-            errorMessage: ''
+            errorMessage: '',
+            total : 10,
+            currentPage: 1,
+            pageSize: 5,
         }
     },
+    created() {
+        this.load()
+    },
     methods:{
-        selectCourse(row){//TODO 代码乱写的 这个错误提示外观也不漂亮
-            if (this.selectedCourses.some(c => c.name === course.name)) {
-                this.errorMessage = '同一门课程只能选择一个课堂';
-                this.errorDialogVisible = true;
-            }
-            else
-                row.selected = true;
-            // this.selectedCourses.push(course);
+        // selectCourse(row){//TODO 代码乱写的 这个错误提示外观也不漂亮
+        //     if (this.selectedCourses.some(c => c.name === course.name)) {
+        //         this.errorMessage = '同一门课程只能选择一个课堂';
+        //         this.errorDialogVisible = true;
+        //     }
+        //     else
+        //         row.selected = true;
+        //     // this.selectedCourses.push(course);
+        // },
+        load(){
+
+            this.request.get('/api/student/page/tc', {
+                    params: {
+                        teacher_id: (this.teacher_id === '' ? "" : this.teacher_id),
+                        teacher_name: (this.teacher_name === '' ? "" : this.teacher_name),
+                        course_id: (this.course_id === '' ? "" : this.course_id),
+                        course_name: (this.course_name === '' ? "" : this.course_name),
+                        type: (this.type === '' ? "" : this.type),
+                        place: (this.place === '' ? "" : this.place),
+                        credit: (this.credit === '' ? -1 : this.credit),
+                        page: this.currentPage,
+                        pageSize: this.pageSize
+                    }
+                }
+            )
+                .then( res => {
+                    if (res.status === 200) {
+                        this.course = res.data.list
+                        this.total = res.data.total
+                    } else {
+                        this.$message.error(res.msg)
+                    }
+                })
+
         },
         search(){
-            //TODO
-        }
+            this.load()
+        },
+        handleSizeChange(pageSize) {
+            this.pageSize = pageSize
+            this.load()
+        },
+        handleCurrentChange(currentPage) {
+            this.currentPage = currentPage
+            this.load()
+        },
     }
 })
 </script>
@@ -146,6 +205,18 @@ export default defineComponent({
                 </template>
             </el-table-column>
         </el-table>
+        <!--          分页控制-->
+        <div style="padding: 10px;text-align: center">
+            <el-pagination
+                @size-change="handleSizeChange"
+                @current-change="handleCurrentChange"
+                :current-page="currentPage"
+                :page-sizes="[2, 5, 10, 15, 20]"
+                :page-size="pageSize"
+                layout="total, sizes, prev, pager, next, jumper"
+                :total="total">
+            </el-pagination>
+        </div>
         <el-dialog title="错误提示" :visible.sync="errorDialogVisible">
             <span>{{ errorMessage }}</span>
         </el-dialog>
