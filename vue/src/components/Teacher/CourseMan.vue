@@ -75,31 +75,15 @@
       <el-table-column property="current" label="已选人数" width="80"></el-table-column>
       <el-table-column property="capacity" label="选课上限" width="80"></el-table-column>
       <el-table-column property="comment" label="课程备注"></el-table-column>
-      <!--          编辑与删除-->
+      <!--          点开查看学生-->
       <el-table-column align="right">
         <template slot-scope="scope">
           <el-button
               size="mini"
-              @click="handleEdit(scope.row)"
+              @click="handleCheck(scope.row)"
               type="success">
-            <i class="el-icon-edit-outline"></i>编辑
+            <i class="el-icon-edit-outline"></i>查看
           </el-button>
-          <el-popconfirm
-            class="ml-5"
-            confirm-button-text='确定'
-            cancel-button-text='取消'
-            icon="el-icon-info"
-            icon-color="red"
-            title="确定删除该授课信息吗？"
-            @confirm="handleDelete(scope.row)"
-          >
-            <el-button
-              size="mini"
-              type="danger"
-              slot = "reference">
-              <i class="el-icon-delete"></i>删除
-            </el-button>
-          </el-popconfirm>
         </template>
       </el-table-column>
     </el-table>
@@ -119,64 +103,33 @@
     <el-dialog
         title="授课信息"
         :visible.sync="dialogFormVisible"
-        width="30%">
-      <el-form label-width="100px" class="demo-ruleForm">
-        <el-form-item label="课程ID" prop="course_id">
-          <el-input :disabled = "disableEdit" v-model="form.course_id"></el-input>
-        </el-form-item>
-        <el-form-item label="课程名称" prop="course_name">
-          <el-input v-model="form.course_name" disabled></el-input>
-        </el-form-item>
-        <el-form-item label="教师ID" prop="course_id">
-          <el-input :disabled = "disableEdit" v-model="form.teacher_id"></el-input>
-        </el-form-item>
-        <el-form-item label="教师姓名" prop="course_name">
-          <el-input v-model="form.teacher_name" disabled></el-input>
-        </el-form-item>
-<!--        <el-form-item label="课程名称" prop="course_name">-->
-<!--          <el-input v-model="form.course_name"></el-input>-->
-<!--        </el-form-item>-->
-<!--        <el-form-item label="课程性质" prop="type">-->
-<!--          <el-select v-model="form.type" placeholder="请选择课程性质">-->
-<!--            <el-option-->
-<!--                v-for="item in options"-->
-<!--                :key="item.value"-->
-<!--                :label="item.label"-->
-<!--                :value="item.value">-->
-<!--            </el-option>-->
-<!--          </el-select>-->
-<!--        </el-form-item>-->
-        <el-form-item label="授课地点" prop="place">
-          <el-input v-model="form.place"></el-input>
-        </el-form-item>
-<!--        <el-form-item label="学分" prop="credit">-->
-<!--          <el-input v-model="form.credit"></el-input>-->
-<!--        </el-form-item>-->
-<!--        <el-form-item label="总学时" prop="total_hours">-->
-<!--          <el-input v-model="form.total_hours"></el-input>-->
-<!--        </el-form-item>-->
-<!--        <el-form-item label="授课学时" prop="teaching_hours">-->
-<!--          <el-input v-model="form.teaching_hours"></el-input>-->
-<!--        </el-form-item>-->
-<!--        <el-form-item label="实验/上机学时" prop="experiment_hours">-->
-<!--          <el-input v-model="form.experiment_hours"></el-input>-->
-<!--        </el-form-item>-->
-        <el-form-item label="已选人数" prop="current">
-          <el-input v-model="form.current"></el-input>
-        </el-form-item>
-        <el-form-item label="选课上限" prop="capacity">
-          <el-input v-model="form.capacity"></el-input>
-        </el-form-item>
-        <el-form-item label="授课学期" prop="comment">
-          <el-input v-model="form.term"></el-input>
-        </el-form-item>
-        <el-form-item label="课程备注" prop="comment">
-          <el-input v-model="form.comment"></el-input>
-        </el-form-item>
-      </el-form>
-      <div slot="footer" class="dialog-footer">
-        <el-button @click="dialogFormVisible = false">取 消</el-button>
-        <el-button type="primary" @click="save">确 定</el-button>
+        width="60%">
+        <el-table :data="tableData"  stripe class="ml-5" height="700" style="width: 100%">
+            <el-table-column property="还不会调用学生列表" label="一些学生信息" width="100"></el-table-column>
+<!--            TODO: 这里会是学生列表-->
+            <!--          编辑与删除-->
+            <el-table-column align="right">
+                <template slot-scope="scope">
+                    <el-button
+                            size="mini"
+                            @click="handleGiveScore()"
+                            type="success">
+                        <i class="el-icon-edit-outline"></i>修改给分
+                    </el-button>
+                </template>
+            </el-table-column>
+        </el-table>
+        <div style="padding: 10px;text-align: center">
+            <!--          分页控制-->
+            <el-pagination
+                    @size-change="handleSizeChangeStudent"
+                    @current-change="handleCurrentChangeStudent"
+                    :current-page="currentPageStudent"
+                    :page-sizes="[2, 5, 10, 15, 20]"
+                    :page-size="pageSizeStudent"
+                    layout="total, sizes, prev, pager, next, jumper"
+                    :total="total">
+            </el-pagination>
         </div>
     </el-dialog>
   </div>
@@ -185,7 +138,7 @@
 <script>
 
 export default {
-  name: "Admin",
+  name: "Teacher",
   computed: {
   },
   data() {
@@ -235,6 +188,8 @@ export default {
       total : 10,
       currentPage: 1,
       pageSize: 5,
+      currentPageStudent: 1,
+      pageSizeStudent: 5,
     }
   },
   created() {
@@ -252,7 +207,7 @@ export default {
       }
     },
     load(){
-
+      //TODO: 不知道咋搞成从teacher的api调用导入课程和学生列表
       this.request.get('/api/admin/page/tc', {
             params: {
               teacher_id: (this.teacher_id === '' ? "" : this.teacher_id),
@@ -290,21 +245,10 @@ export default {
           comment: '',
         }
     },
-    handleEdit(row) {
+    handleCheck(row) {
         this.disableEdit = true
         this.dialogFormVisible = true
         this.form = Object.assign({}, row)
-    },
-    handleDelete(row) {
-      this.request.delete('/api/admin/tc/delete/' + row.teacher_id + '/' + row.course_id)
-        .then(res => {
-          if (res.status === 200) {
-            this.$message.success(res.msg)
-            this.load()
-          } else {
-            this.$message.error(res.msg)
-          }
-        })
     },
     save(){
         if (this.disableEdit) {
@@ -334,6 +278,9 @@ export default {
     search(){
       this.load()
     },
+    handleGiveScore() {
+        //TODO: 不会写占个位
+    },
     handleSizeChange(pageSize) {
       this.pageSize = pageSize
       this.load()
@@ -341,6 +288,14 @@ export default {
     handleCurrentChange(currentPage) {
       this.currentPage = currentPage
       this.load()
+    },
+    handleSizeChangeStudent(pageSize) {
+        this.pageSizeStudent = pageSize
+        this.load()
+    },
+    handleCurrentChangeStudent(currentPage) {
+        this.currentPageStudent = currentPage
+        this.load()
     },
   }
 }
