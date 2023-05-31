@@ -12,6 +12,9 @@ import java.io.Serializable;
 public class SCRecord implements Serializable {
     private String student_id;
     private String course_id;
+
+
+
     private int grade;
 
     private String student_name;
@@ -31,6 +34,10 @@ public class SCRecord implements Serializable {
     private String term;
     private String place;
     private String comment = "";
+
+    public SCRecord(String student_id) {
+        this.student_id = student_id;
+    }
 
     public SCRecord(String student_id, String course_id, int grade) {
         this.student_id = student_id;

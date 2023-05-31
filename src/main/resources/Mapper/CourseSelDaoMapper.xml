@@ -21,7 +21,8 @@
         select * from sc
     </select>
     <select id="querySCByStudentID" resultType="com.cy.studentsel.entity.SCRecord" parameterType="String">
-        select * from sc where sc.student_id = #{student_id}
+        select * from scview where scview.student_id = #{student_id}
+        order by course_id, term desc
     </select>
     <select id="querySCByCourseID" resultType="com.cy.studentsel.entity.SCRecord" parameterType="String">
         select * from sc where sc.course_id = #{course_id}
@@ -61,6 +62,7 @@
                 place = #{place} and
             </if>
             true
+        order by course_id, term desc
     </select>
     <delete id="deleteSC" parameterType="String">
         delete from sc where sc.student_id = #{student_id} and sc.course_id = #{course_id}

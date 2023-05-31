@@ -30,12 +30,11 @@ public class StudentHandlerImpl implements StudentHandler {
 
     @Override
     public String login(String ID, String pwd) {
-        StudentRecord query = new StudentRecord(ID, null, null, null, null, null);
-        List<StudentRecord> studentRecord = studentDao.queryStudentByCondition(query);
+        StudentRecord studentRecord = studentDao.queryStudentByID(ID);
         if (studentRecord == null) {
             throw new UserNameNoFoundException("学号不存在");
         }
-        if (!Objects.equals(studentRecord.get(0).getPwd(), pwd)){
+        if (!Objects.equals(studentRecord.getPwd(), pwd)){
             throw new PasswordNoMatchException("密码错误");
         }
         return "登录成功";
@@ -59,6 +58,12 @@ public class StudentHandlerImpl implements StudentHandler {
     public void addSC(SCRecord record) {
 
     }
+
+    @Override
+    public List<SCRecord> querySCByStudentId(String student_id) {
+        return scDAO.querySCByStudentID(student_id);
+    }
+
 
 
     public static void main(String[] args) {

@@ -5,35 +5,15 @@ export default defineComponent({
     name: "info",
     data() {
         return {
-            tableData: [{
-                term:'sp22',
-                course_id:'MATH1001.01',
-                course_name:'数学分析(B2)',
-                credit:6,
-                teacher_name:'张三',
-                grade: 90,
-            }, {
-                term:'sp22',
-                course_id:'MATH1001.01',
-                course_name:'数学分析(B2)',
-                credit:6,
-                teacher_name:'张三',
-                grade: 90,
-            }, {
-                term:'sp22',
-                course_id:'MATH1001.01',
-                course_name:'数学分析(B2)',
-                credit:6,
-                teacher_name:'张三',
-                grade: 90,
-            }, {
-                term:'sp22',
-                course_id:'MATH1001.01',
-                course_name:'数学分析(B2)',
-                credit:6,
-                teacher_name:'张三',
-                grade: 90,
-            }],
+            user: localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user')) : {},
+            student : {
+                student_id: '',
+                student_name: '',
+                sex: '',
+                age: '',
+                major: '',
+            },
+            tableData: [],
             options: [
             //     {
             //     value: 'sp23',
@@ -55,7 +35,23 @@ export default defineComponent({
             weighted_ave:90.86,
         }
     },
+    created() {
+        this.load()
+    },
     methods: {
+        load() {
+            //request for student Personal info
+            this.request.get('/api/student/personal',{
+                params: {
+                    student_id: this.user.username
+                }
+            }).then(res => {
+                console.log(res)
+                this.student = res.data
+            }).catch(err => {
+                console.log(err)
+            })
+        },
         handleEdit(index, row) {
             console.log(index, row);
         },
@@ -77,35 +73,35 @@ export default defineComponent({
                     <i class="el-icon-user"></i>
                     学号
                 </template>
-                18100000000
+                {{student.student_id}}
             </el-descriptions-item>
             <el-descriptions-item>
                 <template slot="label">
                     <i class="el-icon-user"></i>
                     姓名
                 </template>
-                kooriookami
+                {{student.student_name}}
             </el-descriptions-item>
             <el-descriptions-item>
                 <template slot="label">
                     <i class="el-icon-user"></i>
                     性别
                 </template>
-                男
+                {{student.sex}}
             </el-descriptions-item>
             <el-descriptions-item>
                 <template slot="label">
                     <i class="el-icon-user"></i>
                     年龄
                 </template>
-                18
+                {{student.age}}
             </el-descriptions-item>
             <el-descriptions-item>
                 <template slot="label">
                     <i class="el-icon-user"></i>
                     专业
                 </template>
-                计算机科学与技术
+                {{student.major}}
             </el-descriptions-item>
         </el-descriptions>
         <el-descriptions class="info" title="成绩信息" style="margin-top: 50px"></el-descriptions>

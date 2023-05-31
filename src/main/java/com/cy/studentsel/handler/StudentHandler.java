@@ -26,5 +26,7 @@ public interface StudentHandler extends UserHandler {
 
     public void addSC(SCRecord record);
 
+    public List<SCRecord> querySCByStudentId(String student_id);
+
 //    public SCRecord querySCByStudentID(String studentId);
 }

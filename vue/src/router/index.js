@@ -31,6 +31,7 @@ const routes = [
     {
         path: '/student',
         name: 'student',
+        redirect: '/student/info',
         component: () => import('../views/Student.vue'),
 
         children: [
