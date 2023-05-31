@@ -1,21 +1,4 @@
 <template>
-<<<<<<< HEAD
-    <el-container style="min-height: 100vh">
-        <!--    左侧边栏导航菜单-->
-        <el-aside :width="sideWidth + 'px'" style="box-shadow: 2px 0 6px rgb(0 21 41 / 35%);">
-            <TeacherAside :isCollapse="isCollapse" style="padding-bottom: 20px" />
-        </el-aside>
-        <el-container>
-            <!--      顶栏-->
-            <el-header>
-                <TeacherHeader :collapseBtnClass="collapseBtnClass" :collapse="collapse"/>
-            </el-header>
-            <!--      主体内容-->
-            <el-main style="overflow-x: hidden">
-                <router-view/>
-            </el-main>
-        </el-container>
-=======
   <el-container style="height: 100%">
 <!--    左侧边栏导航菜单-->
       <el-menu
@@ -131,59 +114,61 @@
           </el-pagination>
         </div>
       </el-main>
->>>>>>> 4f02aa339fc3dbc75e366b4b8772be73c137d531
     </el-container>
+  </el-container>
 </template>
 
 <script>
-
-import TeacherHeader from "@/components/Teacher/TeacherHeader.vue";
-import TeacherAside from "@/components/Teacher/TeacherAside.vue";
 export default {
-    name: "Teacher",
-    data() {
-        const item = {
-
-        };
-        return {
-
-            collapseBtnClass: 'el-icon-s-fold',
-            isCollapse: false,
-            sideWidth: 200,
-        }
-    },
-
-
-    components: {
-        TeacherAside,
-        TeacherHeader,
-    },
-
-    // if search
-
-    methods:{
-        collapse(){ //点击收缩按钮触发
-            this.isCollapse=!this.isCollapse
-            if(this.isCollapse){
-                this.collapseBtnClass = 'el-icon-s-unfold'
-                this.sideWidth = 64
-            }else{
-                this.collapseBtnClass = 'el-icon-s-fold'
-                this.sideWidth = 200
-            }
-        },
-
+  name: "Admin",
+  data() {
+    const item = {
+      date: '2016-05-02',
+      name: '王小虎',
+      address: '上海市普陀区金沙江路 1518 弄'
+    };
+    return {
+      tableData: Array(10).fill(item),
+      collapseBtnClass: 'el-icon-s-fold',
+      isCollapse: false,
     }
+  },
+  methods:{
+    collapse(){ //点击收缩按钮触发
+      this.isCollapse=!this.isCollapse
+      if(this.isCollapse){
+        this.collapseBtnClass = 'el-icon-s-unfold'
+      }else{
+        this.collapseBtnClass = 'el-icon-s-fold'
+      }
+    }
+  }
 }
 </script>
 
 <style scoped>
 .el-header {
-    background-color: #ffffff;
-    color: #333;
-    line-height: 60px;
-    border-bottom: 1px solid #ccc;
+  background-color: #ffffff;
+  color: #333;
+  line-height: 60px;
 }
 
+.el-menu {
+  min-height: 100vh;
+  overflow-x: hidden;
+  border-right-color: transparent;
+}
 
+.menu-header{
+  height: 60px;
+  line-height: 60px;
+  text-align: center;
+}
+
+.logo {
+  width: 18px;
+  position:relative;
+  top: 3px;
+  margin-right: 5px;
+}
 </style>

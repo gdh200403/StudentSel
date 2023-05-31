@@ -137,10 +137,14 @@
 </template>
 
 <script>
+import teacher from "@/views/Teacher.vue";
 
 export default {
   name: "Admin",
   computed: {
+    teacher() {
+      return teacher
+    }
   },
   data() {
     const item = {
