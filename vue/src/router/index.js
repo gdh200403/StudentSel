@@ -20,7 +20,6 @@ const routes = [
         name: 'admin',
         component: () => import('../views/Admin.vue'),
 
-<<<<<<< HEAD
     children: [
         {path: 'studentMan', name: 'studentMan', component: () => import('../components/Admin/StudentMan.vue')},
         {path: 'teacherMan', name: 'teacherMan', component: () => import('../components/Admin/TeacherMan.vue')},
@@ -46,7 +45,6 @@ const routes = [
     name: '404',
     component: () => import('../views/404.vue')
   },
-=======
         children: [
             {path: 'studentMan', name: 'studentMan', component: () => import('../components/Admin/StudentMan.vue')},
             {path: 'teacherMan', name: 'teacherMan', component: () => import('../components/Admin/TeacherMan.vue')},
