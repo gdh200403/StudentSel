@@ -3,7 +3,7 @@
     <!--          搜索框-->
     <div style="margin: 10px 0">
           <el-input
-                  placeholder="请输入ID"
+                  placeholder="请输入学号"
                   prefix-icon="el-icon-search"
                   v-model="student_id"
                   style="width: 200px;"
@@ -55,33 +55,18 @@
       <el-table-column align="right">
         <template slot-scope="scope">
           <el-button
-              size="mini"
-              @click="dialogTableVisible = true"
-              type="info">
-            <i class="el-icon-tickets"></i>查看选课
-          </el-button>
-          <el-button
                   size="mini"
                   @click="handleEdit(scope.row)"
                   type="success">
             <i class="el-icon-edit-outline"></i>编辑
           </el-button>
-          <el-popconfirm
-                  class="ml-5"
-                  confirm-button-text='确定'
-                  cancel-button-text='取消'
-                  icon="el-icon-info"
-                  icon-color="red"
-                  title="确定删除该学生信息吗？"
-                  @confirm="handleDelete(scope.row.student_id)"
-          >
+
             <el-button
                     size="mini"
                     type="danger"
-                    slot = "reference">
-              <i class="el-icon-delete"></i>删除
+                    >
+              <i class="el-icon-delete" @click="handleDelete(scope.row.student_id)"></i>删除
             </el-button>
-          </el-popconfirm>
         </template>
       </el-table-column>
     </el-table>
@@ -235,15 +220,23 @@ export default {
             this.dialogFormVisible = true
         },
         handleDelete(id) {
-            this.request.delete('/api/admin/student/delete/' + id)
-                .then(res => {
-                    if (res.status === 200) {
-                        this.$message.success(res.msg)
-                        this.load()
-                    } else {
-                        this.$message.error(res.msg)
-                    }
-                })
+            this.$confirm('删除该生会删除与该学生相关选课信息，确定吗？', '提示', {
+                confirmButtonText: '确定',
+                cancelButtonText: '取消',
+                type: 'danger'
+            }).then(() => {
+                this.request.delete('/api/admin/student/delete/' + id)
+                    .then(res => {
+                        if (res.status === 200) {
+                            this.$message.success(res.msg)
+                            this.load()
+                        } else {
+                            this.$message.error(res.msg)
+                        }
+                    })
+            }).catch(() => {
+            });
+
         },
         save() {
             if (this.disableEditID) {

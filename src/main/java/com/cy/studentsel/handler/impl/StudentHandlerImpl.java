@@ -4,8 +4,10 @@ package com.cy.studentsel.handler.impl;
 
 import com.cy.studentsel.DAO.SCDAO;
 import com.cy.studentsel.DAO.StudentDAO;
+import com.cy.studentsel.DAO.TCDAO;
 import com.cy.studentsel.entity.SCRecord;
 import com.cy.studentsel.entity.StudentRecord;
+import com.cy.studentsel.entity.TCRecord;
 import com.cy.studentsel.handler.StudentHandler;
 import com.cy.studentsel.handler.ex.HandlerSqlException;
 import com.cy.studentsel.handler.ex.PasswordNoMatchException;
@@ -27,15 +29,16 @@ public class StudentHandlerImpl implements StudentHandler {
     private StudentDAO studentDao;
     @Resource
     private SCDAO scDAO;
+    @Resource
+    private TCDAO tcDAO;
 
     @Override
     public String login(String ID, String pwd) {
-        StudentRecord query = new StudentRecord(ID, null, null, null, null, null);
-        List<StudentRecord> studentRecord = studentDao.queryStudentByCondition(query);
+        StudentRecord studentRecord = studentDao.queryStudentByID(ID);
         if (studentRecord == null) {
             throw new UserNameNoFoundException("学号不存在");
         }
-        if (!Objects.equals(studentRecord.get(0).getPwd(), pwd)){
+        if (!Objects.equals(studentRecord.getPwd(), pwd)){
             throw new PasswordNoMatchException("密码错误");
         }
         return "登录成功";
@@ -58,6 +61,16 @@ public class StudentHandlerImpl implements StudentHandler {
     @Override
     public void addSC(SCRecord record) {
 
+    }
+
+    @Override
+    public List<SCRecord> querySCByStudentId(String student_id) {
+        return scDAO.querySCByStudentID(student_id);
+    }
+
+    @Override
+    public List<TCRecord> queryTCByCondition(TCRecord record) {
+        return tcDAO.queryTCByCondition(record);
     }
 
 

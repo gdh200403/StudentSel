@@ -3,7 +3,7 @@
     <!--          搜索框-->
     <div style="margin: 10px 0">
       <el-input
-          placeholder="请输入ID"
+          placeholder="请输入工号"
           prefix-icon="el-icon-search"
           v-model="teacher_id"
           style="width: 200px;"
@@ -39,7 +39,7 @@
     </div>
     <!--        数据表格-->
     <el-table :data="tableData"  stripe class="ml-5" height="700" style="width: 100%">
-      <el-table-column prop="teacher_id" label="学号" width="180"></el-table-column>
+      <el-table-column prop="teacher_id" label="工号" width="180"></el-table-column>
       <el-table-column prop="teacher_name" label="姓名" width="120"></el-table-column>
       <el-table-column prop="sex" label="性别" width="120"></el-table-column>
       <el-table-column prop="age" label="年龄" width="120"></el-table-column>
@@ -52,22 +52,13 @@
             type="success">
             <i class="el-icon-edit-outline"></i>编辑
           </el-button>
-          <el-popconfirm
-            class="ml-5"
-            confirm-button-text='确定'
-            cancel-button-text='取消'
-            icon="el-icon-info"
-            icon-color="red"
-            title="确定删除该教师信息？"
-            @confirm="handleDelete(scope.row.teacher_id)"
-          >
+
             <el-button
               size="mini"
               type="danger"
-              slot = "reference">
-              <i class="el-icon-delete"></i>删除
+              >
+              <i class="el-icon-delete" @click="handleDelete(scope.row.teacher_id)"></i>删除
             </el-button>
-          </el-popconfirm>
         </template>
       </el-table-column>
     </el-table>
@@ -192,15 +183,23 @@
       this.dialogFormVisible = true
     },
     handleDelete(id) {
-      this.request.delete('/api/admin/teacher/delete/' + id)
-        .then(res => {
-          if (res.status === 200) {
-            this.$message.success(res.msg)
-            this.load()
-          } else {
-            this.$message.error(res.msg)
-          }
-        })
+        this.$confirm('删除该教师会删除与该教师相关授课课信息，确定吗？', '提示', {
+            confirmButtonText: '确定',
+            cancelButtonText: '取消',
+            type: 'danger'
+        }).then(() => {
+            this.request.delete('/api/admin/teacher/delete/' + id)
+                .then(res => {
+                    if (res.status === 200) {
+                        this.$message.success(res.msg)
+                        this.load()
+                    } else {
+                        this.$message.error(res.msg)
+                    }
+                })
+        }).catch(() => {
+        });
+
     },
     save() {
       if (this.disableEditID) {

@@ -1,28 +1,3 @@
-<template>
-  <div style="line-height: 60px; display: flex">
-      <div style="flex: 1;font-size: 18px">
-          <span :class="collapseBtnClass" style="cursor: pointer" @click="collapse"></span>
-      </div>
-      <el-dropdown style="text-align:left;cursor: pointer" trigger="click">
-          <div>
-              <span>{{user.username}}</span>
-              <i class="el-icon-arrow-down"></i>
-          </div>
-          <el-dropdown-menu slot="dropdown">
-              <el-dropdown-item><i class="el-icon-user"></i>个人信息</el-dropdown-item>
-              <el-dropdown-item >
-                  <div @click="logout">
-                    <i class="el-icon-switch-button"  ></i>退出登陆
-                  </div>
-              </el-dropdown-item>
-<!--              <el-dropdown-item style="font-size: 14px; padding: 5px 0">-->
-<!--                  <span style="text-decoration: none" @click="logout">退出</span>-->
-<!--              </el-dropdown-item>-->
-          </el-dropdown-menu>
-      </el-dropdown>
-  </div>
-</template>
-
 <script>
 export default {
     name: "AdminHeader",
@@ -53,6 +28,31 @@ export default {
     }
 }
 </script>
+
+<template>
+  <div style="line-height: 60px; display: flex">
+      <div style="flex: 1;font-size: 18px">
+          <span :class="collapseBtnClass" style="cursor: pointer" @click="collapse"></span>
+      </div>
+      <el-dropdown style="text-align:left;cursor: pointer" trigger="click">
+          <div>
+              <span>{{user.username}}</span>
+              <i class="el-icon-arrow-down"></i>
+          </div>
+          <el-dropdown-menu slot="dropdown">
+              <el-dropdown-item><i class="el-icon-user"></i>个人信息</el-dropdown-item>
+              <el-dropdown-item >
+                  <div @click="logout">
+                    <i class="el-icon-switch-button"  ></i>退出登陆
+                  </div>
+              </el-dropdown-item>
+<!--              <el-dropdown-item style="font-size: 14px; padding: 5px 0">-->
+<!--                  <span style="text-decoration: none" @click="logout">退出</span>-->
+<!--              </el-dropdown-item>-->
+          </el-dropdown-menu>
+      </el-dropdown>
+  </div>
+</template>
 
 <style>
 /*.el-header {*/

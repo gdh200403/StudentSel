@@ -53,7 +53,7 @@
         </where>
     </update>
     <delete id="deleteTeacher" parameterType="String">
-        delete from teacher where teacher.teacher_id = #{teacher_id}
+        call deleteTeacher(#{teacher_id})
     </delete>
     <insert id="addTeacher" parameterType="com.cy.studentsel.entity.TeacherRecord">
         insert into teacher values (#{teacher_id}, #{teacher_name}, #{sex}, #{age}, #{pwd})

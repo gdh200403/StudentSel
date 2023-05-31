@@ -25,10 +25,6 @@ public class AdminController extends BaseController{
     @Resource
     private AdminHandler adminHandler;
 
-    public static class pageInfo<E> {
-        public int total;
-        public List<E> list;
-    };
 
 
     @GetMapping("/page/student")
@@ -258,10 +254,7 @@ public class AdminController extends BaseController{
                                                              @RequestParam String course_id,
                                                              @RequestParam String course_name,
                                                              @RequestParam String type,
-                                                             @RequestParam int credit,
-                                                             @RequestParam int total_hours,
-                                                             @RequestParam int teaching_hours,
-                                                             @RequestParam int experiment_hours
+                                                             @RequestParam int credit
     ) {
         JsonResult<pageInfo<CourseRecord>> jsonResult = new JsonResult<>();
         pageInfo<CourseRecord> pageInfo = new pageInfo<>();
