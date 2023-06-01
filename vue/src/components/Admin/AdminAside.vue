@@ -54,9 +54,9 @@ export default {
     text-align: center;
 }
 .el-menu {
-  min-height: 100%;
-  overflow-x: hidden;
-  border-right-color: transparent;
+    min-height: 100%;
+    overflow-x: hidden;
+    border-right-color: transparent;
 }
 /*.el-menu-item.is-active {*/
 /*    background-color: rgb(38, 52, 69) !important;*/

@@ -67,5 +67,4 @@ export default {
     border-bottom: 1px solid #ccc;
 }
 
-
 </style>

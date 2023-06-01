@@ -38,7 +38,8 @@
                     <el-button
                         size="mini"
                         @click="handle_add(scope.row.student_id, scope.row.student_name)"
-                        type="success">
+                        type="success"
+                    style="width: 90px">
                         <i class="el-icon-edit-outline"></i>新增选课
                     </el-button>
                     <el-popconfirm
@@ -53,7 +54,9 @@
                         <el-button
                             size="mini"
                             type="danger"
-                            slot = "reference">
+                            slot = "reference"
+                        style="width: 90px;margin-top: 5px"
+                        >
                             <i class="el-icon-delete"></i>删除
                         </el-button>
                     </el-popconfirm>
