@@ -26,7 +26,17 @@ public class AdminController extends BaseController{
     private AdminHandler adminHandler;
 
 
-
+    /**
+     * get page info of student with condition
+     * @param page
+     * @param pageSize
+     * @param student_id
+     * @param student_name
+     * @param sex
+     * @param age
+     * @param major
+     * @return
+     */
     @GetMapping("/page/student")
     @ResponseBody
     public JsonResult<pageInfo<StudentRecord>> findPageStudent(@RequestParam Integer page, @RequestParam Integer pageSize,
@@ -40,7 +50,7 @@ public class AdminController extends BaseController{
         pageInfo<StudentRecord> pageInfo = new pageInfo<>();
         StudentRecord record = new StudentRecord(student_id, student_name, sex, age, major);
         List<StudentRecord> list = adminHandler.queryStudentByCondition(record);
-//        List<StudentRecord> list = adminHandler.queryAllStudent();
+        // get page info
         int pageStart = (page - 1) * pageSize;
         int limit = pageSize;
         pageInfo.list = list.subList(pageStart, min(pageStart + limit, list.size()));
@@ -81,7 +91,21 @@ public class AdminController extends BaseController{
         return jsonResult;
     }
 
-
+    /**
+     * get page info of course Selection with condition
+     * @param page
+     * @param pageSize
+     * @param student_id
+     * @param student_name
+     * @param course_id
+     * @param course_name
+     * @param teacher_id
+     * @param teacher_name
+     * @param type
+     * @param credit
+     * @param place
+     * @return page info`
+     */
     @GetMapping("/page/sc")
     @ResponseBody
     public JsonResult<pageInfo<SCRecord>> findPageSC(@RequestParam Integer page, @RequestParam Integer pageSize,
@@ -139,7 +163,16 @@ public class AdminController extends BaseController{
         return jsonResult;
     }
 
-
+    /**
+     * get page info of teacher with condition
+     * @param page
+     * @param pageSize
+     * @param teacher_id
+     * @param teacher_name
+     * @param sex
+     * @param age
+     * @return
+     */
     @GetMapping("/page/teacher")
     @ResponseBody
     public JsonResult<pageInfo<TeacherRecord>> findPageTeacher(@RequestParam Integer page, @RequestParam Integer pageSize,
@@ -193,6 +226,19 @@ public class AdminController extends BaseController{
         return jsonResult;
     }
 
+    /**
+     * get page info of teach course with condition
+     * @param page
+     * @param pageSize
+     * @param teacher_id
+     * @param course_id
+     * @param teacher_name
+     * @param course_name
+     * @param type
+     * @param credit
+     * @param place
+     * @return
+     */
     @GetMapping("/page/tc")
     @ResponseBody
     public JsonResult<pageInfo<TCRecord>> findPageTC(@RequestParam Integer page, @RequestParam Integer pageSize,
@@ -248,6 +294,16 @@ public class AdminController extends BaseController{
         return jsonResult;
     }
 
+    /**
+     * get page info of course with condition
+     * @param page
+     * @param pageSize
+     * @param course_id
+     * @param course_name
+     * @param type
+     * @param credit
+     * @return
+     */
     @GetMapping("/page/course")
     @ResponseBody
     public JsonResult<pageInfo<CourseRecord>> findPageCourse(@RequestParam Integer page, @RequestParam Integer pageSize,

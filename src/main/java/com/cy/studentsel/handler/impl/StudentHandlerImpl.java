@@ -60,7 +60,10 @@ public class StudentHandlerImpl implements StudentHandler {
 
     @Override
     public void addSC(SCRecord record) {
-
+        if (scDAO.querySCByStudentIDAndCourseID(record.getStudent_id(), record.getCourse_id()) != null){
+            throw new HandlerSqlException("已选该课程");
+        }
+        scDAO.addSC(record);
     }
 
     @Override

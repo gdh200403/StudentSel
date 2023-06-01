@@ -69,6 +69,10 @@ public class BaseController {
                 jsonResult.setStatus(2001);
                 jsonResult.setMsg(e.getMessage());
             }
+            case "UserTypeEmptyException" -> {
+                jsonResult.setStatus(2002);
+                jsonResult.setMsg(e.getMessage());
+            }
             default -> {
                 jsonResult.setStatus(6004);
                 jsonResult.setMsg("控制层未知错误");

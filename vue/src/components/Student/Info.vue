@@ -13,6 +13,7 @@ export default defineComponent({
                 age: '',
                 major: '',
             },
+
             tableData: [],
             options: [
             //     {

@@ -2,6 +2,7 @@ package com.cy.studentsel.controler;
 
 import com.cy.studentsel.controler.dto.UserDto;
 import com.cy.studentsel.controler.ex.PasswordEmptyException;
+import com.cy.studentsel.controler.ex.UserTypeException;
 import com.cy.studentsel.controler.ex.UsernameEmptyException;
 import com.cy.studentsel.handler.AdminHandler;
 import com.cy.studentsel.handler.StudentHandler;
@@ -32,6 +33,7 @@ public class VerifyController extends BaseController{
     @PostMapping
     @ResponseBody
     public JsonResult<UserDto> login(@RequestBody UserDto dto) {
+        // 检查用户名和密码是否为空
         if (dto.getUsername() == null || Objects.equals(dto.getUsername(), "")) {
             throw new UsernameEmptyException("用户名不能为空");
         }
@@ -41,6 +43,7 @@ public class VerifyController extends BaseController{
         UserDto info = new UserDto();
         info.setUsername(dto.getUsername());
         info.setUserType(dto.getUserType());
+        // if no exception is thrown, then login successfully
         JsonResult<UserDto> jsonResult = new JsonResult<>(200, "登录成功", info);
         String msg = switch (dto.getUserType()) {
             case "student" -> studentHandler.login(dto.getUsername(), dto.getPassword());
@@ -49,8 +52,7 @@ public class VerifyController extends BaseController{
             default -> "user_type_error";
         };
         if (Objects.equals(msg, "user_type_error")) {
-            jsonResult.setStatus(1100);
-            jsonResult.setMsg("用户类型错误");
+            throw new UserTypeException("用户类型错误");
         }
         return jsonResult;
     }

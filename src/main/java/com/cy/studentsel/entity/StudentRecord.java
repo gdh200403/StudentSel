@@ -9,14 +9,6 @@ import java.io.Serializable;/**
  * @date 2023/4/24 17:38
  */
 
-//public record StudentRecord(
-//        String ID,
-//        String Name,
-//        String Sex,
-//        int age,
-//        String Major,
-//        String pwd
-//){}
 @Data
 @AllArgsConstructor
 @NoArgsConstructor

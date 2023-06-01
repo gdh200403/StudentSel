@@ -6,6 +6,11 @@ import java.io.Serializable;
  * @author leaf-fulture
  * @date 2023/5/21 21:34
  */
+
+/**
+ * JSON object interact with frontend
+ * @param <E>
+ */
 public class JsonResult<E> implements Serializable {
     private Integer status;
     private String msg;
