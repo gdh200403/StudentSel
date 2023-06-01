@@ -5,6 +5,7 @@ export default defineComponent({
     name: "CourseAll",
     data(){
         return{
+            user: localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user')) : {},
             teacher_id: '',
             teacher_name: '',
             course_id: '',
@@ -14,15 +15,8 @@ export default defineComponent({
             place: '',
             credit: '',
             form : {
-                teacher_id: '',
-                teacher_name: '',
+                student_id: '',
                 course_id: '',
-                course_name: '',
-                current: '',
-                capacity: '',
-                term: '',
-                place: '',
-                comment: '',
             },
             course:[{//TODO 显示数据
                 teacher_id: '123',
@@ -67,15 +61,6 @@ export default defineComponent({
         this.load()
     },
     methods:{
-        // selectCourse(row){//TODO 代码乱写的 这个错误提示外观也不漂亮
-        //     if (this.selectedCourses.some(c => c.name === course.name)) {
-        //         this.errorMessage = '同一门课程只能选择一个课堂';
-        //         this.errorDialogVisible = true;
-        //     }
-        //     else
-        //         row.selected = true;
-        //     // this.selectedCourses.push(course);
-        // },
         load(){
 
             this.request.get('/api/student/page/tc', {
@@ -104,6 +89,19 @@ export default defineComponent({
         },
         search(){
             this.load()
+        },
+        selectCourse(row) {
+            this.form.student_id = this.user.username
+            this.form.course_id = row.course_id
+            this.request.post('/api/student/sc/save', this.form)
+                .then(res => {
+                    if (res.status === 200) {
+                        this.$message.success('选课成功')
+                        this.load()
+                    } else {
+                        this.$message.error(res.msg)
+                    }
+                })
         },
         handleSizeChange(pageSize) {
             this.pageSize = pageSize

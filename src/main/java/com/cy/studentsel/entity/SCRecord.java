@@ -13,9 +13,7 @@ public class SCRecord implements Serializable {
     private String student_id;
     private String course_id;
 
-
-
-    private int grade = -1;
+    private Integer grade = null;
 
     private String student_name;
     private String course_name;
@@ -39,7 +37,7 @@ public class SCRecord implements Serializable {
         this.student_id = student_id;
     }
 
-    public SCRecord(String student_id, String course_id, int grade) {
+    public SCRecord(String student_id, String course_id, Integer grade) {
         this.student_id = student_id;
         this.course_id = course_id;
         this.grade = grade;
@@ -59,4 +57,8 @@ public class SCRecord implements Serializable {
     }
 
 
+    public SCRecord(String student_id, String course_id) {
+        this.student_id = student_id;
+        this.course_id = course_id;
+    }
 }

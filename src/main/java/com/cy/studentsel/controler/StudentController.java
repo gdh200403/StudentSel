@@ -75,7 +75,7 @@ public class StudentController extends BaseController{
         scInfo info = new scInfo(0, 0, 0, 0, 0, pageInfo);
         for (SCRecord record : list) {
             info.total_credit += record.getCredit();
-            if (record.getGrade() == -1) {
+            if (record.getGrade() == null || record.getGrade() == -1) {
                 continue;
             }
             if (record.getGrade() >= 60) {
