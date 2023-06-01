@@ -33,7 +33,7 @@
             <el-table-column property="capacity" label="选课上限" width="80"></el-table-column>
             <el-table-column property="comment" label="课程备注"></el-table-column>
             <!--          编辑与删除-->
-            <el-table-column align="right">
+            <el-table-column align="right" fixed="right">
                 <template slot-scope="scope">
                     <el-button
                         size="mini"
@@ -112,7 +112,7 @@
                     <el-table-column property="capacity" label="选课上限" width="80"></el-table-column>
                     <el-table-column property="comment" label="课程备注"></el-table-column>
                     <!--          选择-->
-                    <el-table-column align="right">
+                    <el-table-column align="right" fixed="right" label="操作">
                         <template slot-scope="scope">
                             <el-button
                                 size="mini"
