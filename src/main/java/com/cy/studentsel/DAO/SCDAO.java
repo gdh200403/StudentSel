@@ -28,5 +28,5 @@ public interface SCDAO {
     public void deleteSC(String student_id, String course_id);
 
     @Select("select * from scview where student_id = #{student_id} and term = #{term}")
-    public List<SCRecord> querySCByStudentIDAndTerm(String studentId, String term);
+    public List<SCRecord> querySCByStudentIDAndTerm(String student_id, String term);
 }

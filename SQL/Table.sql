@@ -80,6 +80,7 @@ CREATE TABLE SC (
     student_id varchar(20) NOT NULL,
     course_id varchar(20) NOT NULL,
     Grade int(11) default NULL,
+    term varchar(20) NOT NULL,
     PRIMARY KEY (student_id, course_id),
     FOREIGN KEY (student_id) REFERENCES Student(student_id),
     FOREIGN KEY (course_id) REFERENCES Course(course_id)
@@ -91,9 +92,9 @@ drop view if exists SCView;
 create view TCView as select teacher.teacher_id,teacher_name,course.course_id,course_name,type,credit,total_hours,teaching_hours,experiment_hours,term,place,current,Capacity,Comment
                       from TC inner join Course on TC.course_id=Course.course_id inner join Teacher on TC.teacher_id=Teacher.teacher_id;
 
-create view SCView as select SC.student_id, student_name, SC.course_id, course_name, Teacher.teacher_id, teacher.teacher_name, type, credit, total_hours, teaching_hours, experiment_hours, term, place, Grade, current, Capacity, Comment
+create view SCView as select SC.student_id, student_name, SC.course_id, course_name, Teacher.teacher_id, teacher.teacher_name, type, credit, total_hours, teaching_hours, experiment_hours, tc.term, place, Grade, current, Capacity, Comment
                       from sc, tc, Student, Course, Teacher
-                      where sc.course_id = tc.course_id and sc.student_id = Student.student_id and sc.course_id = Course.course_id and tc.teacher_id = Teacher.teacher_id;
+                      where sc.course_id = tc.course_id and sc.student_id = Student.student_id and sc.course_id = Course.course_id and tc.teacher_id = Teacher.teacher_id and sc.term = tc.term;
 
 # 删除课程记录事务
 drop procedure if exists deleteCourse;
@@ -146,55 +147,32 @@ insert into Admin values('admin','admin');
 insert into CoursePlan values('计算机科学与技术','计算机科学与技术 2024-2027');
 insert into CoursePlan values('软件工程','软件工程 2024-2027');
 insert into CoursePlan values('网络工程','网络工程 2024-2027');
-insert into CoursePlan values('信息安全','信息安全 2024-2027');
-insert into CoursePlan values('数学','数学 2024-2027');
-insert into CoursePlan values('物理','物理 2024-2027');
-insert into CoursePlan values('化学','化学 2024-2027');
-insert into CoursePlan values('生物','生物 2024-2027');
-insert into CoursePlan values('英语','英语 2024-2027');
-insert into CoursePlan values('法学','法学 2024-2027');
-insert into CoursePlan values('经济学','经济学 2024-2027');
-insert into CoursePlan values('管理学','管理学 2024-2027');
-insert into CoursePlan values('哲学','哲学 2024-2027');
-insert into CoursePlan values('历史学','历史学 2024-2027');
+
 
 insert into Student values('PB42000001','张百嘉','男',20,'计算机科学与技术','123456');
 insert into Student values('PB42000002','李玲','女',20,'软件工程','123456');
 insert into Student values('PB42000003','王嘉','男',20,'计算机科学与技术','123456');
 insert into Student values('PB42000004','郑永波','男',20,'网络工程','123456');
-insert into Student values('PB42000005','朱丽','女',20,'数学','123456');
-insert into Student values('PB42000006','周潞潞', '女',20,'管理学','123456');
+insert into Student values('PB42000005','朱丽','女',20,'软件工程','123456');
+insert into Student values('PB42000006','周潞潞', '女',20,'软件工程','123456');
 
-insert into Teacher values('PB42000007','李明','男',30,'123456');
-insert into Teacher values('PB42000008','王丽','女',30,'123456');
-insert into Teacher values('PB42000009','张丽','女',30,'123456');
-insert into Teacher values('PB42000010','李丽','女',30,'123456');
-insert into Teacher values('PB42000011','王明','男',30,'123456');
-insert into Teacher values('PB42000012','张明','男',30,'123456');
+insert into Teacher values('42000007','李明','男',30,'123456');
+insert into Teacher values('42000008','王丽','女',30,'123456');
+insert into Teacher values('42000009','张丽','女',30,'123456');
+insert into Teacher values('42000010','李丽','女',30,'123456');
+insert into Teacher values('42000011','王明','男',30,'123456');
+insert into Teacher values('42000012','张明','男',30,'123456');
 
 # generate 10 courses data with random data and different course name
-insert into Course values('42000001','计算机科学与技术','专业必修',4,64,32,32);
-insert into Course values('42000002','物理','专业必修',5,64,32,32);
-insert into Course values('42000003','数学','专业必修',2,64,32,32);
-insert into Course values('42000004','哲学','专业必修',2,64,32,32);
-insert into Course values('42000005','生物','专业必修',4,64,32,32);
-insert into Course values('42000006','英语','专业必修',4,64,32,32);
-insert into Course values('42000007','历史学','专业必修',3,64,32,32);
+insert into Course values('cs1','计算机科学与技术','必修',4,64,32,32);
+insert into Course values('phy2','物理','必修',5,64,32,32);
+insert into Course values('math3','数学','必修',2,64,32,32);
+insert into Course values('phi4','哲学','必修',2,64,32,32);
+insert into Course values('bio5','生物','必修',4,64,32,32);
+insert into Course values('En6','英语','必修',4,64,32,32);
+insert into Course values('his7','历史学','必修',3,64,32,32);
 
-insert into TC values('PB42000007','42000001',0,100, 'sp23', 'A101','');
-insert into TC values('PB42000008','42000001',0,100, 'sp22', 'A102','');
-insert into TC values('PB42000009','42000004',0,100, 'sp21', 'A103','');
-insert into TC values('PB42000010','42000005',0,100, 'sp21', 'A104','');
-insert into TC values('PB42000011','42000006',0,100, 'sp21', 'A105','');
-insert into TC values('PB42000012','42000006',0,100, 'sp22', 'A106','');
+insert into TC values('42000007','cs1','10','100','sp21','A-101', NULL);
 
 
-insert into SC values('PB42000001','42000001',NULL);
-insert into SC values('PB42000001','42000002',NULL);
-insert into SC values('PB42000001','42000003',NULL);
-insert into SC values('PB42000001','42000004',NULL);
-insert into SC values('PB42000002','42000002',NULL);
-insert into SC values('PB42000002','42000003',NULL);
-insert into SC values('PB42000002','42000004',NULL);
-insert into SC values('PB42000003','42000006',NULL);
-insert into SC values('PB42000003','42000007',NULL);
+insert into SC values('PB42000001','cs1',69,'sp21');
