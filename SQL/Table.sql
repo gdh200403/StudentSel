@@ -71,7 +71,7 @@ CREATE TABLE TC (
     term varchar(20) NOT NULL,
     place varchar(20) NOT NULL,
     Comment varchar(100) default NULL,
-    PRIMARY KEY (teacher_id, course_id),
+    PRIMARY KEY (teacher_id, course_id, term),
     FOREIGN KEY (teacher_id) REFERENCES Teacher(teacher_id),
     FOREIGN KEY (course_id) REFERENCES Course(course_id)
 );
