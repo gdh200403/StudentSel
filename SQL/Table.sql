@@ -79,11 +79,13 @@ CREATE TABLE TC (
 CREATE TABLE SC (
     student_id varchar(20) NOT NULL,
     course_id varchar(20) NOT NULL,
+    teacher_id varchar(20) NOT NULL,
     Grade int(11) default NULL,
     term varchar(20) NOT NULL,
-    PRIMARY KEY (student_id, course_id),
+    PRIMARY KEY (student_id, course_id, teacher_id, term),
     FOREIGN KEY (student_id) REFERENCES Student(student_id),
-    FOREIGN KEY (course_id) REFERENCES Course(course_id)
+    FOREIGN KEY (course_id) REFERENCES Course(course_id),
+    FOREIGN KEY (teacher_id) REFERENCES Teacher(teacher_id)
 );
 
 drop view if exists TCView;
@@ -175,4 +177,4 @@ insert into Course values('his7','历史学','必修',3,64,32,32);
 insert into TC values('42000007','cs1','10','100','sp21','A-101', NULL);
 
 
-insert into SC values('PB42000001','cs1',69,'sp21');
+insert into SC values('PB42000001','cs1', '42000007',69,'sp21');
