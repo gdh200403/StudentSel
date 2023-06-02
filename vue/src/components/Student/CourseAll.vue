@@ -222,7 +222,5 @@ export default defineComponent({
 </template>
 
 <style scoped>
-.h1{
-    color: ;
-}
+
 </style>

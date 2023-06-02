@@ -55,17 +55,19 @@
         <el-table :data="tableData"
                   :span-method="objectSpanMethod"
                   stripe class="ml-5" height="700" style="width: 100%">
-            <el-table-column property="course_name" label="课程名称" width="300">
-                <template slot-scope="scope">
+            <el-table-column property="course_name" label="课程名称" width="300" >
+                <template slot-scope="scope" >
+                    <div style="display: flex; flex-direction: column;justify-content: center;align-items: center">
                     <span >{{ scope.row.course_name }}</span>
                     <el-button
                         size="mini"
                         @click="handleAddTC(scope.row)"
                         type="primary"
+                        style="width: 105px;"
                     >
                         <i class="el-icon-circle-plus-outline"></i>新增开课
                     </el-button>
-
+                    </div>
                 </template>
             </el-table-column>
             <el-table-column property="term" label="授课学期" width="100"></el-table-column>

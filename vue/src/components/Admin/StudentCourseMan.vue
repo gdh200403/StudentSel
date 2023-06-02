@@ -33,12 +33,13 @@
             <el-table-column property="capacity" label="选课上限" width="80"></el-table-column>
             <el-table-column property="comment" label="课程备注"></el-table-column>
             <!--          编辑与删除-->
-            <el-table-column align="right">
+            <el-table-column align="right" fixed="right">
                 <template slot-scope="scope">
                     <el-button
                         size="mini"
                         @click="handle_add(scope.row.student_id, scope.row.student_name)"
-                        type="success">
+                        type="success"
+                    style="width: 90px">
                         <i class="el-icon-edit-outline"></i>新增选课
                     </el-button>
                     <el-popconfirm
@@ -53,7 +54,9 @@
                         <el-button
                             size="mini"
                             type="danger"
-                            slot = "reference">
+                            slot = "reference"
+                        style="width: 90px;margin-top: 5px"
+                        >
                             <i class="el-icon-delete"></i>删除
                         </el-button>
                     </el-popconfirm>
@@ -109,7 +112,7 @@
                     <el-table-column property="capacity" label="选课上限" width="80"></el-table-column>
                     <el-table-column property="comment" label="课程备注"></el-table-column>
                     <!--          选择-->
-                    <el-table-column align="right">
+                    <el-table-column align="right" fixed="right" label="操作">
                         <template slot-scope="scope">
                             <el-button
                                 size="mini"
