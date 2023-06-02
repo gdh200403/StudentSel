@@ -35,7 +35,7 @@ export default defineComponent({
                 cancelButtonText: '取消',
                 type: 'danger'
             }).then(() => {
-                this.request.post('/api/student/sc/delete/'+this.user.username+'/'+row.course_id).then(res => {
+                this.request.delete('/api/student/sc/delete/'+this.user.username+'/'+row.course_id).then(res => {
                     if (res.status === 200) {
                         this.$message.success('退课成功')
                         this.load()
