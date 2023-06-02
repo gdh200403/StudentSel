@@ -2,12 +2,57 @@
 import {defineComponent} from 'vue'
 
 export default defineComponent({
-    name: "CourseSelected"
+    name: "CourseSelected",
+    data() {
+        return {
+            user: localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user')) : {},
+            current_term: 'sp23',
+            tableData: [],
+        }
+    },
+    created() {
+      this.load()
+    },
+    methods: {
+        load() {
+            // request for student course info
+            this.request.get('/api/student/current/sc', {
+                params: {
+                    student_id: this.user.username,
+                    term: this.current_term,
+                }
+            }).then(res => {
+                console.log(res)
+                this.tableData = res.data
+
+            }).catch(err => {
+                console.log(err)
+            })
+        },
+        quitCourse(row) {
+            this.$confirm('退课后人满可能导致无法再选上，确定吗？', '提示', {
+                confirmButtonText: '确定',
+                cancelButtonText: '取消',
+                type: 'danger'
+            }).then(() => {
+                this.request.post('/api/student/sc/delete/'+this.user.username+'/'+row.course_id).then(res => {
+                    if (res.status === 200) {
+                        this.$message.success('退课成功')
+                        this.load()
+                    } else {
+                        this.$message.error(res.msg)
+                    }
+                })
+            }).catch(() => {
+            });
+
+        }
+    }
 })
 </script>
 
 <template>
-    <el-table :data="course" style="width: 100%" height="85vh" >
+    <el-table :data="tableData" style="width: 100%" height="85vh" >
         <el-table-column prop="course_id" label="课程ID"></el-table-column>
         <el-table-column prop="course_name" label="课程名称"></el-table-column>
         <el-table-column prop="term" label="授课学期"></el-table-column>

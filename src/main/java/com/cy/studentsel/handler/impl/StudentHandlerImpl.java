@@ -76,6 +76,16 @@ public class StudentHandlerImpl implements StudentHandler {
         return tcDAO.queryTCByCondition(record);
     }
 
+    @Override
+    public List<SCRecord> querySCByStudentIdAndTerm(String studentId, String term) {
+        return scDAO.querySCByStudentIDAndTerm(studentId, term);
+    }
+
+    @Override
+    public void deleteSC(String studentId, String courseId) {
+        scDAO.deleteSC(studentId, courseId);
+    }
+
 
     public static void main(String[] args) {
         StudentHandlerImpl studentHandler = new StudentHandlerImpl();

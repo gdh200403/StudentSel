@@ -10,6 +10,7 @@ import jakarta.annotation.Resource;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.apache.ibatis.annotations.Delete;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -60,10 +61,21 @@ public class StudentController extends BaseController{
         return jsonResult;
     }
 
+    @DeleteMapping("/sc/delete/{student_id}/{course_id}")
+    @ResponseBody
+    public JsonResult<Void> deleteSC(@PathVariable String student_id, @PathVariable String course_id) {
+        JsonResult<Void> jsonResult = new JsonResult<>();
+        studentHandler.deleteSC(student_id, course_id);
+        jsonResult.setStatus(SUCCESS);
+        jsonResult.setMsg("删除成功");
+        return jsonResult;
+    }
+
     @GetMapping("/page/sc")
     @ResponseBody
     public JsonResult<scInfo> findPageSC(@RequestParam Integer page, @RequestParam Integer pageSize,
-                                                                     @RequestParam String student_id) {
+                                                                     @RequestParam String student_id
+                                         ) {
         JsonResult<scInfo> jsonResult = new JsonResult<>();
         pageInfo<SCRecord> pageInfo = new pageInfo<>();
         List<SCRecord> list = studentHandler.querySCByStudentId(student_id);
@@ -94,6 +106,16 @@ public class StudentController extends BaseController{
         return jsonResult;
     }
 
+    @GetMapping("/current/sc")
+    @ResponseBody
+    public JsonResult<List<SCRecord>> findCurrentSC(@RequestParam String student_id, @RequestParam String term) {
+        JsonResult<List<SCRecord>> jsonResult = new JsonResult<>();
+        List<SCRecord> list = studentHandler.querySCByStudentIdAndTerm(student_id, term);
+        jsonResult.setData(list);
+        jsonResult.setStatus(SUCCESS);
+        jsonResult.setMsg("查询成功");
+        return jsonResult;
+    }
 
 
 

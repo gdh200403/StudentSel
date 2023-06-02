@@ -29,7 +29,13 @@ public interface StudentHandler extends UserHandler {
 
     public List<SCRecord> querySCByStudentId(String student_id);
 
+
+
     public List<TCRecord> queryTCByCondition(TCRecord record);
+
+    public List<SCRecord> querySCByStudentIdAndTerm(String studentId, String term);
+
+    public void deleteSC(String studentId, String courseId);
 
 //    public SCRecord querySCByStudentID(String studentId);
 }

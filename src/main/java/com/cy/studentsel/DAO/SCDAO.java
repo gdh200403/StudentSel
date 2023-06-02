@@ -3,6 +3,7 @@ package com.cy.studentsel.DAO;
 import com.cy.studentsel.entity.SCRecord;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Select;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -25,4 +26,7 @@ public interface SCDAO {
     public List<SCRecord> querySCByCondition(SCRecord record);
 
     public void deleteSC(String student_id, String course_id);
+
+    @Select("select * from scview where student_id = #{student_id} and term = #{term}")
+    public List<SCRecord> querySCByStudentIDAndTerm(String studentId, String term);
 }
