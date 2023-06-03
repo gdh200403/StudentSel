@@ -22,11 +22,20 @@ public class BaseController {
     public static final Integer SUCCESS = 200;
 
 
+    /**
+     * Wrap the result of the query in pageInfo
+     * @param <E>
+     */
     public static class pageInfo<E> {
         public int total;
         public List<E> list;
     };
 
+    /**
+     * Handle the exception thrown by the service layer
+     * @param e
+     * @return
+     */
     @ExceptionHandler(HandlerException.class)
     @ResponseBody
     public JsonResult<Void> handleHandlerException(Throwable e) {
@@ -56,6 +65,11 @@ public class BaseController {
         return jsonResult;
     }
 
+    /**
+     * Handle the exception thrown by the controller layer
+     * @param e
+     * @return
+     */
     @ExceptionHandler(ControllerException.class)
     @ResponseBody
     public JsonResult<Void> handleControllerException(Throwable e) {
@@ -73,6 +87,14 @@ public class BaseController {
                 jsonResult.setStatus(2002);
                 jsonResult.setMsg(e.getMessage());
             }
+            case "NoTokenException" -> {
+                jsonResult.setStatus(401);
+                jsonResult.setMsg("未登录");
+            }
+            case "VerifyTokenFailException" -> {
+                jsonResult.setStatus(401);
+                jsonResult.setMsg("权限不足，重新登录");
+            }
             default -> {
                 jsonResult.setStatus(6004);
                 jsonResult.setMsg("控制层未知错误");
@@ -81,13 +103,18 @@ public class BaseController {
         return jsonResult;
     }
 
-//    @ExceptionHandler(SQLException.class)
-//    @ResponseBody
-//    public JsonResult<Void> handleSqlException(Throwable e) {
-//        JsonResult<Void> jsonResult = new JsonResult<>();
-//        jsonResult.setStatus(6000);
-//        jsonResult.setMsg("Sql错误，填入的数据不符合要求");
-//        return jsonResult;
-//    }
+    /**
+     * Handle the exception thrown by the mybatis
+     * @param e
+     * @return
+     */
+    @ExceptionHandler(SQLException.class)
+    @ResponseBody
+    public JsonResult<Void> handleSqlException(Throwable e) {
+        JsonResult<Void> jsonResult = new JsonResult<>();
+        jsonResult.setStatus(6000);
+        jsonResult.setMsg("Sql错误，填入的数据不符合要求");
+        return jsonResult;
+    }
 
 }

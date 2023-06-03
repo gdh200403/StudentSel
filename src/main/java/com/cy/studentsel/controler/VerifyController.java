@@ -9,6 +9,7 @@ import com.cy.studentsel.handler.StudentHandler;
 import com.cy.studentsel.handler.TeacherHandler;
 import com.cy.studentsel.handler.impl.AdminHandlerImpl;
 import com.cy.studentsel.util.JsonResult;
+import com.cy.studentsel.util.TokenUtils;
 import jakarta.annotation.Resource;
 import org.apache.catalina.User;
 import org.springframework.boot.autoconfigure.batch.BatchProperties;
@@ -43,8 +44,7 @@ public class VerifyController extends BaseController{
         UserDto info = new UserDto();
         info.setUsername(dto.getUsername());
         info.setUserType(dto.getUserType());
-        // if no exception is thrown, then login successfully
-        JsonResult<UserDto> jsonResult = new JsonResult<>(200, "登录成功", info);
+
         String msg = switch (dto.getUserType()) {
             case "student" -> studentHandler.login(dto.getUsername(), dto.getPassword());
             case "teacher" -> teacherHandler.login(dto.getUsername(), dto.getPassword());
@@ -54,6 +54,8 @@ public class VerifyController extends BaseController{
         if (Objects.equals(msg, "user_type_error")) {
             throw new UserTypeException("用户类型错误");
         }
-        return jsonResult;
+        // if no exception is thrown, then login successfully
+        info.setUserToken(TokenUtils.getToken(dto));
+        return new JsonResult<>(200, "登录成功", info);
     }
 }

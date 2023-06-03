@@ -1,0 +1,173 @@
+\usepackage[utf8]{inputenc}
+\usepackage{newtxtext}
+\usepackage{geometry}
+\usepackage[dvipsnames,svgnames]{xcolor}
+\usepackage[strict]{changepage} % 提供一个 adjustwidth 环境
+\usepackage{framed} % 实现方框效果
+\usepackage[fontset=windows]{ctex}
+\usepackage[most]{tcolorbox}
+\usepackage[T1]{fontenc}
+\usepackage{titlesec}
+
+
+\newcommand{\tbf}{\textbf}
+
+\lstdefinestyle{mystyle}{
+    % backgroundcolor=\color{backcolour},   
+    commentstyle=\it\color{brown},
+    % keywordstyle=\color{black}\bf,
+    % numbers = none,
+    % language = C++,
+    % numberstyle=\medium,
+    % numbersep = 0pt,
+    % stringstyle=\color{codepurple},
+    frame = lines,
+    basicstyle=\ttfamily\footnotesize,
+    breakatwhitespace=false,         
+    breaklines=true,                 
+    captionpos=b,                    
+    keepspaces=true,                 
+    numbers=left,                    
+    numbersep=0pt,                  
+    showspaces=false,                
+    showstringspaces=false,
+    showtabs=false,                  
+    tabsize=2
+}
+
+% environment derived from framed.sty: see leftbar environment definition
+\definecolor{block-gray}{gray}{0.95}
+\definecolor{formalshade}{rgb}{0.95, 0.95, 0.95} % 文本框颜色
+\definecolor{greenshade}{rgb}{0.90,0.99,0.91} % 绿色文本框，竖线颜色设为 Green
+\definecolor{redshade}{rgb}{1.00,0.90,0.90}% 红色文本框，竖线颜色设为 LightCoral
+\definecolor{brownshade}{rgb}{0.99,0.97,0.93} % 莫兰迪棕色，竖线颜色设为 BurlyWood
+\definecolor{problemcolor}{RGB}{241, 241, 255}
+\definecolor{thoughtcolor}{RGB}{255, 239, 213}
+\definecolor{ojcolor}{RGB}{224, 255, 232}
+% \let\bf\tbf
+% \newcommand{\tbf}{\bf}
+
+\newcounter{problemname}
+\newcounter{thoughtname}
+\newcounter{ojname}
+
+\newenvironment{problem}{\begin{problemshade}\stepcounter{problemname}\par\noindent\textbf{题目 \arabic{problemname}.}}{\end{problemshade}\par}
+\newenvironment{solution}{\par\noindent\textbf{解答:}}{\par}
+\newenvironment{note}{\par\noindent\textbf{Note:\arabic{problemname}的注记. }}{\par}
+\newenvironment{hint}{\par\noindent\textbf{提示:}}{\par}
+\newenvironment{thought}{\begin{thoughtshade}\stepcounter{thoughtname}\par\noindent\textbf{思考题 \arabic{thoughtname}.}}{\end{thoughtshade}\par}
+\newenvironment{oj}{\begin{ojshade}\stepcounter{ojname}\par\noindent\textbf{实验题 \arabic{ojname}.}}{\end{ojshade}\par}
+
+\newenvironment{problemshade}{%
+    \def\FrameCommand{%
+    \hspace{1pt}%
+    {\color{problemcolor}\vrule width 4pt}%
+    \colorbox{problemcolor}%
+    }%
+
+    \MakeFramed{\advance\hsize-\width\FrameRestore}%
+    \noindent\hspace{-4.55pt}% disable indenting first paragraph
+    \begin{adjustwidth}{}{7pt}%
+    \vspace{2pt}\vspace{2pt}%
+    }
+    {%
+    \vspace{2pt}\end{adjustwidth}\endMakeFramed%
+    }
+
+\newenvironment{thoughtshade}{%
+    \def\FrameCommand{%
+    \hspace{1pt}%
+    {\color{thoughtcolor}\vrule width 4pt}%
+    \colorbox{thoughtcolor}%
+    }%
+
+    \MakeFramed{\advance\hsize-\width\FrameRestore}%
+    \noindent\hspace{-4.55pt}% disable indenting first paragraph
+    \begin{adjustwidth}{}{7pt}%
+    \vspace{2pt}\vspace{2pt}%
+    }
+    {%
+    \vspace{2pt}\end{adjustwidth}\endMakeFramed%
+    }
+
+\newenvironment{ojshade}{%
+    \def\FrameCommand{%
+    \hspace{1pt}%
+    {\color{ojcolor}\vrule width 4pt}%
+    \colorbox{ojcolor}%
+    }%
+
+    \MakeFramed{\advance\hsize-\width\FrameRestore}%
+    \noindent\hspace{-4.55pt}% disable indenting first paragraph
+    \begin{adjustwidth}{}{7pt}%
+    \vspace{2pt}\vspace{2pt}%
+    }
+    {%
+    \vspace{2pt}\end{adjustwidth}\endMakeFramed%
+    }
+
+
+\newenvironment{formal}{%
+    \def\FrameCommand{%
+    \hspace{1pt}%
+    {\color{gray}\vrule width 2pt}%
+    {\color{formalshade}\vrule width 4pt}%
+    \colorbox{formalshade}%
+    }%
+
+    \MakeFramed{\advance\hsize-\width\FrameRestore}%
+    \noindent\hspace{-4.55pt}% disable indenting first paragraph
+    \begin{adjustwidth}{}{7pt}%
+    \vspace{2pt}\vspace{2pt}%
+    }
+    {%
+    \vspace{2pt}\end{adjustwidth}\endMakeFramed%
+    }
+\newenvironment{red}{%
+    \def\FrameCommand{%
+    \hspace{1pt}%
+    {\color{LightCoral}\vrule width 2pt}%
+    {\color{redshade}\vrule width 4pt}%
+    \colorbox{redshade}%
+    }%
+
+    \MakeFramed{\advance\hsize-\width\FrameRestore}%
+    \noindent\hspace{-4.55pt}% disable indenting first paragraph
+    \begin{adjustwidth}{}{7pt}%
+    \vspace{2pt}\vspace{2pt}%
+    }
+    {%
+    \vspace{2pt}\end{adjustwidth}\endMakeFramed%
+    }
+\newenvironment{brown}{%
+    \def\FrameCommand{%
+    \hspace{1pt}%
+    {\color{BurlyWood}\vrule width 2pt}%
+    {\color{brownshade}\vrule width 4pt}%
+    \colorbox{brownshade}%
+    }%
+
+    \MakeFramed{\advance\hsize-\width\FrameRestore}%
+    \noindent\hspace{-4.55pt}% disable indenting first paragraph
+    \begin{adjustwidth}{}{7pt}%
+    \vspace{2pt}\vspace{2pt}%
+    }
+    {%
+    \vspace{2pt}\end{adjustwidth}\endMakeFramed%
+    }
+\newenvironment{green}{%
+    \def\FrameCommand{%
+    \hspace{1pt}%
+    {\color{Green}\vrule width 2pt}%
+    {\color{greenshade}\vrule width 4pt}%
+    \colorbox{greenshade}%
+    }%
+
+    \MakeFramed{\advance\hsize-\width\FrameRestore}%
+    \noindent\hspace{-4.55pt}% disable indenting first paragraph
+    \begin{adjustwidth}{}{7pt}%
+    \vspace{2pt}\vspace{2pt}%
+    }
+    {%
+    \vspace{2pt}\end{adjustwidth}\endMakeFramed%
+    }

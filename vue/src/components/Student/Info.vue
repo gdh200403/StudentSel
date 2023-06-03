@@ -47,18 +47,30 @@ export default defineComponent({
             //request for student Personal info
             this.request.get('/api/student/personal', {
                 params: {
-                    student_id: this.user.username,
+                    student_id: (this.user.username) ? this.user.username : "",
                 }
             }).then(res => {
                 console.log(res)
-                this.student = res.data
+                if (res.status === 200) {
+                    this.student = res.data
+
+                }
+                else {
+                    if (res.status === 401) {
+                        this.$router.push('/login')
+                    }
+                    this.$message({
+                        message: res.msg,
+                        type: 'error'
+                    })
+                }
             }).catch(err => {
                 console.log(err)
             })
             // request for student course info
             this.request.get('/api/student/page/sc', {
                 params: {
-                    student_id: this.user.username,
+                    student_id: (this.user.username) ? this.user.username : "",
                     page: this.currentPage,
                     pageSize: this.pageSize
                 }

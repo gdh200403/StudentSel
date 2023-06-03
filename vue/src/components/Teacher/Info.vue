@@ -28,7 +28,18 @@ export default defineComponent({
                 }
             }).then(res => {
                 console.log(res)
-                this.teacher = res.data
+                if (res.status === 200) {
+                    this.teacher = res.data
+                }
+                else {
+                    if (res.status === 401) {
+                        this.$router.push('/login')
+                    }
+                    this.$message({
+                        message: res.msg,
+                        type: 'error'
+                    })
+                }
             }).catch(err => {
                 console.log(err)
             })

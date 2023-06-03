@@ -21,12 +21,19 @@ import static java.lang.Integer.min;
  * @author leaf-fulture
  * @date 2023/5/20 17:28
  */
+
+/**
+ * All operation provided for student
+ */
 @RestController
 @RequestMapping("api/student")
 public class StudentController extends BaseController{
     @Resource
     private StudentHandler studentHandler;
 
+    /**
+     * student information
+     */
     @Data
     @NoArgsConstructor
     @AllArgsConstructor
@@ -71,6 +78,13 @@ public class StudentController extends BaseController{
         return jsonResult;
     }
 
+    /**
+     * find all selected course within the page range
+     * @param page
+     * @param pageSize
+     * @param student_id
+     * @return
+     */
     @GetMapping("/page/sc")
     @ResponseBody
     public JsonResult<scInfo> findPageSC(@RequestParam Integer page, @RequestParam Integer pageSize,
@@ -79,12 +93,12 @@ public class StudentController extends BaseController{
         JsonResult<scInfo> jsonResult = new JsonResult<>();
         pageInfo<SCRecord> pageInfo = new pageInfo<>();
         List<SCRecord> list = studentHandler.querySCByStudentId(student_id);
-//        List<StudentRecord> list = adminHandler.queryAllStudent();
         int pageStart = (page - 1) * pageSize;
         int limit = pageSize;
         pageInfo.list = list.subList(pageStart, min(pageStart + limit, list.size()));
         pageInfo.total = list.size();
         scInfo info = new scInfo(0, 0, 0, 0, 0, pageInfo);
+        // calculate info
         for (SCRecord record : list) {
             info.total_credit += record.getCredit();
             if (record.getGrade() == null || record.getGrade() == -1) {
@@ -98,14 +112,27 @@ public class StudentController extends BaseController{
             info.arith_ave += record.getGrade();
             info.weighted_ave += record.getGrade() * record.getCredit();
         }
-        info.arith_ave /= list.size();
-        info.weighted_ave /= info.total_credit;
+        // catch exception when list is empty
+        try {
+            info.arith_ave /= list.size();
+            info.weighted_ave /= info.total_credit;
+        }
+        catch (Exception e) {
+            info.arith_ave = 0;
+            info.weighted_ave = 0;
+        }
         jsonResult.setData(info);
         jsonResult.setStatus(SUCCESS);
         jsonResult.setMsg("查询成功");
         return jsonResult;
     }
 
+    /**
+     * course selected in current semester
+     * @param student_id
+     * @param term
+     * @return
+     */
     @GetMapping("/current/sc")
     @ResponseBody
     public JsonResult<List<SCRecord>> findCurrentSC(@RequestParam String student_id, @RequestParam String term) {
@@ -118,7 +145,19 @@ public class StudentController extends BaseController{
     }
 
 
-
+    /**
+     * course available for selection with condition query
+     * @param page
+     * @param pageSize
+     * @param teacher_id
+     * @param course_id
+     * @param teacher_name
+     * @param course_name
+     * @param type
+     * @param credit
+     * @param place
+     * @return
+     */
     @GetMapping("/page/tc")
     @ResponseBody
     public JsonResult<pageInfo<TCRecord>> findPageTC(@RequestParam Integer page, @RequestParam Integer pageSize,
@@ -143,30 +182,5 @@ public class StudentController extends BaseController{
         jsonResult.setMsg("查询成功");
         return jsonResult;
     }
-//
-//    @GetMapping("/page/course")
-//    @ResponseBody
-//    public JsonResult<AdminController.pageInfo<CourseRecord>> findPageCourse(@RequestParam Integer page, @RequestParam Integer pageSize,
-//                                                                             @RequestParam String course_id,
-//                                                                             @RequestParam String course_name,
-//                                                                             @RequestParam String type,
-//                                                                             @RequestParam int credit,
-//                                                                             @RequestParam int total_hours,
-//                                                                             @RequestParam int teaching_hours,
-//                                                                             @RequestParam int experiment_hours
-//    ) {
-//        JsonResult<AdminController.pageInfo<CourseRecord>> jsonResult = new JsonResult<>();
-//        AdminController.pageInfo<CourseRecord> pageInfo = new AdminController.pageInfo<>();
-//        CourseRecord record = new CourseRecord(course_id, course_name, type, credit);
-//        List<CourseRecord> list = studentHandler.queryCourseByCondition(record);
-//        int pageStart = (page - 1) * pageSize;
-//        int limit = pageSize;
-//        pageInfo.list = list.subList(pageStart, min(pageStart + limit, list.size()));
-//        pageInfo.total = list.size();
-//        jsonResult.setData(pageInfo);
-//        jsonResult.setStatus(SUCCESS);
-//        jsonResult.setMsg("查询成功");
-//        return jsonResult;
-//    }
 
 }

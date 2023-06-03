@@ -19,6 +19,10 @@ import static java.lang.Integer.min;
  * @author leaf-fulture
  * @date 2023/5/24 19:00
  */
+
+/**
+ * All operation provided for admin
+ */
 @RestController
 @RequestMapping("api/admin")
 public class AdminController extends BaseController{
@@ -122,7 +126,6 @@ public class AdminController extends BaseController{
         pageInfo<SCRecord> pageInfo = new pageInfo<>();
         SCRecord record = new SCRecord(student_id, course_id, teacher_id, student_name, course_name, teacher_name, type, credit, place);
         List<SCRecord> list = adminHandler.querySCByCondition(record);
-//        List<StudentRecord> list = adminHandler.queryAllStudent();
         int pageStart = (page - 1) * pageSize;
         int limit = pageSize;
         pageInfo.list = list.subList(pageStart, min(pageStart + limit, list.size()));
