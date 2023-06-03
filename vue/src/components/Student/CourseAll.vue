@@ -11,6 +11,7 @@ export default defineComponent({
             course_id: '',
             course_name: '',
             term:'',
+            currentTerm: 'sp23',
             type: '',
             place: '',
             credit: '',
@@ -49,7 +50,7 @@ export default defineComponent({
                 value: '',
                 label: '请选择课程性质'
             }],
-            credit_selected:12,//TODO 统计当前已选总学分
+            credit_selected: 0,
             selectedCourses: [],
             errorDialogVisible: false,
             errorMessage: '',
@@ -86,6 +87,19 @@ export default defineComponent({
                         this.$message.error(res.msg)
                     }
                 })
+
+            this.request.get('/api/student/current/credit', {
+                params: {
+                    student_id: this.user.username,
+                    term: this.currentTerm,
+                }
+            }).then(res => {
+                console.log(res)
+                this.credit_selected = res.data
+
+            }).catch(err => {
+                console.log(err)
+            })
 
         },
         search(){

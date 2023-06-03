@@ -43,8 +43,527 @@
 \tableofcontents
 \newpage
 
-\section{详细设计介绍}
+\section{需求分析}
+
+\section{概要设计}
+
+\section{详细设计介绍与系统设计}
+我们的程序采用 Spring Boot 框架， JDBC 采用 MyBatis 管理，数据库使用 MySQL，前端使用 vue 构建，总体
+使用持久层-业务层-控制层-前端的架构，下面分别介绍各个模块的设计。
+\subsection{持久层}
+持久层采用 MyBatis 管理，使用 Mapper.xml 文件进行数据库操作，使用 Dao 接口进行调用，针对每一个表，我们
+都设计了一个 Dao 接口和一个 Mapper.xml(./resources/Mapper) 文件同时有相应的 entity 进行数据封装如下：
+\begin{figure}[H]
+	\centering
+	\includegraphics[width = 0.8 \textwidth]{MapperInterface.png}
+	\caption{Dao 接口}
+\end{figure}
+\begin{figure}[H]
+	\centering
+	\includegraphics[width = 0.8 \textwidth]{entity.png}
+	\caption{数据库实体}
+\end{figure}
+
+下面以 TeacherMapper 为例，介绍持久层接口和 Mapper.xml 文件的设计。TeacherDao 接口中定义了
+如下的方法（功能见注释）：
+\begin{figure}[H]
+	\centering
+	\includegraphics[width = 0.6 \textwidth]{TeacherDao.png}
+	\caption{TeacherDao 接口}
+\end{figure}
+\begin{lstlisting}[language = Java]
+@Mapper //`Spring Boot 的注解，表示这是一个 Mapper 接口，会自动将其与 Mapper.xml 文件关联'
+@Repository(value = "TeacherDAO")
+public interface TeacherDAO {
+		// `查询所有教师'
+		List<TeacherRecord> queryAllTeacher();
+		// `分页查询教师'
+		public List<TeacherRecord> queryTeacherByPage(@Param("page") int page, @Param("size") int size);
+		// `查询指定教师的 ID'
+		public TeacherRecord queryTeacherByID(@Param("teacher_id") String ID);
+		// `更新教师信息'
+		public int updateTeacher(TeacherRecord record);
+		// `删除教师'
+		public int deleteTeacher(@Param("teacher_id") String ID);
+		// `添加教师'
+		public int addTeacher(TeacherRecord record);
+		// `根据条件查询教师'
+		List<TeacherRecord> queryTeacherByCondition(TeacherRecord temp);
+	}
+\end{lstlisting}
+Mapper.xml 文件中定义了如下的 SQL 语句与之对应：
+\begin{lstlisting}[language = Java]
+    <select id="queryAllTeacher" resultType="com.cy.studentsel.entity.TeacherRecord">
+        select * from teacher
+    </select>
+    <select id="queryTeacherByPage" parameterType="int" resultType="TeacherRecord">
+        select * from teacher limit #{page}, #{size}
+    </select>
+    <select id="queryTeacherByID" resultType="TeacherRecord" parameterType="String">
+        select * from teacher where teacher.teacher_id = #{teacher_id}
+    </select>
+    <select id="queryTeacherByCondition" resultType="TeacherRecord">
+        select teacher_id, teacher_name, sex, age
+        from teacher
+        where
+		// `如果 teacher\_id 不为空, 动态拼接 SQL 语句'
+        <if test="teacher_id != null and teacher_id != ''">
+            teacher_id like concat('%', #{teacher_id}, '%') and // `模糊查询'
+        </if>
+        <if test="teacher_name != null and teacher_name != ''">
+            teacher_name like concat('%', #{teacher_name}, '%') and
+        </if>
+        <if test="sex != null and sex != ''">
+            sex = #{sex} and
+        </if>
+        <if test="age != null and age != -1">
+            age = #{age} and
+        </if>
+        true
+    </select>
+    <update id="updateTeacher" parameterType="TeacherRecord">
+        update teacher
+        <set>
+		// `如果 teacher\_name 不为空, 动态拼接 SQL 语句'
+            <if test="teacher_name != null and teacher_name != ''"> 
+                teacher_name = #{teacher_name},
+            </if>
+            <if test="sex != null and sex != ''">
+                sex = #{sex},
+            </if>
+            <if test="age != null and age != -1">
+                age = #{age},
+            </if>
+            <if test="pwd != null and pwd != ''">
+                pwd = #{pwd},
+            </if>
+            teacher_id = #{teacher_id}
+        </set>
+        <where>
+            teacher_id = #{teacher_id}
+        </where>
+    </update>
+    <delete id="deleteTeacher" parameterType="String">
+        call deleteTeacher(#{teacher_id})
+    </delete>
+    <insert id="addTeacher" parameterType="TeacherRecord">
+        insert into teacher values (#{teacher_id}, #{teacher_name}, #{sex}, #{age}, #{pwd})
+    </insert>
+\end{lstlisting}
+
+其中 deleteTeacher 为保证数据一致性设计为一个存储过程（因为删去教师需要同时删去教师的授课信息）:
+\begin{lstlisting}[language = Java]
+	// `删除教师记录事务'
+	drop procedure if exists deleteTeacher;
+	delimiter //
+	create procedure deleteTeacher(in teacher_id varchar(20))
+	begin
+		delete from TC where tc.teacher_id=teacher_id;
+		delete from Teacher where teacher.teacher_id=teacher_id;
+	end //
+	delimiter ;
+\end{lstlisting}
+对于删去学生和课程的操作也是类似的。
+
+\subsection{业务层}
+\subsubsection{控制层主要功能类}
+业务层主要负责对持久层的调用以及包装来定义业务逻辑以供控制层调用，是的控制层不需要关心具体的
+数据库实现使得将控制层与持久层解耦合。我们定义如下形式的业务层接口：
+\begin{figure}[H]
+	\centering
+	\includegraphics[width = 0.8 \textwidth]{ServiceInterface.png}
+	\caption{Handler 接口}
+\end{figure}
+下面以 TeacherHandler 为例，介绍业务层的设计。TeacherHandler 接口实现了 UserHandler 接口
+(其中的 login 是每个 Handler 都需要提供的)，TeacherHandler 接口中定义了如下的方法：
+\begin{figure}[H]
+	\centering
+	\includegraphics[width = 0.6 \textwidth]{TeacherHandler.png}
+	\caption{TeacherHandler 接口}
+\end{figure}
+TeacherHandlerImpl 类中实现了 TeacherHandler 接口中的方法如下：
+\begin{lstlisting}[language = Java]
+	@Service // `标注为 Spring 的 Service 层'
+	public class TeacherHandlerImpl implements TeacherHandler {
+		@Resource	// `自动注入 TeacherDAO 对象'
+		private TeacherDAO teacherDao;
+		@Resource	// `自动注入 SCDAO 对象'
+		private SCDAO scDao;
+		@Resource	// `自动注入 TCDAO 对象'
+		private TCDAO tcDao;
+	
+		@Override
+		public String login(String ID, String pwd) {
+			TeacherRecord teacherRecord = teacherDao.queryTeacherByID(ID);
+			if (teacherRecord == null) {
+				throw new UserNameNoFoundException("`教师工号不存在'");
+			}
+			if (!Objects.equals(teacherRecord.getPwd(), pwd)){
+				throw new PasswordNoMatchException("`密码错误'");
+			}
+			return "`登录成功'";
+		}
+	
+		// `查询教师信息'
+		@Override
+		public List<TCRecord> queryTCByCondition(TCRecord record) {
+			return tcDao.queryTCByCondition(record);
+		}
+		// `通过 ID 查询教师信息'
+		@Override
+		public TeacherRecord getTeacher(String ID) {
+			return teacherDao.queryTeacherByID(ID);
+		}
+	 	// `更新教师信息'
+		@Override
+		public boolean update(TeacherRecord teacherRecord) {
+			teacherDao.updateTeacher(teacherRecord);
+			return true;
+		}
+		// `查询选本教师课的所有选课记录'
+		@Override
+		public List<SCRecord> querySCByCondition(SCRecord record) {
+			return scDao.querySCByCondition(record);
+		}
+		// `更新授课信息'
+		@Override
+		public void updateTC(TCRecord record) {
+			tcDao.updateTC(record);
+		}
+		// `更新选课信息（评分）'
+		@Override
+		public void updateSC(SCRecord record) {
+			scDao.updateSC(record);
+		}
+	
+	}
+\end{lstlisting}
+其中 TeacherHandlerImpl 类中的 TeacherDAO、SCDAO、TCDAO 为持久层接口。
+\subsubsection{业务层异常}
+业务层执行部分持久层操作前，需要对传入的参数进行检查，如果参数不合法，需要抛出异常。业务层的异常自定义
+为 RuntimeException 的子类，如下：
+\begin{figure}[H]
+	\centering
+	\includegraphics[width = 0.9 \textwidth]{HandlerException.png}
+	\caption{业务层异常}
+\end{figure}
+
+\subsection{控制层}
+\subsubsection{控制层主要功能类}
+控制层主要负责接收用户的请求，直接面向前端提供方法，整合业务层的方法。我们定义如下控制层类：
+\begin{figure}[H]
+	\centering
+	\includegraphics[width = 0.9 \textwidth]{Controller.png}
+	\caption{控制层类}
+\end{figure}
+
+其中：
+\begin{itemize}
+	\item BaseController 类：提供所有控制层类的基类，提供统一的全局异常处理机制
+	\item VerifyController 类：提供针对所有用户的统一登录验证
+	\item AdminController 类：提供管理员前端界面所需的所有方法
+	\item TeacherController 类：提供教师前端界面所需的所有方法
+	\item StudentController 类：提供学生前端界面所需的所有方法
+\end{itemize}
+
+以 TeacherController 类为例，介绍控制层的设计。TeacherController 类中定义了如下方法：
+\begin{figure}[H]
+	\centering
+	\includegraphics[width = 0.9 \textwidth]{TeacherController.png}
+	\caption{TeacherController 类}
+\end{figure}
+\begin{itemize}
+	\item findPageTC 方法：处理教师分页查询授课信息的请求
+	\item updateTC 方法：处理教师更新授课信息的请求
+	\item updateSC 方法：处理教师更新学生选课信息（评分）的请求
+	\item findPersonal 方法：处理登录时查询个人信息
+	\item findPageSC 方法：处理教师分页查询选自己课学生信息的请求
+\end{itemize}
+\begin{lstlisting}[language=Java]
+	@RestController`// 标注为 Spring 的 Controller 层，自动将返回值转换为 JSON 对象'
+	@RequestMapping("api/teacher")
+	public class TeacherController extends BaseController{
+	@Resource
+	private TeacherHandler teacherHandler;
+
+	/**
+	* get teacher personal information
+	*/
+	@GetMapping("/personal")
+	@ResponseBody
+	public JsonResult<TeacherRecord> findPersonal(@RequestParam String teacher_id) {
+		JsonResult<TeacherRecord> jsonResult = new JsonResult<>();
+		TeacherRecord record = teacherHandler.queryTeacherByTeacherID(teacher_id);
+		jsonResult.setData(record);
+		jsonResult.setStatus(SUCCESS);
+		jsonResult.setMsg("`查询成功'");
+		return jsonResult;
+	}
+
+	/**
+		* All the student who choose the course in page range
+		*/
+	@GetMapping("/page/sc")
+	@ResponseBody
+	public JsonResult<pageInfo<SCRecord>> findPageSC(@RequestParam Integer page,
+													@RequestParam Integer pageSize,
+													@RequestParam String student_id,
+													@RequestParam String student_name,
+													@RequestParam String course_id,
+													@RequestParam String course_name,
+													@RequestParam String teacher_id,
+													@RequestParam String teacher_name,
+													@RequestParam String type,
+													@RequestParam int credit,
+													@RequestParam String place) {
+		JsonResult<pageInfo<SCRecord>> jsonResult = new JsonResult<>();
+		pageInfo<SCRecord> pageInfo = new pageInfo<>();
+		SCRecord record = new SCRecord(student_id, course_id, teacher_id, 
+				student_name, course_name, teacher_name, type, credit, place);
+		List<SCRecord> list = teacherHandler.querySCByCondition(record);
+		int pageStart = (page - 1) * pageSize;
+		int limit = pageSize;
+		pageInfo.list = list.subList(pageStart, min(pageStart + limit, list.size()));
+		pageInfo.total = list.size();
+		jsonResult.setData(pageInfo);
+		jsonResult.setStatus(SUCCESS);
+		jsonResult.setMsg("`查询成功'");
+		return jsonResult;
+	}
+	.......
+	`部分方法实现与上面方法类似且相对较长，不再赘述见源码'
+
+	}
+\end{lstlisting}
+
+\subsubsection{登录鉴权与操作鉴权}
+登录鉴权是指用户在访问系统资源时，系统对用户进行身份验证的过程。本系统中，用户登录后，系统会为用户生成一个 token
+(限制有效时间为 15 分钟)返回给前端，前端将得到的 token 存储在本地，每次请求时将 token 放在请求头中，后端会对 token 进行
+不同权限的操作进行鉴权，如果 token 过期或者 token 不合法，后端会返回错误信息，前端会跳转到登录界面。登录鉴权的实现
+通过如下类：
+\begin{figure}[H]
+	\centering
+	\includegraphics[width = 0.5 \textwidth]{loginVerify.png}
+	\caption{登录鉴权}
+\end{figure}
+其中：
+\begin{itemize}
+	\item TokenUtil 类：提供依据用户名，用户类型，用户签名生成 token 的方法（使用 HMAC256 算法）
+	\item JwtTokenVerify 类：提供基于不同用户类型的 token 验证方法
+	\item VerifyConfig 类：提供 token 验证的拦截器配置
+\end{itemize}
+依次实现如下：\\
+\textbf{TokenUtil.java}
+\begin{lstlisting}[language=Java]
+	/**
+	* `生成 Token'
+	*/
+	public static String getToken(UserDto userDto) {
+			String token="";
+			token= JWT.create().withClaim("username", userDto.getUsername())// `保存用户信息'
+				.withClaim("userType", userDto.getUserType())// `保存用户信息'
+				.withExpiresAt(DateUtil.offsetMinute(new Date(), 15))// `设置过期时间为 15 分钟'
+				.sign(Algorithm.HMAC256(userDto.getPassword()));// `以 password 作为 token 的密钥'
+			return token;
+		}
+\end{lstlisting}
+\textbf{JwtTokenVerify.java}
+\begin{lstlisting}
+	@Override
+	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
+			String token = request.getHeader("token");
+			if (!(handler instanceof HandlerMethod))
+					return true;
+			if (token == null || token.equals("")) {
+					throw new NoTokenException("`未登录'");
+			}
+
+			String username;
+			String userType;
+			String password;
+			try {
+					username = JWT.decode(token).getClaim("username").asString();
+					userType = JWT.decode(token).getClaim("userType").asString();
+					// if the token is not for the requested user type, then throw exception
+					if (!userType.equals(VerifyType)) {
+							throw new VerifyTokenFailException("`token 验证失败'");
+					}
+					// get the password from database
+					switch (userType) {
+							case "admin" -> {
+									AdminRecord adminRecord = adminHandler.getAdmin(username);
+									password = adminRecord.getPwd();
+							}
+							case "teacher" -> {
+									TeacherRecord teacherRecord = teacherHandler.getTeacher(username);
+									password = teacherRecord.getPwd();
+							}
+							case "student" -> {
+									StudentRecord studentRecord = studentHandler.getStudent(username);
+									password = studentRecord.getPwd();
+							}
+							default -> throw new VerifyTokenFailException("`token 验证失败'");
+					}
+					// verify the token
+					JWTVerifier jwtVerifier = JWT.require(Algorithm.HMAC256(password)).build();
+					jwtVerifier.verify(token);
+			} catch (Exception e) {
+					throw new VerifyTokenFailException("`token 验证失败'");
+			}							
+			return true;
+	
+\end{lstlisting}
+\textbf{VerifyConfig.java}
+\begin{lstlisting}
+	/**
+	*  `拦截请求，验证 token，排除登录请求'
+	* @param registry
+	*/
+ @Override
+ public void addInterceptors(InterceptorRegistry registry) {
+		 // if /api/admin is requested, then verify the token with admin role
+		 registry.addInterceptor(jwtTokenVerifyAdmin())
+						 .addPathPatterns("/api/admin/**")
+						 .excludePathPatterns("api/verify");
+		 // if /api/teacher is requested, then verify the token with teacher role
+		 registry.addInterceptor(jwtTokenVerifyTeacher())
+						 .addPathPatterns("/api/teacher/**")
+						 .excludePathPatterns("/api/verify");
+		 // if /api/student is requested, then verify the token with student role
+		 registry.addInterceptor(jwtTokenVerifyStudent())
+						 .addPathPatterns("/api/student/**")
+						 .excludePathPatterns("/api/verify");
+ }
+\end{lstlisting}
+
+\subsubsection{控制层异常处理}
+控制层在请求业务层操作前，需要对传入的参数进行一定的检查（包括权限检查，登录请求类型检查），需要抛出异常。
+控制层的异常自定义为 RuntimeException 的子类，如下：
+\begin{figure}[H]
+	\centering
+	\includegraphics[width = 0.9 \textwidth]{ControllerException.png}
+	\caption{控制层异常}
+\end{figure}
+
+\subsection{全局异常处理机制}
+在项目中我们在业务层和控制层抛出自定义异常，数据库在操作时可能由于服务器宕机等各种原因抛出异常，
+在将问题传递给前端前需要将异常信息进行处理避免造成程序崩溃。
+我们选择在控制层统一捕获各类异常进行处理。
+异常的处理在 BaseController 类中实现，所有的控制层 Controller 都继承自 BaseController，拥有统一的
+异常处理机制。\\
+\textbf{业务层异常处理}
+\begin{lstlisting}[language=Java]
+	/**
+	* Handle the exception thrown by the service layer
+	* @param e
+	* @return
+	*/
+ @ExceptionHandler(HandlerException.class)// `Java 注释，自动捕获所有业务层异常'
+ @ResponseBody
+ public JsonResult<Void> handleHandlerException(Throwable e) {
+		 JsonResult<Void> jsonResult = new JsonResult<>();
+		 switch (e.getClass().getSimpleName()) {
+				 case "UserNameNoFoundException" -> {
+						 jsonResult.setStatus(1000);
+						 jsonResult.setMsg(e.getMessage());
+				 }
+				 case "PasswordNoMatchException" -> {
+						 jsonResult.setStatus(1001);
+						 jsonResult.setMsg(e.getMessage());
+				 }
+				 case "UserIdDuplicateException" -> {
+						 jsonResult.setStatus(1002);
+						 jsonResult.setMsg(e.getMessage());
+				 }
+				 case "HandlerSqlException" -> {
+						 jsonResult.setStatus(5000);
+						 jsonResult.setMsg(e.getMessage());
+				 }
+				 default -> {
+						 jsonResult.setStatus(5001);
+						 jsonResult.setMsg("`未知错误'");
+				 }
+		 }
+		 return jsonResult;
+ }
+\end{lstlisting}
+\textbf{控制层异常处理}
+\begin{lstlisting}[language=Java]
+	/**
+	* Handle the exception thrown by the controller layer
+	* @param e
+	* @return
+	*/
+ @ExceptionHandler(ControllerException.class) `Java 注释，自动捕获所有控制层异常'
+ @ResponseBody
+ public JsonResult<Void> handleControllerException(Throwable e) {
+		 JsonResult<Void> jsonResult = new JsonResult<>();
+		 switch (e.getClass().getSimpleName()) {
+				 case "UsernameEmptyException" -> {
+						 jsonResult.setStatus(2000);
+						 jsonResult.setMsg(e.getMessage());
+				 }
+				 case "PasswordEmptyException" -> {
+						 jsonResult.setStatus(2001);
+						 jsonResult.setMsg(e.getMessage());
+				 }
+				 case "UserTypeEmptyException" -> {
+						 jsonResult.setStatus(2002);
+						 jsonResult.setMsg(e.getMessage());
+				 }
+				 case "NoTokenException" -> {
+						 jsonResult.setStatus(401);
+						 jsonResult.setMsg("`未登录'");
+				 }
+				 case "VerifyTokenFailException" -> {
+						 jsonResult.setStatus(401);
+						 jsonResult.setMsg("`权限不足，重新登录'");
+				 }
+				 default -> {
+						 jsonResult.setStatus(6004);
+						 jsonResult.setMsg("`控制层未知错误'");
+				 }
+		 }
+		 return jsonResult;
+ }
+\end{lstlisting}
+\textbf{持久层异常处理}
+\begin{lstlisting}[language=Java]
+	/**
+	* Handle the exception thrown by the mybatis
+	* @param e
+	* @return
+	*/
+ @ExceptionHandler(SQLException.class)
+ @ResponseBody
+ public JsonResult<Void> handleSqlException(Throwable e) {
+		 JsonResult<Void> jsonResult = new JsonResult<>();
+		 jsonResult.setStatus(6000);
+		 jsonResult.setMsg("`Sql 错误，填入的数据不符合要求'");
+		 return jsonResult;
+ }
+\end{lstlisting}
 
 
+\subsection{前端与后端交互封装}
+前端与后端交互使用 Ajax 技术（进一步使用 axios 进行封装），我们约定使用 JSON 格式传递数据，后端通过 Spring Boot
+框架提供的 @ResponseBody @RequestBody 注解分别将传出传入数据转换为 JSON 格式。
+包装的格式如下：
+\begin{figure}[H]
+	\centering
+	\includegraphics[width = 0.4 \textwidth]{Json.png}
+	\caption{JSON 封装}
+\end{figure}
+其中：
+\begin{itemize}
+	\item JsonResult 是一个泛型类，用于封装后端传递给前端的数据，包括状态码和信息
+	\item UserDto 由于封装登录时前端传递的数据，包括用户名，密码，用户类型
+	\item 在持久层提到的数据库实体类用于封装从数据库中查询出的数据以及封装前端传递的数据
+\end{itemize}
 
+\section{调试与测试}
+
+\section{源程序清单与执行结果}
+
+\section{总结}
 \end{document}

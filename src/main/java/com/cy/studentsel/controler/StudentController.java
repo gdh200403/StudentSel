@@ -146,6 +146,29 @@ public class StudentController extends BaseController{
 
 
     /**
+     * course selected in current semester
+     * @param student_id
+     * @param term
+     * @return
+     */
+    @GetMapping("/current/credit")
+    @ResponseBody
+    public JsonResult<Integer> findCurrentCredit(@RequestParam String student_id, @RequestParam String term) {
+        JsonResult<Integer> jsonResult = new JsonResult<>();
+        List<SCRecord> list = studentHandler.querySCByStudentIdAndTerm(student_id, term);
+        // calculate total credit
+        int total_credit = 0;
+        for (SCRecord record : list) {
+            total_credit += record.getCredit();
+        }
+        jsonResult.setData(total_credit);
+        jsonResult.setStatus(SUCCESS);
+        jsonResult.setMsg("查询成功");
+        return jsonResult;
+    }
+
+
+    /**
      * course available for selection with condition query
      * @param page
      * @param pageSize

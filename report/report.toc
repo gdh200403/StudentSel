@@ -1,1 +1,16 @@
-\contentsline {section}{\numberline {1}详细设计介绍}{3}{section.1}%
+\contentsline {section}{\numberline {1}需求分析}{3}{section.1}%
+\contentsline {section}{\numberline {2}概要设计}{3}{section.2}%
+\contentsline {section}{\numberline {3}详细设计介绍与系统设计}{3}{section.3}%
+\contentsline {subsection}{\numberline {3.1}持久层}{3}{subsection.3.1}%
+\contentsline {subsection}{\numberline {3.2}业务层}{7}{subsection.3.2}%
+\contentsline {subsubsection}{\numberline {3.2.1}控制层主要功能类}{7}{subsubsection.3.2.1}%
+\contentsline {subsubsection}{\numberline {3.2.2}业务层异常}{9}{subsubsection.3.2.2}%
+\contentsline {subsection}{\numberline {3.3}控制层}{10}{subsection.3.3}%
+\contentsline {subsubsection}{\numberline {3.3.1}控制层主要功能类}{10}{subsubsection.3.3.1}%
+\contentsline {subsubsection}{\numberline {3.3.2}登录鉴权与操作鉴权}{13}{subsubsection.3.3.2}%
+\contentsline {subsubsection}{\numberline {3.3.3}控制层异常处理}{16}{subsubsection.3.3.3}%
+\contentsline {subsection}{\numberline {3.4}全局异常处理机制}{16}{subsection.3.4}%
+\contentsline {subsection}{\numberline {3.5}前端与后端交互封装}{19}{subsection.3.5}%
+\contentsline {section}{\numberline {4}调试与测试}{20}{section.4}%
+\contentsline {section}{\numberline {5}源程序清单与执行结果}{20}{section.5}%
+\contentsline {section}{\numberline {6}总结}{20}{section.6}%

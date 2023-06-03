@@ -142,6 +142,16 @@ begin
 end //
 delimiter ;
 
+# 触发器选课时，选课人数加一
+drop trigger if exists addCurrent;
+delimiter //
+create trigger addCurrent after insert on SC
+for each row
+begin
+    update TC set current=current+1 where tc.course_id=new.course_id and tc.teacher_id=new.teacher_id and tc.term=new.term;
+end //
+delimiter ;
+
 
 
 insert into Admin values('admin','admin');

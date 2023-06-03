@@ -31,10 +31,10 @@ export default {
             <i class="el-icon-search"></i>
             <span>开课查询</span>
         </el-menu-item>
-        <el-menu-item index="/student/plan">
-            <i class="el-icon-document"></i>
-            <span>培养计划</span>
-        </el-menu-item>
+<!--        <el-menu-item index="/student/plan">-->
+<!--            <i class="el-icon-document"></i>-->
+<!--            <span>培养计划</span>-->
+<!--        </el-menu-item>-->
     </el-menu>
 </template>
 
