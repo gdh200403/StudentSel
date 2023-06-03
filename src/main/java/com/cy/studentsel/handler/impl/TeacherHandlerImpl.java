@@ -1,5 +1,9 @@
 package com.cy.studentsel.handler.impl;
+import com.cy.studentsel.DAO.SCDAO;
+import com.cy.studentsel.DAO.TCDAO;
 import  com.cy.studentsel.DAO.TeacherDAO;
+import com.cy.studentsel.entity.SCRecord;
+import com.cy.studentsel.entity.TCRecord;
 import com.cy.studentsel.entity.TeacherRecord;
 import com.cy.studentsel.handler.TeacherHandler;
 import com.cy.studentsel.handler.ex.HandlerException;
@@ -20,6 +24,10 @@ import java.util.Objects;
 public class TeacherHandlerImpl implements TeacherHandler {
     @Resource
     private TeacherDAO teacherDao;
+    @Resource
+    private SCDAO scDao;
+    @Resource
+    private TCDAO tcDao;
 
     @Override
     public String login(String ID, String pwd) {
@@ -35,25 +43,39 @@ public class TeacherHandlerImpl implements TeacherHandler {
 
 
     @Override
+    public List<TCRecord> queryTCByCondition(TCRecord record) {
+        return tcDao.queryTCByCondition(record);
+    }
+
+    @Override
     public TeacherRecord getTeacher(String ID) {
-        try {
-            return teacherDao.queryTeacherByID(ID);
-        }
-        catch (Exception e){
-            e.printStackTrace();
-            return null;
-        }
+        return teacherDao.queryTeacherByID(ID);
     }
 
     @Override
     public boolean update(TeacherRecord teacherRecord) {
-        try {
-            teacherDao.updateTeacher(teacherRecord);
-            return true;
-        } catch (Exception e) {
-            e.printStackTrace();
-            return false;
-        }
+        teacherDao.updateTeacher(teacherRecord);
+        return true;
+    }
+
+    @Override
+    public TeacherRecord queryTeacherByTeacherID(String teacherId) {
+        return teacherDao.queryTeacherByID(teacherId);
+    }
+
+    @Override
+    public List<SCRecord> querySCByCondition(SCRecord record) {
+        return scDao.querySCByCondition(record);
+    }
+
+    @Override
+    public void updateTC(TCRecord record) {
+        tcDao.updateTC(record);
+    }
+
+    @Override
+    public void updateSC(SCRecord record) {
+        scDao.updateSC(record);
     }
 
     public static void main(String[] args) {

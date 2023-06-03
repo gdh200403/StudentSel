@@ -10,9 +10,13 @@
             <img src="../../assets/logo.png" class="logo" alt="el-icon-picture-outline">
             <b style="color: white" v-show="!isCollapse">选课平台教师端</b>
         </div>
+        <el-menu-item index="/teacher/info">
+            <i class="el-icon-user-solid"></i>
+            <span v-show="!isCollapse">个人信息</span>
+        </el-menu-item>
         <el-menu-item index="/teacher/courseMan">
           <i class="el-icon-user-solid"></i>
-          <span v-show="!isCollapse">课程管理</span>
+          <span v-show="!isCollapse">我的课程</span>
         </el-menu-item>
     </el-menu>
 </template>

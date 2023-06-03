@@ -17,6 +17,7 @@ export default defineComponent({
             form : {
                 student_id: '',
                 course_id: '',
+                term: '',
             },
             course:[{//TODO 显示数据
                 teacher_id: '123',
@@ -93,6 +94,7 @@ export default defineComponent({
         selectCourse(row) {
             this.form.student_id = this.user.username
             this.form.course_id = row.course_id
+            this.form.term = row.term
             this.request.post('/api/student/sc/save', this.form)
                 .then(res => {
                     if (res.status === 200) {

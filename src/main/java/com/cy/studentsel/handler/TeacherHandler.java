@@ -1,5 +1,7 @@
 package com.cy.studentsel.handler;
 
+import com.cy.studentsel.entity.SCRecord;
+import com.cy.studentsel.entity.TCRecord;
 import com.cy.studentsel.entity.TeacherRecord;
 import org.springframework.stereotype.Service;
 
@@ -11,7 +13,17 @@ import java.util.List;
  */
 
 public interface TeacherHandler extends UserHandler {
-    public TeacherRecord getTeacher(String ID);
+    List<TCRecord> queryTCByCondition(TCRecord record);
 
-    public boolean update(TeacherRecord teacherRecord);
+    TeacherRecord getTeacher(String ID);
+
+    boolean update(TeacherRecord teacherRecord);
+
+    TeacherRecord queryTeacherByTeacherID(String teacherId);
+
+    List<SCRecord> querySCByCondition(SCRecord record);
+
+    void updateTC(TCRecord record);
+
+    void updateSC(SCRecord record);
 }

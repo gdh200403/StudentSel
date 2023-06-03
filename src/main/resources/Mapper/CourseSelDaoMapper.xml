@@ -68,6 +68,6 @@
         delete from sc where sc.student_id = #{student_id} and sc.course_id = #{course_id}
     </delete>
     <insert id="addSC" parameterType="com.cy.studentsel.entity.SCRecord">
-        insert into sc values (#{student_id}, #{course_id}, #{grade})
+        insert into sc values (#{student_id}, #{course_id}, #{teacher_id}, #{grade}, #{term})
     </insert>
 </mapper>

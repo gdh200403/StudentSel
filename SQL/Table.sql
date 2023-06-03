@@ -82,7 +82,7 @@ CREATE TABLE SC (
     teacher_id varchar(20) NOT NULL,
     Grade int(11) default NULL,
     term varchar(20) NOT NULL,
-    PRIMARY KEY (student_id, course_id, teacher_id, term),
+    PRIMARY KEY (student_id, course_id),
     FOREIGN KEY (student_id) REFERENCES Student(student_id),
     FOREIGN KEY (course_id) REFERENCES Course(course_id),
     FOREIGN KEY (teacher_id) REFERENCES Teacher(teacher_id)

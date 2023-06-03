@@ -26,6 +26,7 @@
             <el-table-column property="course_id" label="课程ID" width="100"></el-table-column>
             <el-table-column property="course_name" label="课程名称" width="150"></el-table-column>
             <el-table-column property="teacher_name" label="授课教师" width="100"></el-table-column>
+            <el-table-column property="term" label="授课学期" width="100"></el-table-column>
             <el-table-column property="place" label="授课地点" width="100"></el-table-column>
             <el-table-column property="credit" label="学分" width="80"></el-table-column>
             <el-table-column property="total_hours" label="总学时" width="80"></el-table-column>
@@ -182,6 +183,9 @@ export default {
                 student_name: '',
                 course_id: '',
                 course_name: '',
+                teacher_id: '',
+                teacher_name: '',
+                term: '',
                 grade: '',
             },
             inner_course_id: '',
@@ -285,6 +289,8 @@ export default {
                 student_name: name,
                 course_id: '',
                 course_name: '',
+                teacher_id: '',
+                teacher_name: '',
                 grade: '',
             }
         },
@@ -295,6 +301,9 @@ export default {
                 type: 'warning'
             }).then(() => {
                 this.form.course_id = row.course_id
+                this.form.teacher_id = row.teacher_id
+                this.form.term = row.term
+                this.term = row.term
                 this.request.post('/api/admin/sc/save', this.form)
                     .then(res => {
                         if (res.status === 200) {

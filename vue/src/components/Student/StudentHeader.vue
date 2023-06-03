@@ -1,6 +1,6 @@
 <script>
 export default {
-    name: "AdminHeader",
+    name: "StudentHeader",
     props: {
         collapseBtnClass: String,
         collapse: Function,

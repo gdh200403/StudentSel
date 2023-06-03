@@ -14,6 +14,7 @@ public class SCRecord implements Serializable {
     private String course_id;
 
     private Integer grade = null;
+    private String term;
 
     private String student_name;
     private String course_name;
@@ -29,7 +30,6 @@ public class SCRecord implements Serializable {
     private int experiment_hours;
     private int current = -1;
     private int capacity = -1;
-    private String term;
     private String place;
     private String comment = "";
 
