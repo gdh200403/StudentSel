@@ -44,8 +44,67 @@
 \newpage
 
 \section{需求分析}
+\subsection{需求简述}
+\begin{itemize}
+  \item 学生选课系统（Student Course Registration System，简记为 SRS）就是大学生完成选课的软件系统
+  \item 该系统使用面向对象的思想进行分析和设计并使用 Java 实现。
+  \item 当学生入学后，大学一般已经为学生准备了四年的学习计划，即为了满足学历、学位的要求而应完成的课程（Course）
+  \item 在每学期期末的选课（Class）时间，学生都能通过选课系统查看下学期所开设课程，并选择和注册自己应该或有兴趣学习的课程，
+        学生也可按学分查询、按课程性质查询等多种方式查询课程信息。系统应提供选课帮助，如已经选择的总学分等。
+  \item 如果多个老师讲授这门课程，学生还可以选择自己喜欢的老师的课程
+  \item 如果有空余的选课名额，那么学生就选课成功，考试结束后可查看该课程的成绩
+  \item 学生在正式上课前也可取消课程
+  \item 任课教师可以查看选课学生的名单，可以给学生成绩或查看学生的成绩
+  \item 管理员可以录入课程信息
+\end{itemize}
+
+\subsection{学生选课系统面向对象以及用户分析}
+\begin{itemize}
+  \item 学生（Student）：学生有学号、姓名、性别、年龄、专业等属性，学生可以选课、退课、查看课程信息、查看成绩等
+  \item 教师 （Teacher）：教师有工号、姓名、性别、年龄等属性，教师可以查看选课学生名单、录入成绩等
+  \item 管理员（Administrator）：管理员有账户密码等属性，管理员可以录入课程信息等
+\end{itemize}
+
+\subsection{用例图}
+\begin{figure}[H]
+  \centering
+  \includegraphics[width = 0.8 \textwidth]{usecase.png}
+  \caption{用例图}
+\end{figure}
 
 \section{概要设计}
+\subsection{包关系与系统架构}
+前端使用 vue 框架,后端使用 spring boot 框架.前端与用户交互后可以向后端发出请求,后端 controler 处理后通过 Mapper 中的.
+xml 文件实现 java 与 sql 语言的转换进而操作数据库.
+\begin{figure}[H]
+  \centering
+  \includegraphics[width = 0.8 \textwidth]{package.png}
+  \caption{包关系}
+\end{figure}
+
+\subsection{组件图}
+\begin{figure}[H]
+  \centering
+  \includegraphics[width = 0.8 \textwidth]{component.png}
+  \caption{组件图}
+\end{figure}
+
+\subsection{部署图}
+前端接口:http://localhost:8080/\\
+后端接口:http://localhost:8081/\\
+后端服务器运行在本地电脑上\\
+\begin{figure}[H]
+  \centering
+  \includegraphics[width = 0.8 \textwidth]{deployment.png}
+  \caption{部署图}
+\end{figure}
+
+\subsection{活动图}
+\begin{figure}[H]
+  \centering
+  \includegraphics[width = 0.8 \textwidth]{activity.png}
+  \caption{活动图}
+\end{figure}
 
 \section{详细设计介绍与系统设计}
 我们的程序采用 Spring Boot 框架， JDBC 采用 MyBatis 管理，数据库使用 MySQL，前端使用 vue 构建，总体
@@ -60,9 +119,25 @@
 \end{figure}
 \begin{figure}[H]
   \centering
-  \includegraphics[width = 0.8 \textwidth]{entity.png}
+  \includegraphics[width = 0.9 \textwidth]{entity.png}
   \caption{数据库实体}
 \end{figure}
+
+Spring Boot 配置如下：
+\begin{lstlisting}[language = Java]
+  # sql config
+  spring.datasource.url=jdbc:mysql://localhost:3306/courseselsys?
+  &characterEncoding=utf-8&allowPublicKeyRetrieval=true
+  &useSSL=false&serverTimezone=UTC
+  spring.datasource.password=162474
+  spring.datasource.username=root
+  # mybatis mapper xml path
+  mybatis.mapper-locations=classpath:mapper/*.xml
+  # server default run at 8081
+  server.port=8081
+  # don't cache thymeleaf template
+  spring.thymeleaf.cache=false
+\end{lstlisting}
 
 下面以 TeacherMapper 为例，介绍持久层接口和 Mapper.xml 文件的设计。TeacherDao 接口中定义了
 如下的方法（功能见注释）：
@@ -637,8 +712,51 @@ TeacherHandlerImpl 类中实现了 TeacherHandler 接口中的方法如下：
 \subsection{前端功能测试}
 前端主要通过浏览器开发者模式，Postman 进行测试，主要检查点击交互时前端是否向后端发送了预期的
 请求，以及后端是否返回了预期的数据。下面以登录功能为例进行测试。
+\begin{figure}[H]
+  \centering
+  \includegraphics[width = 0.6 \textwidth]{loginRe.png}
+  \includegraphics[width = 0.6 \textwidth]{loginPayload}
+  \includegraphics[width = 0.9 \textwidth]{response}
+  \caption{登录功能测试}
+\end{figure}
 
+\subsection{测试结果分析与讨论}
+经过对代码部分充分的单元测试，以及进入浏览器和 PostMan 进行充分前后端结合测试，
+证明项目能够很好的完成预期功能并具有一定的对意外处理能力。
 
+\subsection{测试中遇到的主要问题以及解决方法}
+\begin{itemize}
+  \item 数据库连接被拒绝：由于数据库默认拒绝未知的 ssl 连接和 ssh 公钥检索，需要在数据库中
+        修改配置文件，关闭的 ssl 连接和允许 ssh 公钥检索。
+        \begin{quotation}
+          allowPublicKeyRetrieval=true\&useSSL=false\&
+        \end{quotation}
+  \item 试图删除教师记录时，由于外键约束，导致删除失败，需要先删除教师对应的课程记录。
+        \begin{lstlisting}
+  create procedure deleteTeacher(in teacher_id varchar(20))
+  begin
+      delete from TC where tc.teacher_id=teacher_id;
+      delete from Teacher where teacher.teacher_id=teacher_id;
+  end //
+        \end{lstlisting}
+  \item 由于前端和后端的跨域问题，导致前端无法向后端发送请求，需要在后端配置跨域请求
+        进行本地转发。
+        \begin{lstlisting}
+  devServer: {
+    host: 'localhost',
+    port: 8080, // `端口'
+    proxy: {
+      "/proxy_url":{           // `proxy\_url 这个用来和根路径 baseURL 进行匹配'
+        target: 'http://localhost:8081',  // `这个是填写跨域的请求域名+端口号，也就是要请求的 URL(不包含 URL 路径)'
+        changeOrigin: true,  // `是否允许跨域请求'
+        pathRewrite: {   // `路径重写'
+          '^/proxy_url': '/' // `替换 target 中的请求地址，原请求为 http://127.0.0.1:8080/kuayu 实际请求为 http://127.0.0.1:8080/proxy\_url/'
+        }
+      }
+    }
+  }        
+        \end{lstlisting}
+\end{itemize}
 
 
 \section{源程序清单与执行结果}
