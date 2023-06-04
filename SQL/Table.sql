@@ -179,7 +179,7 @@ insert into Teacher values('42000012','张明','男',30,'123456');
 insert into Course values('cs1','计算机科学与技术','必修',4,64,32,32);
 insert into Course values('phy2','物理','必修',5,64,32,32);
 insert into Course values('math3','数学','必修',2,64,32,32);
-insert into Course values('phi4','哲学','必修',2,64,32,32);
+insert into Course values('phi4','哲学','选修',2,64,32,32);
 insert into Course values('bio5','生物','必修',4,64,32,32);
 insert into Course values('En6','英语','必修',4,64,32,32);
 insert into Course values('his7','历史学','必修',3,64,32,32);
