@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.24 (TeX Live 2022) (preloaded format=pdflatex 2022.10.3)  3 JUN 2023 22:14
+This is pdfTeX, Version 3.141592653-2.6-1.40.24 (TeX Live 2022) (preloaded format=pdflatex 2022.10.3)  4 JUN 2023 11:32
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -1176,7 +1176,7 @@ LaTeX Font Info:    Trying to load font information for OT1+zplm on input line 3
  (d:/leaf-fulture/software/texlive/texlive/2022/texmf-dist/tex/latex/psnfss/ot1zplm.fd
 File: ot1zplm.fd 2002/09/08 Fontinst v1.914 font definitions for OT1/zplm.
 )
-<./figs//logo.png, id=119, 239.89626pt x 239.89626pt>
+<./figs//logo.png, id=143, 239.89626pt x 239.89626pt>
 File: ./figs//logo.png Graphic file (type png)
 <use ./figs//logo.png>
 Package pdftex.def Info: ./figs//logo.png  used on input line 36.
@@ -1223,18 +1223,18 @@ LaTeX Font Info:    Font shape `U/msb/m/n' will be
 Package CJKpunct Info: use punctuation spaces for family 'rm' with punctstyle (quanjiao) on input line 51.
 LaTeX Font Info:    Font shape `T1/ntxtlf/b/n' will be
 (Font)              scaled to size 14.4pt on input line 53.
-<./figs//MapperInterface.png, id=240, 1417.295pt x 218.8175pt>
+<./figs//MapperInterface.png, id=273, 1417.295pt x 218.8175pt>
 File: ./figs//MapperInterface.png Graphic file (type png)
 <use ./figs//MapperInterface.png>
 Package pdftex.def Info: ./figs//MapperInterface.png  used on input line 58.
 (pdftex.def)             Requested size: 382.40794pt x 59.0381pt.
-<./figs//entity.png, id=242, 1780.6525pt x 664.4825pt>
+<./figs//entity.png, id=275, 1780.6525pt x 664.4825pt>
 File: ./figs//entity.png Graphic file (type png)
 <use ./figs//entity.png>
 Package pdftex.def Info: ./figs//entity.png  used on input line 63.
 (pdftex.def)             Requested size: 382.40794pt x 142.69872pt.
  [3 <./figs//MapperInterface.png>]
-<./figs//TeacherDao.png, id=267, 322.70563pt x 166.12062pt>
+<./figs//TeacherDao.png, id=298, 322.70563pt x 166.12062pt>
 File: ./figs//TeacherDao.png Graphic file (type png)
 <use ./figs//TeacherDao.png>
 Package pdftex.def Info: ./figs//TeacherDao.png  used on input line 71.
@@ -1266,24 +1266,24 @@ File: t1txtt.fd 2000/12/15 v3.1
 LaTeX Font Info:    Font shape `T1/ntxtt/b/n' in size <10> not available
 (Font)              Font shape `T1/txtt/bx/n' tried instead on input line 77.
  [4 <./figs//entity.png> <./figs//TeacherDao.png>] [5] [6]
-<./figs//ServiceInterface.png, id=409, 1324.95pt x 564.1075pt>
+<./figs//ServiceInterface.png, id=440, 1324.95pt x 564.1075pt>
 File: ./figs//ServiceInterface.png Graphic file (type png)
 <use ./figs//ServiceInterface.png>
 Package pdftex.def Info: ./figs//ServiceInterface.png  used on input line 174.
 (pdftex.def)             Requested size: 382.40794pt x 162.8123pt.
-<./figs//TeacherHandler.png, id=410, 670.505pt x 447.6725pt>
+<./figs//TeacherHandler.png, id=441, 670.505pt x 447.6725pt>
 File: ./figs//TeacherHandler.png Graphic file (type png)
 <use ./figs//TeacherHandler.png>
 Package pdftex.def Info: ./figs//TeacherHandler.png  used on input line 181.
 (pdftex.def)             Requested size: 286.80779pt x 191.49127pt.
  [7 <./figs//ServiceInterface.png>] [8 <./figs//TeacherHandler.png>]
-<./figs//HandlerException.png, id=465, 2539.4875pt x 463.7325pt>
+<./figs//HandlerException.png, id=496, 2539.4875pt x 463.7325pt>
 File: ./figs//HandlerException.png Graphic file (type png)
 <use ./figs//HandlerException.png>
 Package pdftex.def Info: ./figs//HandlerException.png  used on input line 247.
 (pdftex.def)             Requested size: 430.20438pt x 78.55751pt.
  [9]
-<./figs//Controller.png, id=502, 2310.6325pt x 1676.2625pt>
+<./figs//Controller.png, id=533, 2310.6325pt x 1676.2625pt>
 File: ./figs//Controller.png Graphic file (type png)
 <use ./figs//Controller.png>
 Package pdftex.def Info: ./figs//Controller.png  used on input line 256.
@@ -1295,7 +1295,7 @@ File: ts1ntxtlf.fd 2015/01/18 v1.0 fd file for TS1/ntxtlf
 LaTeX Font Info:    Font shape `TS1/ntxtlf/m/n' will be
 (Font)              scaled to size 12.0pt on input line 262.
  [10 <./figs//HandlerException.png> <./figs//Controller.png>]
-<./figs//TeacherController.png, id=513, 1608.0075pt x 463.7325pt>
+<./figs//TeacherController.png, id=544, 1608.0075pt x 463.7325pt>
 File: ./figs//TeacherController.png Graphic file (type png)
 <use ./figs//TeacherController.png>
 Package pdftex.def Info: ./figs//TeacherController.png  used on input line 272.
@@ -1303,7 +1303,7 @@ Package pdftex.def Info: ./figs//TeacherController.png  used on input line 272.
 LaTeX Font Info:    Font shape `TS1/ntxtlf/m/it' will be
 (Font)              scaled to size 10.0pt on input line 289.
  [11 <./figs//TeacherController.png>] [12]
-<./figs//loginVerify.png, id=577, 945.5325pt x 965.6075pt>
+<./figs//loginVerify.png, id=608, 945.5325pt x 965.6075pt>
 File: ./figs//loginVerify.png Graphic file (type png)
 <use ./figs//loginVerify.png>
 Package pdftex.def Info: ./figs//loginVerify.png  used on input line 346.
@@ -1314,34 +1314,34 @@ Overfull \hbox (5.54198pt too wide) in paragraph at lines 351--352
  []
 
 [13 <./figs//loginVerify.png>] [14] [15]
-<./figs//ControllerException.png, id=677, 2475.2475pt x 499.8675pt>
+<./figs//ControllerException.png, id=708, 2475.2475pt x 499.8675pt>
 File: ./figs//ControllerException.png Graphic file (type png)
 <use ./figs//ControllerException.png>
 Package pdftex.def Info: ./figs//ControllerException.png  used on input line 444.
 (pdftex.def)             Requested size: 430.20438pt x 86.87555pt.
  [16 <./figs//ControllerException.png>] [17] [18]
-<./figs//Json.png, id=794, 527.9725pt x 704.6325pt>
+<./figs//Json.png, id=823, 330.23375pt x 134.5025pt>
 File: ./figs//Json.png Graphic file (type png)
 <use ./figs//Json.png>
 Package pdftex.def Info: ./figs//Json.png  used on input line 554.
-(pdftex.def)             Requested size: 191.20032pt x 255.17276pt.
- [19 <./figs//Json.png>] [20] (./report.aux)
+(pdftex.def)             Requested size: 191.20032pt x 77.87808pt.
+ [19 <./figs//Json.png>] [20] [21] [22] [23] [24] (./report.aux)
 Package rerunfilecheck Info: File `report.out' has not changed.
-(rerunfilecheck)             Checksum: 6DAFAF040DB9645CD70C47DF1A24C411;1677.
+(rerunfilecheck)             Checksum: 35826CCEA7E4F4B0CE5A00353F415626;2439.
  ) 
 Here is how much of TeX's memory you used:
- 40471 strings out of 478268
- 825866 string characters out of 5835375
- 1531756 words of memory out of 5000000
- 57100 multiletter control sequences out of 15000+600000
- 588480 words of font info for 345 fonts, out of 8000000 for 9000
+ 40972 strings out of 478268
+ 832758 string characters out of 5835375
+ 1531781 words of memory out of 5000000
+ 57512 multiletter control sequences out of 15000+600000
+ 594150 words of font info for 366 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  105i,12n,117p,802b,2075s stack positions out of 10000i,1000n,20000p,200000b,200000s
-<c:/Windows/Fonts/simsun.ttc><c:/Windows/Fonts/simsun.ttc><c:/Windows/Fonts/simhei.ttf><c:/Windows/Fonts/simfang.ttf><c:/Windows/Fonts/simfang.ttf><c:/Windows/Fonts/simfang.ttf><c:/Windows/Fonts/simfang.ttf><c:/Windows/Fonts/simfang.ttf><c:/Windows/Fonts/simfang.ttf><c:/Windows/Fonts/simsun.ttc><c:/Windows/Fonts/simsun.ttc><c:/Windows/Fonts/simhei.ttf><c:/Windows/Fonts/simhei.ttf><c:/Windows/Fonts/simhei.ttf><c:/Windows/Fonts/simfang.ttf><c:/Windows/Fonts/simfang.ttf><c:/Windows/Fonts/simfang.ttf><c:/Windows/Fonts/simfang.ttf><c:/Windows/Fonts/simsun.ttc><c:/Windows/Fonts/simsun.ttc><c:/Windows/Fonts/simsun.ttc><c:/Windows/Fonts/simsun.ttc><c:/Windows/Fonts/simhei.ttf><c:/Windows/Fonts/simhei.ttf><c:/Windows/Fonts/simhei.ttf><c:/Windows/Fonts/simfang.ttf><c:/Windows/Fonts/simfang.ttf><c:/Windows/Fonts/simfang.ttf><c:/Windows/Fonts/simfang.ttf>{d:/leaf-fulture/software/texlive/texlive/2022/texmf-dist/fonts/enc/dvips/tex-gyre/q-ts1.enc}<c:/Windows/Fonts/simfang.ttf><c:/Windows/Fonts/simfang.ttf><c:/Windows/Fonts/simsun.ttc><c:/Windows/Fonts/simsun.ttc><c:/Windows/Fonts/simsun.ttc><c:/Windows/Fonts/simfang.ttf><c:/Windows/Fonts/simfang.ttf><c:/Windows/Fonts/simfang.ttf><c:/Windows/Fonts/simfang.ttf><c:/Windows/Fonts/simfang.ttf><c:/Windows/Fonts/simfang.ttf><c:/Windows/Fonts/simsun.ttc><c:/Windows/Fonts/simhei.ttf><c:/Windows/Fonts/simfang.ttf><c:/Windows/Fonts/simsun.ttc><c:/Windows/Fonts/simsun.ttc><c:/Windows/Fonts/simfang.ttf><c:/Windows/Fonts/simfang.ttf><c:/Windows/Fonts/simfang.ttf><c:/Windows/Fonts/simfang.ttf><c:/Windows/Fonts/simfang.ttf><c:/Windows/Fonts/simfang.ttf><c:/Windows/Fonts/simfang.ttf><c:/Windows/Fonts/simfang.ttf><c:/Windows/Fonts/simfang.ttf><c:/Windows/Fonts/simfang.ttf><c:/Windows/Fonts/simfang.ttf><c:/Windows/Fonts/simfang.ttf><c:/Windows/Fonts/simfang.ttf><c:/Windows/Fonts/simfang.ttf><c:/Windows/Fonts/simfang.ttf><c:/Windows/Fonts/simfang.ttf><c:/Windows/Fonts/simfang.ttf><c:/Windows/Fonts/simfang.ttf><c:/Windows/Fonts/simfang.ttf><c:/Windows/Fonts/simfang.ttf><c:/Windows/Fonts/simfang.ttf><c:/Windows/Fonts/simfang.ttf><c:/Windows/Fonts/simfang.ttf><c:/Windows/Fonts/simfang.ttf><c:/Windows/Fonts/simfang.ttf><c:/Windows/Fonts/simfang.ttf><c:/Windows/Fonts/simfang.ttf><c:/Windows/Fonts/simfang.ttf><c:/Windows/Fonts/simfang.ttf><c:/Windows/Fonts/simfang.ttf><c:/Windows/Fonts/simfang.ttf><c:/Windows/Fonts/simfang.ttf>{d:/leaf-fulture/software/texlive/texlive/2022/texmf-dist/fonts/enc/dvips/newtx/ntx-ec-tlf.enc}<c:/Windows/Fonts/simsun.ttc><c:/Windows/Fonts/simsun.ttc><c:/Windows/Fonts/simsun.ttc><c:/Windows/Fonts/simsun.ttc><c:/Windows/Fonts/simsun.ttc><c:/Windows/Fonts/simsun.ttc><c:/Windows/Fonts/simhei.ttf><c:/Windows/Fonts/simhei.ttf><c:/Windows/Fonts/simsun.ttc><c:/Windows/Fonts/simsun.ttc><c:/Windows/Fonts/simsun.ttc><c:/Windows/Fonts/simsun.ttc><c:/Windows/Fonts/simsun.ttc><c:/Windows/Fonts/simsun.ttc><c:/Windows/Fonts/simsun.ttc><c:/Windows/Fonts/simsun.ttc><c:/Windows/Fonts/simsun.ttc><c:/Windows/Fonts/simsun.ttc><c:/Windows/Fonts/simsun.ttc>{d:/leaf-fulture/software/texlive/texlive/2022/texmf-dist/fonts/enc/dvips/base/8r.enc}<c:/Windows/Fonts/simhei.ttf><c:/Windows/Fonts/simhei.ttf><c:/Windows/Fonts/simhei.ttf><c:/Windows/Fonts/simhei.ttf><c:/Windows/Fonts/simhei.ttf><c:/Windows/Fonts/simhei.ttf><c:/Windows/Fonts/simhei.ttf><c:/Windows/Fonts/simsun.ttc><c:/Windows/Fonts/simsun.ttc><c:/Windows/Fonts/simsun.ttc><c:/Windows/Fonts/simsun.ttc><c:/Windows/Fonts/simsun.ttc><c:/Windows/Fonts/simsun.ttc><c:/Windows/Fonts/simsun.ttc><c:/Windows/Fonts/simsun.ttc><c:/Windows/Fonts/simsun.ttc><c:/Windows/Fonts/simsun.ttc><c:/Windows/Fonts/simsun.ttc><c:/Windows/Fonts/simsun.ttc><c:/Windows/Fonts/simsun.ttc><c:/Windows/Fonts/simsun.ttc><c:/Windows/Fonts/simsun.ttc><c:/Windows/Fonts/simhei.ttf><c:/Windows/Fonts/simhei.ttf><c:/Windows/Fonts/simhei.ttf><c:/Windows/Fonts/simhei.ttf><c:/Windows/Fonts/simhei.ttf><c:/Windows/Fonts/simhei.ttf><c:/Windows/Fonts/simhei.ttf><c:/Windows/Fonts/simhei.ttf><c:/Windows/Fonts/simhei.ttf><c:/Windows/Fonts/simhei.ttf><c:/Windows/Fonts/simsun.ttc><c:/Windows/Fonts/simsun.ttc><c:/Windows/Fonts/simsun.ttc><c:/Windows/Fonts/simsun.ttc><c:/Windows/Fonts/simsun.ttc><c:/Windows/Fonts/simsun.ttc><c:/Windows/Fonts/simsun.ttc><c:/Windows/Fonts/simsun.ttc><c:/Windows/Fonts/simsun.ttc><c:/Windows/Fonts/simsun.ttc><c:/Windows/Fonts/simsun.ttc><c:/Windows/Fonts/simsun.ttc><c:/Windows/Fonts/simsun.ttc><c:/Windows/Fonts/simsun.ttc><c:/Windows/Fonts/simhei.ttf><c:/Windows/Fonts/simhei.ttf><c:/Windows/Fonts/simhei.ttf><c:/Windows/Fonts/simhei.ttf><c:/Windows/Fonts/simhei.ttf><c:/Windows/Fonts/simhei.ttf><c:/Windows/Fonts/simhei.ttf><c:/Windows/Fonts/simhei.ttf><d:/leaf-fulture/software/texlive/texlive/2022/texmf-dist/fonts/type1/public/tex-gyre/qtmr.pfb><d:/leaf-fulture/software/texlive/texlive/2022/texmf-dist/fonts/type1/public/tex-gyre/qtmri.pfb><d:/leaf-fulture/software/texlive/texlive/2022/texmf-dist/fonts/type1/public/txfonts/t1xbtt.pfb><d:/leaf-fulture/software/texlive/texlive/2022/texmf-dist/fonts/type1/public/txfonts/t1xtt.pfb><d:/leaf-fulture/software/texlive/texlive/2022/texmf-dist/fonts/type1/urw/palatino/uplr8a.pfb><d:/leaf-fulture/software/texlive/texlive/2022/texmf-dist/fonts/type1/public/newtx/ztmb.pfb><d:/leaf-fulture/software/texlive/texlive/2022/texmf-dist/fonts/type1/public/newtx/ztmr.pfb><d:/leaf-fulture/software/texlive/texlive/2022/texmf-dist/fonts/type1/public/newtx/ztmri.pfb>
-Output written on report.pdf (20 pages, 1461717 bytes).
+<c:/Windows/Fonts/simsun.ttc><c:/Windows/Fonts/simsun.ttc><c:/Windows/Fonts/simsun.ttc><c:/Windows/Fonts/simsun.ttc><c:/Windows/Fonts/simsun.ttc><c:/Windows/Fonts/simsun.ttc><c:/Windows/Fonts/simsun.ttc><c:/Windows/Fonts/simsun.ttc><c:/Windows/Fonts/simhei.ttf><c:/Windows/Fonts/simhei.ttf><c:/Windows/Fonts/simhei.ttf><c:/Windows/Fonts/simhei.ttf><c:/Windows/Fonts/simsun.ttc><c:/Windows/Fonts/simsun.ttc><c:/Windows/Fonts/simhei.ttf><c:/Windows/Fonts/simfang.ttf><c:/Windows/Fonts/simfang.ttf><c:/Windows/Fonts/simfang.ttf><c:/Windows/Fonts/simfang.ttf><c:/Windows/Fonts/simsun.ttc><c:/Windows/Fonts/simsun.ttc><c:/Windows/Fonts/simhei.ttf><c:/Windows/Fonts/simhei.ttf><c:/Windows/Fonts/simhei.ttf><c:/Windows/Fonts/simfang.ttf><c:/Windows/Fonts/simfang.ttf><c:/Windows/Fonts/simfang.ttf><c:/Windows/Fonts/simfang.ttf><c:/Windows/Fonts/simsun.ttc><c:/Windows/Fonts/simsun.ttc><c:/Windows/Fonts/simsun.ttc><c:/Windows/Fonts/simsun.ttc><c:/Windows/Fonts/simhei.ttf><c:/Windows/Fonts/simhei.ttf><c:/Windows/Fonts/simhei.ttf><c:/Windows/Fonts/simfang.ttf><c:/Windows/Fonts/simfang.ttf><c:/Windows/Fonts/simfang.ttf><c:/Windows/Fonts/simfang.ttf>{d:/leaf-fulture/software/texlive/texlive/2022/texmf-dist/fonts/enc/dvips/tex-gyre/q-ts1.enc}<c:/Windows/Fonts/simfang.ttf><c:/Windows/Fonts/simfang.ttf><c:/Windows/Fonts/simsun.ttc><c:/Windows/Fonts/simsun.ttc><c:/Windows/Fonts/simsun.ttc><c:/Windows/Fonts/simfang.ttf><c:/Windows/Fonts/simfang.ttf><c:/Windows/Fonts/simfang.ttf><c:/Windows/Fonts/simfang.ttf><c:/Windows/Fonts/simfang.ttf><c:/Windows/Fonts/simfang.ttf><c:/Windows/Fonts/simsun.ttc><c:/Windows/Fonts/simhei.ttf><c:/Windows/Fonts/simfang.ttf><c:/Windows/Fonts/simsun.ttc><c:/Windows/Fonts/simsun.ttc><c:/Windows/Fonts/simfang.ttf><c:/Windows/Fonts/simfang.ttf><c:/Windows/Fonts/simfang.ttf><c:/Windows/Fonts/simfang.ttf><c:/Windows/Fonts/simfang.ttf><c:/Windows/Fonts/simfang.ttf><c:/Windows/Fonts/simfang.ttf><c:/Windows/Fonts/simfang.ttf><c:/Windows/Fonts/simfang.ttf><c:/Windows/Fonts/simfang.ttf><c:/Windows/Fonts/simfang.ttf><c:/Windows/Fonts/simfang.ttf><c:/Windows/Fonts/simfang.ttf><c:/Windows/Fonts/simfang.ttf><c:/Windows/Fonts/simfang.ttf><c:/Windows/Fonts/simfang.ttf><c:/Windows/Fonts/simfang.ttf><c:/Windows/Fonts/simfang.ttf><c:/Windows/Fonts/simfang.ttf><c:/Windows/Fonts/simfang.ttf><c:/Windows/Fonts/simfang.ttf><c:/Windows/Fonts/simfang.ttf><c:/Windows/Fonts/simfang.ttf><c:/Windows/Fonts/simfang.ttf><c:/Windows/Fonts/simfang.ttf><c:/Windows/Fonts/simfang.ttf><c:/Windows/Fonts/simfang.ttf><c:/Windows/Fonts/simfang.ttf><c:/Windows/Fonts/simfang.ttf><c:/Windows/Fonts/simfang.ttf><c:/Windows/Fonts/simfang.ttf><c:/Windows/Fonts/simfang.ttf>{d:/leaf-fulture/software/texlive/texlive/2022/texmf-dist/fonts/enc/dvips/newtx/ntx-ec-tlf.enc}<c:/Windows/Fonts/simsun.ttc><c:/Windows/Fonts/simsun.ttc><c:/Windows/Fonts/simsun.ttc><c:/Windows/Fonts/simsun.ttc><c:/Windows/Fonts/simsun.ttc><c:/Windows/Fonts/simsun.ttc><c:/Windows/Fonts/simhei.ttf><c:/Windows/Fonts/simhei.ttf><c:/Windows/Fonts/simsun.ttc><c:/Windows/Fonts/simsun.ttc><c:/Windows/Fonts/simsun.ttc><c:/Windows/Fonts/simsun.ttc><c:/Windows/Fonts/simsun.ttc><c:/Windows/Fonts/simsun.ttc><c:/Windows/Fonts/simsun.ttc><c:/Windows/Fonts/simsun.ttc><c:/Windows/Fonts/simsun.ttc>{d:/leaf-fulture/software/texlive/texlive/2022/texmf-dist/fonts/enc/dvips/base/8r.enc}<c:/Windows/Fonts/simhei.ttf><c:/Windows/Fonts/simhei.ttf><c:/Windows/Fonts/simhei.ttf><c:/Windows/Fonts/simhei.ttf><c:/Windows/Fonts/simhei.ttf><c:/Windows/Fonts/simsun.ttc><c:/Windows/Fonts/simsun.ttc><c:/Windows/Fonts/simhei.ttf><c:/Windows/Fonts/simhei.ttf><c:/Windows/Fonts/simsun.ttc><c:/Windows/Fonts/simsun.ttc><c:/Windows/Fonts/simsun.ttc><c:/Windows/Fonts/simsun.ttc><c:/Windows/Fonts/simsun.ttc><c:/Windows/Fonts/simsun.ttc><c:/Windows/Fonts/simsun.ttc><c:/Windows/Fonts/simsun.ttc><c:/Windows/Fonts/simsun.ttc><c:/Windows/Fonts/simsun.ttc><c:/Windows/Fonts/simsun.ttc><c:/Windows/Fonts/simsun.ttc><c:/Windows/Fonts/simsun.ttc><c:/Windows/Fonts/simsun.ttc><c:/Windows/Fonts/simsun.ttc><c:/Windows/Fonts/simsun.ttc><c:/Windows/Fonts/simhei.ttf><c:/Windows/Fonts/simhei.ttf><c:/Windows/Fonts/simhei.ttf><c:/Windows/Fonts/simhei.ttf><c:/Windows/Fonts/simhei.ttf><c:/Windows/Fonts/simhei.ttf><c:/Windows/Fonts/simhei.ttf><c:/Windows/Fonts/simhei.ttf><c:/Windows/Fonts/simhei.ttf><c:/Windows/Fonts/simhei.ttf><c:/Windows/Fonts/simsun.ttc><c:/Windows/Fonts/simsun.ttc><c:/Windows/Fonts/simsun.ttc><c:/Windows/Fonts/simsun.ttc><c:/Windows/Fonts/simsun.ttc><c:/Windows/Fonts/simsun.ttc><c:/Windows/Fonts/simsun.ttc><c:/Windows/Fonts/simsun.ttc><c:/Windows/Fonts/simsun.ttc><c:/Windows/Fonts/simsun.ttc><c:/Windows/Fonts/simsun.ttc><c:/Windows/Fonts/simsun.ttc><c:/Windows/Fonts/simsun.ttc><c:/Windows/Fonts/simsun.ttc><c:/Windows/Fonts/simhei.ttf><c:/Windows/Fonts/simhei.ttf><c:/Windows/Fonts/simhei.ttf><c:/Windows/Fonts/simhei.ttf><c:/Windows/Fonts/simhei.ttf><c:/Windows/Fonts/simhei.ttf><c:/Windows/Fonts/simhei.ttf><c:/Windows/Fonts/simhei.ttf><d:/leaf-fulture/software/texlive/texlive/2022/texmf-dist/fonts/type1/public/tex-gyre/qtmr.pfb><d:/leaf-fulture/software/texlive/texlive/2022/texmf-dist/fonts/type1/public/tex-gyre/qtmri.pfb><d:/leaf-fulture/software/texlive/texlive/2022/texmf-dist/fonts/type1/public/txfonts/t1xbtt.pfb><d:/leaf-fulture/software/texlive/texlive/2022/texmf-dist/fonts/type1/public/txfonts/t1xtt.pfb><d:/leaf-fulture/software/texlive/texlive/2022/texmf-dist/fonts/type1/urw/palatino/uplr8a.pfb><d:/leaf-fulture/software/texlive/texlive/2022/texmf-dist/fonts/type1/public/newtx/ztmb.pfb><d:/leaf-fulture/software/texlive/texlive/2022/texmf-dist/fonts/type1/public/newtx/ztmr.pfb><d:/leaf-fulture/software/texlive/texlive/2022/texmf-dist/fonts/type1/public/newtx/ztmri.pfb>
+Output written on report.pdf (24 pages, 1520964 bytes).
 PDF statistics:
- 1406 PDF objects out of 1440 (max. 8388607)
- 1095 compressed objects within 11 object streams
- 406 named destinations out of 1000 (max. 500000)
- 601 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 1563 PDF objects out of 1728 (max. 8388607)
+ 1229 compressed objects within 13 object streams
+ 463 named destinations out of 1000 (max. 500000)
+ 673 words of extra memory for PDF output out of 10000 (max. 10000000)
 
