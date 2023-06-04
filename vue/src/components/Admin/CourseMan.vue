@@ -152,17 +152,17 @@ export default {
     };
     return {
       options: [{
-        value: '专业必修',
-        label: '专业必修'
+        value: '必修',
+        label: '必修'
       }, {
-        value: '选项2',
-        label: '必修课'
+        value: '选修',
+        label: '选修'
       }, {
-        value: '选项3',
-        label: '选修课'
+        value: '通识',
+        label: '通识'
       }, {
         value: '',
-        label: '请选择课程性质'
+        label: '无'
       }],
       teacher_id: '',
       teacher_name: '',

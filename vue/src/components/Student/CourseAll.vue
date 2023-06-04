@@ -38,17 +38,17 @@ export default defineComponent({
                 selected:false,
             }],
             options: [{
-                value: '专业必修',
-                label: '专业必修'
+                value: '必修',
+                label: '必修'
             }, {
-                value: '选项2',
-                label: '必修课'
+                value: '选修',
+                label: '选修'
             }, {
-                value: '选项3',
-                label: '选修课'
+                value: '通识',
+                label: '通识'
             }, {
                 value: '',
-                label: '请选择课程性质'
+                label: '无'
             }],
             credit_selected: 0,
             selectedCourses: [],
@@ -186,7 +186,7 @@ export default defineComponent({
                 </el-tag>
             </div>
         </div>
-        <el-table :data="course" style="width: 100%" height="85vh" >
+        <el-table :data="course" style="width: 100%" height="72vh" >
             <el-table-column prop="course_id" label="课程ID"></el-table-column>
             <el-table-column prop="course_name" label="课程名称"></el-table-column>
             <el-table-column prop="term" label="授课学期"></el-table-column>
@@ -205,8 +205,8 @@ export default defineComponent({
                     <div style="display: flex; align-items: center;width: 70px">
                         <div style="flex: 1; ">
                             <el-progress :percentage="row.current / row.capacity * 100"
-                                         :text-inside="true"
-                                         :stroke-width="14"
+                                         :stroke-width="8"
+                                         :show-text="false"
                             color="#a0cfff"></el-progress>
                         </div>
                     </div>

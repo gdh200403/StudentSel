@@ -16,13 +16,14 @@
                   style="width: 200px"
                   class="ml-5">
           </el-input>
-          <el-input
-                  placeholder="请输入性别"
-                  prefix-icon="el-icon-search"
-                  v-model="sex"
-                  style="width: 200px"
-                  class="ml-5">
-          </el-input>
+            <el-select v-model="sex" placeholder="请选择性别" style="width: 200px" class="ml-5">
+                <el-option
+                    v-for="item in options"
+                    :key="item.value"
+                    :label="item.label"
+                    :value="item.value">
+                </el-option>
+            </el-select>
           <el-input
                   placeholder="请输入年龄"
                   prefix-icon="el-icon-search"
@@ -166,6 +167,16 @@ export default {
                 major: '',
                 pwd: '123456',
             },
+            options: [{
+                value: '男',
+                label: '男'
+            }, {
+                value: '女',
+                label: '女'
+            }, {
+                value: '',
+                label: '无'
+            }],
             tableData: Array(0).fill(item),
             total : 10,
             currentPage: 1,

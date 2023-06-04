@@ -70,8 +70,8 @@ export default defineComponent({
             <div style="display: flex; align-items: center;width: 70px">
                 <div style="flex: 1; ">
                     <el-progress :percentage="row.current / row.capacity * 100"
-                                 :text-inside="true"
-                                 :stroke-width="14"
+                                 :stroke-width="8"
+                                 :show-text="false"
                                  color="#a0cfff"></el-progress>
                 </div>
             </div>
