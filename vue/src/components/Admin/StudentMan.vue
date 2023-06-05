@@ -276,6 +276,7 @@ export default {
         },
 
         handleSizeChange(pageSize) {
+            this.currentPage = 1
             this.pageSize = pageSize
             this.load()
         },

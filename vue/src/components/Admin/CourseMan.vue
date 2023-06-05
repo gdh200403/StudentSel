@@ -290,6 +290,7 @@ export default {
       this.load()
     },
     handleSizeChange(pageSize) {
+      this.currentPage = 1
       this.pageSize = pageSize
       this.load()
     },

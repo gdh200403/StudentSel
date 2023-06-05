@@ -17,6 +17,7 @@ export default defineComponent({
             credit: '',
             form : {
                 student_id: '',
+                teacher_id: '',
                 course_id: '',
                 term: '',
             },
@@ -71,6 +72,7 @@ export default defineComponent({
                         teacher_name: (this.teacher_name === '' ? "" : this.teacher_name),
                         course_id: (this.course_id === '' ? "" : this.course_id),
                         course_name: (this.course_name === '' ? "" : this.course_name),
+                        term: this.currentTerm,
                         type: (this.type === '' ? "" : this.type),
                         place: (this.place === '' ? "" : this.place),
                         credit: (this.credit === '' ? -1 : this.credit),
@@ -108,6 +110,7 @@ export default defineComponent({
         selectCourse(row) {
             this.form.student_id = this.user.username
             this.form.course_id = row.course_id
+            this.form.teacher_id = row.teacher_id
             this.form.term = row.term
             this.request.post('/api/student/sc/save', this.form)
                 .then(res => {
@@ -120,6 +123,7 @@ export default defineComponent({
                 })
         },
         handleSizeChange(pageSize) {
+            this.currentPage = 1
             this.pageSize = pageSize
             this.load()
         },
@@ -191,6 +195,7 @@ export default defineComponent({
             <el-table-column prop="course_name" label="课程名称"></el-table-column>
             <el-table-column prop="term" label="授课学期"></el-table-column>
             <el-table-column prop="type" label="课程种类"></el-table-column>
+            <el-table-column prop="teacher_id" label="授课教师ID"></el-table-column>
             <el-table-column prop="teacher_name" label="授课教师"></el-table-column>
             <el-table-column prop="credit" label="学分"></el-table-column>
             <el-table-column prop="total_hours" label="总学时"></el-table-column>

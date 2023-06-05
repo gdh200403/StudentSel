@@ -51,9 +51,6 @@ export default defineComponent({
 <template>
     <div>
         <el-descriptions class="info" title="个人信息" :column="3" border>
-            <template slot="extra">
-                <el-button type="primary" size="small">编辑</el-button>
-            </template>
             <el-descriptions-item>
                 <template slot="label">
                     <i class="el-icon-user"></i>

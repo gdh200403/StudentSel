@@ -94,9 +94,9 @@ drop view if exists SCView;
 create view TCView as select teacher.teacher_id,teacher_name,course.course_id,course_name,type,credit,total_hours,teaching_hours,experiment_hours,term,place,current,Capacity,Comment
                       from TC inner join Course on TC.course_id=Course.course_id inner join Teacher on TC.teacher_id=Teacher.teacher_id;
 
-create view SCView as select SC.student_id, student_name, SC.course_id, course_name, Teacher.teacher_id, teacher.teacher_name, type, credit, total_hours, teaching_hours, experiment_hours, tc.term, place, Grade, current, Capacity, Comment
-                      from sc, tc, Student, Course, Teacher
-                      where sc.course_id = tc.course_id and sc.student_id = Student.student_id and sc.course_id = Course.course_id and tc.teacher_id = Teacher.teacher_id and sc.term = tc.term;
+create view SCView as select SC.student_id, student_name, SC.course_id, course_name, sc.teacher_id, TCView.teacher_name, type, credit, total_hours, teaching_hours, experiment_hours, tcview.term, place, Grade, current, Capacity, Comment
+                      from sc,  Student, tcview
+                      where sc.course_id = TCView.course_id and sc.student_id = Student.student_id and sc.teacher_id = TCView.teacher_id and sc.term = TCView.term;
 
 # 删除课程记录事务
 drop procedure if exists deleteCourse;
@@ -194,7 +194,7 @@ insert into TC values('42000009','math3','8','120','sp23','A-201', NULL);
 insert into TC values('42000010','cs1','6','80','sp21','A-211', NULL);
 insert into TC values('42000010','phi4','4','100','sp22','A-212', NULL);
 insert into TC values('42000010','bio5','4','100','sp23','A-213', NULL);
-insert into TC values('42000010','En6','6','80','sp23','A-313', NULL);
+insert into TC values('42000010','En6','6','80','sp22','A-313', NULL);
 insert into TC values('42000010','his7','4','120','sp22','A-312', NULL);
 insert into TC values('42000011','phy2','8','120','sp23','A-311', NULL);
 insert into TC values('42000011','math3','8','120','sp22','A-301', NULL);
@@ -205,38 +205,38 @@ insert into TC values('42000012','phi4','4','100','sp23','B-212', NULL);
 insert into TC values('42000012','En6','6','80','sp22','C-114', NULL);
 insert into TC values('42000012','his7','4','120','sp23','C-514', NULL);
 
-insert into SC values('PB42000006','cs1','42000007',72,'sp22');
-insert into SC values('PB42000004','phy2','42000007',93,'sp21');
-insert into SC values('PB42000002','phy2','42000007',NULL,'sp23');
+insert into SC values('PB42000006','cs1','42000007',72,'sp21');
+insert into SC values('PB42000004','phy2','42000007',93,'sp22');
+insert into SC values('PB42000002','phy2','42000007',60,'sp22');
 insert into SC values('PB42000006','phy2','42000007',61,'sp22');
-insert into SC values('PB42000001','cs1','42000008',85,'sp21');
+insert into SC values('PB42000001','cs1','42000008',NULL,'sp23');
 insert into SC values('PB42000002','cs1','42000008',NULL,'sp23');
-insert into SC values('PB42000001','math3','42000008',82,'sp21');
+insert into SC values('PB42000001','math3','42000008',82,'sp22');
 insert into SC values('PB42000003','math3','42000008',84,'sp22');
 insert into SC values('PB42000006','math3','42000008',78,'sp22');
 insert into SC values('PB42000004','phi4','42000008',53,'sp21');
-insert into SC values('PB42000001','his7','42000008',87,'sp21');
-insert into SC values('PB42000003','his7','42000008',84,'sp22');
+insert into SC values('PB42000001','his7','42000008',NULL,'sp23');
+insert into SC values('PB42000003','his7','42000008',NULL,'sp23');
 insert into SC values('PB42000002','math3','42000009',NULL,'sp23');
-insert into SC values('PB42000003','cs1','42000010',71,'sp22');
-insert into SC values('PB42000001','phi4','42000010',73,'sp21');
+insert into SC values('PB42000003','cs1','42000010',71,'sp21');
+insert into SC values('PB42000001','phi4','42000010',73,'sp22');
 insert into SC values('PB42000003','phi4','42000010',74,'sp22');
 insert into SC values('PB42000002','bio5','42000010',NULL,'sp23');
-insert into SC values('PB42000004','bio5','42000010',84,'sp21');
-insert into SC values('PB42000006','bio5','42000010',83,'sp22');
+insert into SC values('PB42000004','bio5','42000010',NULL,'sp23');
+insert into SC values('PB42000006','bio5','42000010',NULL,'sp23');
 insert into SC values('PB42000003','En6','42000010',83,'sp22');
-insert into SC values('PB42000004','En6','42000010',41,'sp21');
+insert into SC values('PB42000004','En6','42000010',41,'sp22');
 insert into SC values('PB42000006','his7','42000010',73,'sp22');
-insert into SC values('PB42000004','his7','42000010',64,'sp21');
-insert into SC values('PB42000005','phy2','42000011',41,'sp21');
-insert into SC values('PB42000001','phy2','42000011',83,'sp21');
-insert into SC values('PB42000005','math3','42000011',47,'sp21');
-insert into SC values('PB42000005','phi4','42000011',52,'sp21');
+insert into SC values('PB42000004','his7','42000010',64,'sp22');
+insert into SC values('PB42000005','phy2','42000011',41,'sp23');
+insert into SC values('PB42000001','phy2','42000011',83,'sp23');
+insert into SC values('PB42000005','math3','42000011',47,'sp22');
+insert into SC values('PB42000005','phi4','42000011',52,'sp22');
 insert into SC values('PB42000001','bio5','42000011',86,'sp21');
 insert into SC values('PB42000005','bio5','42000011',83,'sp21');
-insert into SC values('PB42000004','math3','42000012',72,'sp21');
+insert into SC values('PB42000004','math3','42000012',72,'sp22');
 insert into SC values('PB42000002','phi4','42000012',NULL,'sp23');
-insert into SC values('PB42000001','En6','42000012',74,'sp21');
-insert into SC values('PB42000005','En6','42000012',85,'sp21');
+insert into SC values('PB42000001','En6','42000012',74,'sp22');
+insert into SC values('PB42000005','En6','42000012',85,'sp22');
 insert into SC values('PB42000006','En6','42000012',85,'sp22');
 insert into SC values('PB42000002','his7','42000012',NULL,'sp23');

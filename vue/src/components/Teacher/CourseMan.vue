@@ -355,6 +355,7 @@ export default {
             this.innerload()
         },
         handleSizeChange(pageSize) {
+            this.currentPage = 1
             this.pageSize = pageSize
             this.load()
         },
@@ -363,6 +364,7 @@ export default {
             this.load()
         },
         handleSizeChangeStudent(pageSize) {
+            this.innerCurrentPageStudent = 1
             this.innerPageSizeStudent = pageSize
             this.innerload()
         },

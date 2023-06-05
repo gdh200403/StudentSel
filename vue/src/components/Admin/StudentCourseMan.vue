@@ -263,6 +263,7 @@ export default {
                         teacher_name:"",
                         course_id: (this.inner_course_id === '' ? "" : this.inner_course_id),
                         course_name: (this.inner_course_name === '' ? "" : this.inner_course_name),
+                        term: "",
                         type: "",
                         place: "",
                         credit: -1,
@@ -364,6 +365,7 @@ export default {
             this.innerload()
         },
         handleSizeChange(pageSize) {
+            this.currentPage = 1
             this.pageSize = pageSize
             this.load()
         },
@@ -372,6 +374,7 @@ export default {
             this.load()
         },
         handleInnerSizeChange(pageSize) {
+            this.innerCurrentPage = 1
             this.innerPageSize = pageSize
             this.innerload()
         },

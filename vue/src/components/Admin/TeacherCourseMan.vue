@@ -246,6 +246,7 @@ export default {
                         teacher_name: (this.teacher_name === '' ? "" : this.teacher_name),
                         course_id: (this.course_id === '' ? "" : this.course_id),
                         course_name: (this.course_name === '' ? "" : this.course_name),
+                        term: (this.term === '' ? "" : this.term),
                         type: (this.type === '' ? "" : this.type),
                         place: (this.place === '' ? "" : this.place),
                         credit: (this.credit === '' ? -1 : this.credit),
@@ -324,6 +325,7 @@ export default {
             this.load()
         },
         handleSizeChange(pageSize) {
+            this.currentPage = 1
             this.pageSize = pageSize
             this.load()
         },

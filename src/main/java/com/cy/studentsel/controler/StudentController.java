@@ -188,13 +188,14 @@ public class StudentController extends BaseController{
                                                      @RequestParam String course_id,
                                                      @RequestParam String teacher_name,
                                                      @RequestParam String course_name,
+                                                     @RequestParam String term,
                                                      @RequestParam String type,
                                                      @RequestParam int credit,
                                                      @RequestParam String place
     ) {
         JsonResult<pageInfo<TCRecord>> jsonResult = new JsonResult<>();
         pageInfo<TCRecord> pageInfo = new pageInfo<>();
-        TCRecord record = new TCRecord(teacher_id, course_id, teacher_name, course_name, type, credit, place);
+        TCRecord record = new TCRecord(teacher_id, course_id, teacher_name, course_name, term, type, credit, place);
         List<TCRecord> list = studentHandler.queryTCByCondition(record);
         int pageStart = (page - 1) * pageSize;
         int limit = pageSize;

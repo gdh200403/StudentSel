@@ -61,6 +61,9 @@
             <if test="course_name != null and course_name != ''">
                 course_name like concat('%', #{course_name}, '%') and
             </if>
+            <if test="term != null and term != ''">
+                term = #{term} and
+            </if>
              <if test="type != null and type != ''">
                 type = #{type} and
             </if>

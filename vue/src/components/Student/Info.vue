@@ -88,6 +88,7 @@ export default defineComponent({
             })
         },
         handleSizeChange(pageSize) {
+            this.currentPage = 1
             this.pageSize = pageSize
             this.load()
         },
@@ -208,7 +209,7 @@ export default defineComponent({
                     <el-statistic precision="2" title="算术平均分" :value="arith_ave"></el-statistic>
                 </el-col>
                 <el-col span="4">
-                    <el-statistic precision="2" title="算术平均分" :value="weighted_ave"></el-statistic>
+                    <el-statistic precision="2" title="加权平均分" :value="weighted_ave"></el-statistic>
                 </el-col>
         </el-row>
         </div>

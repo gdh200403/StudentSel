@@ -37,6 +37,17 @@ public class TCRecord implements Serializable {
         this.teacher_name = teacher_name;
     }
 
+    public TCRecord(String teacher_id, String course_id, String teacher_name, String course_name, String term, String type, int credit, String place) {
+        this.teacher_id = teacher_id;
+        this.course_id = course_id;
+        this.course_name = course_name;
+        this.term = term;
+        this.type = type;
+        this.credit = credit;
+        this.place = place;
+        this.teacher_name = teacher_name;
+    }
+
     public TCRecord(String id, String course_id, int current, int capacity, String comment) {
         this.teacher_id = id;
         this.course_id = course_id;

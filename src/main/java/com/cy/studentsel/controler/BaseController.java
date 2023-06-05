@@ -93,7 +93,7 @@ public class BaseController {
             }
             case "VerifyTokenFailException" -> {
                 jsonResult.setStatus(401);
-                jsonResult.setMsg("权限不足，重新登录");
+                jsonResult.setMsg("权限错误，重新登录");
             }
             default -> {
                 jsonResult.setStatus(6004);
